@@ -3,24 +3,78 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Octwave brand gradient stops */
+  --octwave-from: #c9277c; /* pink */
+  --octwave-via: #8c2da5; /* purple */
+  --octwave-to: #3e34bb;  /* indigo */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #070712;
+    --foreground: #f5f5f7;
   }
 }
 
+/* Base */
 body {
-  background: var(--background);
+  background: radial-gradient(1200px 600px at 80% -10%, color-mix(in oklab, var(--octwave-to) 20%, transparent), transparent 60%),
+              radial-gradient(1000px 500px at 0% 100%, color-mix(in oklab, var(--octwave-from) 16%, transparent), transparent 60%),
+              var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Utilities */
+.octwave-gradient-text {
+  background: linear-gradient(135deg, var(--octwave-from), var(--octwave-via), var(--octwave-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.octwave-gradient-bg {
+  background: linear-gradient(135deg, var(--octwave-from), var(--octwave-via), var(--octwave-to));
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+  background: linear-gradient(135deg, var(--octwave-from), var(--octwave-via), var(--octwave-to));
+}
+.btn-primary:hover { transform: scale(1.02); }
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.2);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: rgba(255,255,255,0.9);
+  transition: color 0.2s ease;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--octwave-to) 18%, transparent), color-mix(in oklab, var(--octwave-from) 12%, transparent));
+}
+.btn-ghost:hover { color: #fff; }
+
+.section { max-width: 72rem; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+
+.card {
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
 }
