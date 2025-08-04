@@ -1,10 +1,12 @@
 import Image from "next/image";
-
+import VectorTimeline from "@/components/timeline";
+import SmoothFollower from "@/components/SmoothFollowercursot";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero */}
       <header className="section pt-16 pb-20 sm:pt-24 sm:pb-28">
+        <SmoothFollower/>
         <div className="text-center">
           <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/70 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10">
             <span>Octwave 2.0</span>
@@ -47,7 +49,9 @@ export default function Home() {
       </section>
 
       {/* Timeline */}
+      <VectorTimeline />
       <section className="section pb-14" id="timeline">
+        
         <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">Event Timeline</h2>
         <div className="mt-8 grid md:grid-cols-[1fr_auto_1fr] gap-6 items-start">
           {/* Left column labels */}
