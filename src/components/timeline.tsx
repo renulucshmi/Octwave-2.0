@@ -12,6 +12,30 @@ interface TimelineEvent {
   dataPoints: number[];
 }
 
+// Deterministic particle positions to avoid hydration mismatch
+const particleConfigs = [
+  { left: 64.59, top: 57.02, color: 'var(--octwave-from)', delay: 2.56, duration: 3.73 },
+  { left: 9.79, top: 35.13, color: 'var(--octwave-via)', delay: 0.71, duration: 2.29 },
+  { left: 12.92, top: 0.34, color: 'var(--octwave-to)', delay: 2.27, duration: 3.74 },
+  { left: 85.21, top: 78.45, color: 'var(--octwave-from)', delay: 1.32, duration: 2.88 },
+  { left: 33.67, top: 92.12, color: 'var(--octwave-via)', delay: 0.89, duration: 3.15 },
+  { left: 72.14, top: 23.89, color: 'var(--octwave-to)', delay: 1.95, duration: 2.67 },
+  { left: 18.45, top: 65.34, color: 'var(--octwave-from)', delay: 0.45, duration: 3.42 },
+  { left: 91.23, top: 12.67, color: 'var(--octwave-via)', delay: 2.78, duration: 2.91 },
+  { left: 45.78, top: 88.21, color: 'var(--octwave-to)', delay: 1.67, duration: 3.28 },
+  { left: 67.89, top: 45.67, color: 'var(--octwave-from)', delay: 0.23, duration: 2.54 },
+  { left: 23.45, top: 71.23, color: 'var(--octwave-via)', delay: 2.12, duration: 3.67 },
+  { left: 89.12, top: 34.56, color: 'var(--octwave-to)', delay: 1.44, duration: 2.76 },
+  { left: 56.78, top: 89.34, color: 'var(--octwave-from)', delay: 0.78, duration: 3.21 },
+  { left: 12.34, top: 56.78, color: 'var(--octwave-via)', delay: 2.45, duration: 2.89 },
+  { left: 78.90, top: 23.45, color: 'var(--octwave-to)', delay: 1.23, duration: 3.45 },
+  { left: 34.56, top: 67.89, color: 'var(--octwave-from)', delay: 0.56, duration: 2.98 },
+  { left: 90.12, top: 45.23, color: 'var(--octwave-via)', delay: 2.34, duration: 3.12 },
+  { left: 45.67, top: 78.90, color: 'var(--octwave-to)', delay: 1.78, duration: 2.65 },
+  { left: 67.34, top: 12.56, color: 'var(--octwave-from)', delay: 0.67, duration: 3.78 },
+  { left: 23.78, top: 89.67, color: 'var(--octwave-via)', delay: 2.89, duration: 2.43 }
+];
+
 const timelineEvents: TimelineEvent[] = [
   {
     id: 1,
@@ -60,8 +84,15 @@ const VectorTimeline: React.FC = () => {
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [time, setTime] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -78,23 +109,27 @@ const VectorTimeline: React.FC = () => {
     elements.forEach(el => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+  }, [isMounted]);
 
   useEffect(() => {
+    if (!isMounted) return;
+    
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [isMounted]);
 
   useEffect(() => {
+    if (!isMounted) return;
+    
     const interval = setInterval(() => {
       setTime(prev => prev + 0.01);
     }, 16);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMounted]);
 
   return (
     <div className="min-h-screen overflow-hidden relative" >
@@ -120,17 +155,17 @@ const VectorTimeline: React.FC = () => {
 
       {/* Floating Particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {particleConfigs.map((particle, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 rounded-full animate-pulse"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              backgroundColor: i % 3 === 0 ? 'var(--octwave-from)' : i % 3 === 1 ? 'var(--octwave-via)' : 'var(--octwave-to)',
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-              transform: `translate(${Math.sin(time + i) * 20}px, ${Math.cos(time + i) * 20}px)`,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              backgroundColor: particle.color,
+              animationDelay: `${particle.delay}s`,
+              animationDuration: `${particle.duration}s`,
+              transform: isMounted ? `translate(${Math.sin(time + i) * 20}px, ${Math.cos(time + i) * 20}px)` : 'translate(0px, 0px)',
               opacity: 0.6
             }}
           />
