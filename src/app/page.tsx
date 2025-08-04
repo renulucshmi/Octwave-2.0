@@ -2,6 +2,7 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import SmoothFollower from "@/components/SmoothFollowercursot";
+import NeuralInterfaceFAQ from "@/components/faq";
 import { useEffect, useState } from "react";
 
 // Dynamically import VectorTimeline to avoid hydration issues
@@ -281,6 +282,7 @@ export default function Home() {
 
       {/* FAQ */}
       <section className="section pb-16">
+        <NeuralInterfaceFAQ />
         <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">FAQs</h2>
         <dl className="mt-6 grid gap-4 md:grid-cols-2">
           {[
