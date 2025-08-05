@@ -107,7 +107,48 @@ export default function Home() {
       `}</style>
 
       {/* Hero */}
-      <header className="section pt-16 pb-20 sm:pt-24 sm:pb-28">
+      <header className="section pt-16 pb-20 sm:pt-24 sm:pb-28 relative">
+        {/* Neural Network Background */}
+        <div className="neural-bg">
+          {/* Neural nodes */}
+          {Array.from({length: 15}).map((_, i) => (
+            <div 
+              key={i}
+              className="neural-node"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`
+              }}
+            />
+          ))}
+          {/* Data streams */}
+          {Array.from({length: 8}).map((_, i) => (
+            <div 
+              key={i}
+              className="data-stream"
+              style={{
+                top: `${20 + i * 10}%`,
+                width: '200px',
+                animationDelay: `${i * 0.5}s`
+              }}
+            />
+          ))}
+          {/* Matrix characters */}
+          {Array.from({length: 40}).map((_, i) => (
+            <div 
+              key={i}
+              className="matrix-char"
+              style={{
+                left: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 8}s`
+              }}
+            >
+              {Math.random() > 0.5 ? '1' : '0'}
+            </div>
+          ))}
+        </div>
+        
         <SmoothFollower/>
         <div className="text-center">
           {/* Badge - appears after dash animation (no typing animation) */}
