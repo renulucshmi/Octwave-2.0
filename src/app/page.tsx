@@ -50,75 +50,7 @@ export default function Home() {
 
       {/* Timeline */}
       <VectorTimeline />
-      <section className="section pb-14" id="timeline">
-        
-        <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">Event Timeline</h2>
-        <div className="mt-8 grid md:grid-cols-[1fr_auto_1fr] gap-6 items-start">
-          {/* Left column labels */}
-          <div className="flex flex-col gap-16 md:gap-20 text-right pr-2">
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 02</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Workshop session 02 & 03</p>
-            </div>
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 04</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Preliminary Round (online)</p>
-            </div>
-          </div>
-
-          {/* Center rail */}
-          <div className="relative mx-auto">
-            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[6px] rounded bg-gradient-to-b from-[var(--octwave-from)] via-[var(--octwave-via)] to-[var(--octwave-to)] opacity-70"></div>
-
-            {[
-              { side: "right", week: "WEEK 01", text: "Introductory session & Workshop session 01" },
-              { side: "left", week: "WEEK 02", text: "Workshop session 02 & 03" },
-              { side: "right", week: "WEEK 03", text: "Workshop session 04 & Team Registration (online)" },
-              { side: "left", week: "WEEK 04", text: "Preliminary Round (online)" },
-              { side: "right", week: "WEEK 05 & 06", text: "Final Round" },
-            ].map((e) => (
-              <div key={e.week} className="relative flex items-center my-10 md:my-12">
-                {/* node */}
-                <div className="relative z-10 w-5 h-5 rounded-full bg-white dark:bg-white shadow ring-4 ring-[rgba(0,0,0,0.1)] dark:ring-[rgba(255,255,255,0.25)]"></div>
-                {/* connector to card */}
-                <div className={`hidden md:block h-1 w-24 ${e.side === "right" ? "ml-3" : "mr-3"}`} style={{background: 'linear-gradient(90deg, var(--octwave-from), var(--octwave-to))'}}></div>
-              </div>
-            ))}
-          </div>
-
-          {/* Right column cards */}
-          <div className="flex flex-col gap-16 md:gap-20 pl-2">
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 01</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Introductory session & Workshop session 01</p>
-            </div>
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 03</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Workshop session 04 & Team Registration (online)</p>
-            </div>
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 05 & 06</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Final Round</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile stacked list */}
-        <ol className="mt-8 space-y-4 md:hidden">
-          {[
-            { w: "WEEK 01", d: "Introductory session & Workshop session 01" },
-            { w: "WEEK 02", d: "Workshop session 02 & 03" },
-            { w: "WEEK 03", d: "Workshop session 04 & Team Registration (online)" },
-            { w: "WEEK 04", d: "Preliminary Round (online)" },
-            { w: "WEEK 05 & 06", d: "Final Round" },
-          ].map((x) => (
-            <li key={x.w} className="card p-4">
-              <p className="text-xs text-black/60 dark:text-white/70">{x.w}</p>
-              <p className="font-medium text-black dark:text-white">{x.d}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+    
 
       {/* Prizes */}
       <section className="section pb-14">
@@ -137,23 +69,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="section pb-16">
-        <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">FAQs</h2>
-        <dl className="mt-6 grid gap-4 md:grid-cols-2">
-          {[
-            { q: "Who can participate?", a: "Students and professionals worldwide. Teams of up to 4." },
-            { q: "What’s the fee?", a: "Free to join. Limited seats." },
-            { q: "IP and ownership?", a: "You own your work. Sponsors may offer collaborations." },
-            { q: "What do I need?", a: "A laptop, internet, and your ideas." },
-          ].map((f) => (
-            <div key={f.q} className="card p-5">
-              <dt className="font-medium text-black dark:text-white">{f.q}</dt>
-              <dd className="mt-1 text-sm text-black/70 dark:text-white/80">{f.a}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+      
 
       {/* CTA */}
       <footer id="register" className="section pb-24">
