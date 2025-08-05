@@ -1,28 +1,173 @@
+"use client";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import SmoothFollower from "@/components/SmoothFollowercursot";
+import NeuralInterfaceFAQ from "@/components/faq";
+import { useEffect, useState } from "react";
+
+// Dynamically import VectorTimeline to avoid hydration issues
+const VectorTimeline = dynamic(() => import("@/components/timeline"), {
+  ssr: false,
+  loading: () => <div className="min-h-[400px] flex items-center justify-center">
+    <div className="animate-pulse text-center">
+      <div className="w-8 h-8 mx-auto mb-2 bg-gradient-to-r from-[var(--octwave-from)] to-[var(--octwave-to)] rounded-full"></div>
+      <p className="text-sm text-black/60 dark:text-white/60">Loading timeline...</p>
+    </div>
+  </div>
+});
+
+// Custom hook for dash animation - made faster
+function useDashAnimation(text: string, letterDelay: number = 100) { // Reduced from 300 to 100
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimationStarted(true);
+    }, 200); // Reduced from 500 to 200
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleAnimationEnd = () => {
+    setAnimationComplete(true);
+    setTimeout(() => {
+      setShowContent(true);
+    }, 300); // Reduced from 800 to 300
+  };
+
+  return { animationStarted, animationComplete, showContent, handleAnimationEnd };
+}
 
 export default function Home() {
+  const mainHeading = "Ride the Octwave 2.0 - Build the Future";
+  const badgeText = "Octwave 2.0 • Registration Open • Organized by IEEE IAS, University of Moratuwa";
+  const firstParagraph = "Team-based AI/ML challenge solving real industry problems.";
+  const secondParagraph = "Work with a problem statement, apply practical AI/ML techniques, and collaborate with academia and industry to deliver impactful, feasible solutions.";
+
+  const dashAnimation = useDashAnimation(mainHeading);
+
   return (
     <div className="min-h-screen flex flex-col">
+      <style jsx>{`
+        @keyframes dash {
+          0% {
+            transform: skew(-30deg,0deg) translateX(300%) scale(.8);
+            opacity: 1;
+          }
+          40% {
+            transform: skew(10deg,0deg) translateX(100%) scale(.9);
+          }
+          60% {
+            transform: skew(10deg,0deg) translateX(-10px) scale(1.2);
+          }
+          70% {
+            transform: skew(0,0deg) translateX(0) scale(1.3);
+          }
+          75% {
+            transform: skew(0,0deg) translateX(0) scale(1.3);
+          }
+          90% {
+            transform: skew(0,0deg) translateX(0) scale(.85);
+          }
+          100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+        }
+        @keyframes done-animating {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+        .letter {
+          display: inline-block;
+          font-size: clamp(2rem, 8vw, 4rem);
+          color: transparent;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          letter-spacing: 2px;
+          font-weight: bold;
+        }
+        .letter.animate {
+          animation: dash 300ms ease-in forwards; /* Reduced from 500ms to 300ms */
+          opacity: 0;
+        }
+        .main-heading.done-animating {
+          animation: done-animating 200ms ease-in; /* Reduced from 300ms to 200ms */
+        }
+      `}</style>
+
       {/* Hero */}
       <header className="section pt-16 pb-20 sm:pt-24 sm:pb-28">
+        <SmoothFollower/>
         <div className="text-center">
-          <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/70 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10">
-            <span>Octwave 2.0</span>
-            <span aria-hidden>•</span>
-            <span>Registration Open</span>
-            <span aria-hidden className="hidden sm:inline">•</span>
-            <span className="opacity-80">Organized by IEEE IAS, University of Moratuwa</span>
+          {/* Badge - appears after dash animation (no typing animation) */}
+          <div 
+            className={`inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/70 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10 min-h-[28px] transition-all duration-500 ${
+              dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            <span>{badgeText}</span>
           </div>
-          <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-            <span className="octwave-gradient-text">Ride the Octwave 2.0</span> — Build the Future
+          
+          {/* Main Heading with Dash Animation */}
+          <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight min-h-[3.5rem] sm:min-h-[4rem] md:min-h-[4.5rem]">
+            <div 
+              className={`main-heading ${dashAnimation.animationComplete ? 'done-animating' : ''}`}
+              style={{ minHeight: 'inherit' }}
+            >
+              {dashAnimation.animationStarted ? (
+                mainHeading.split('').map((letter, index) => (
+                  <span
+                    key={index}
+                    className={`letter ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                    style={{ 
+                      animationDelay: `${100 * index}ms`, // Reduced from 300ms to 100ms
+                    }}
+                    onAnimationEnd={index === mainHeading.length - 1 ? dashAnimation.handleAnimationEnd : undefined}
+                  >
+                    {letter === ' ' ? '\u00A0' : letter}
+                  </span>
+                ))
+              ) : (
+                <span className="opacity-0">Ride the Octwave 2.0 — Build the Future</span>
+              )}
+            </div>
           </h1>
-          <p className="mt-4 text-base sm:text-lg md:text-xl text-black/80 dark:text-white/85 max-w-2xl mx-auto font-medium">
-            Team-based AI/ML challenge solving real industry problems.
+          
+          {/* First Paragraph - appears after dash animation (no typing animation) */}
+          <p 
+            className={`mt-4 text-base sm:text-lg md:text-xl text-black/80 dark:text-white/85 max-w-2xl mx-auto font-medium min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
+              dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            {firstParagraph}
           </p>
-          <p className="mt-3 text-sm sm:text-base md:text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto">
-            Work with a problem statement, apply practical AI/ML techniques, and collaborate with academia and industry to deliver impactful, feasible solutions.
+          
+          {/* Second Paragraph - appears after dash animation (no typing animation) */}
+          <p 
+            className={`mt-3 text-sm sm:text-base md:text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto transition-all duration-500 ${
+              dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            {secondParagraph}
           </p>
-          <div className="mt-8 flex items-center justify-center gap-3">
+          
+          {/* Buttons - appear after animation is complete */}
+          <div 
+            className={`mt-8 flex items-center justify-center gap-3 transition-all duration-500 ${
+              dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
             <a href="#register" className="btn-primary">Register Now</a>
             <a href="#tracks" className="btn-ghost">Explore Tracks</a>
           </div>
@@ -47,7 +192,9 @@ export default function Home() {
       </section>
 
       {/* Timeline */}
+      <VectorTimeline />
       <section className="section pb-14" id="timeline">
+        
         <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">Event Timeline</h2>
         <div className="mt-8 grid md:grid-cols-[1fr_auto_1fr] gap-6 items-start">
           {/* Left column labels */}
@@ -135,11 +282,12 @@ export default function Home() {
 
       {/* FAQ */}
       <section className="section pb-16">
+        <NeuralInterfaceFAQ />
         <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">FAQs</h2>
         <dl className="mt-6 grid gap-4 md:grid-cols-2">
           {[
             { q: "Who can participate?", a: "Students and professionals worldwide. Teams of up to 4." },
-            { q: "What’s the fee?", a: "Free to join. Limited seats." },
+            { q: "What's the fee?", a: "Free to join. Limited seats." },
             { q: "IP and ownership?", a: "You own your work. Sponsors may offer collaborations." },
             { q: "What do I need?", a: "A laptop, internet, and your ideas." },
           ].map((f) => (
