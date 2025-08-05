@@ -252,7 +252,11 @@ export default function Home() {
           ))}
         </div>
       </section>
+      {/* FAQ Section */}
+      <section className="section pb-14">
 
+        <NeuralInterfaceFAQ />
+      </section>
       
 
       {/* CTA */}
