@@ -18,7 +18,7 @@ const VectorTimeline = dynamic(() => import("@/components/timeline"), {
 });
 
 // Custom hook for dash animation - made faster
-function useDashAnimation(text: string, letterDelay: number = 100) { // Reduced from 300 to 100
+function useDashAnimation(text: string, letterDelay: number = 100) {
   const [animationStarted, setAnimationStarted] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
@@ -26,7 +26,7 @@ function useDashAnimation(text: string, letterDelay: number = 100) { // Reduced 
   useEffect(() => {
     const timer = setTimeout(() => {
       setAnimationStarted(true);
-    }, 200); // Reduced from 500 to 200
+    }, 200);
 
     return () => clearTimeout(timer);
   }, []);
@@ -35,7 +35,7 @@ function useDashAnimation(text: string, letterDelay: number = 100) { // Reduced 
     setAnimationComplete(true);
     setTimeout(() => {
       setShowContent(true);
-    }, 300); // Reduced from 800 to 300
+    }, 300);
   };
 
   return { animationStarted, animationComplete, showContent, handleAnimationEnd };
@@ -48,6 +48,10 @@ export default function Home() {
   const secondParagraph = "Work with a problem statement, apply practical AI/ML techniques, and collaborate with academia and industry to deliver impactful, feasible solutions.";
 
   const dashAnimation = useDashAnimation(mainHeading);
+
+  // Split heading for mobile responsiveness
+  const firstLine = "Ride the";
+  const secondLine = "Octwave 2.0";
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -99,11 +103,11 @@ export default function Home() {
           font-weight: bold;
         }
         .letter.animate {
-          animation: dash 300ms ease-in forwards; /* Reduced from 500ms to 300ms */
+          animation: dash 300ms ease-in forwards;
           opacity: 0;
         }
         .main-heading.done-animating {
-          animation: done-animating 200ms ease-in; /* Reduced from 300ms to 200ms */
+          animation: done-animating 200ms ease-in;
         }
       `}</style>
 
@@ -120,27 +124,46 @@ export default function Home() {
             <span>{badgeText}</span>
           </div>
           
-          {/* Main Heading with Dash Animation */}
-          <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight min-h-[3.5rem] sm:min-h-[4rem] md:min-h-[4.5rem]">
+          {/* Main Heading with Dash Animation - Mobile Responsive */}
+          <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
             <div 
               className={`main-heading ${dashAnimation.animationComplete ? 'done-animating' : ''}`}
-              style={{ minHeight: 'inherit' }}
             >
               {dashAnimation.animationStarted ? (
-                mainHeading.split('').map((letter, index) => (
-                  <span
-                    key={index}
-                    className={`letter ${dashAnimation.animationStarted ? 'animate' : ''}`}
-                    style={{ 
-                      animationDelay: `${100 * index}ms`, // Reduced from 300ms to 100ms
-                    }}
-                    onAnimationEnd={index === mainHeading.length - 1 ? dashAnimation.handleAnimationEnd : undefined}
-                  >
-                    {letter === ' ' ? '\u00A0' : letter}
-                  </span>
-                ))
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+                  {/* First Line: "Ride the" */}
+                  <div className="mb-2 sm:mb-0">
+                    {firstLine.split('').map((letter, index) => (
+                      <span
+                        key={index}
+                        className={`letter ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        style={{ 
+                          animationDelay: `${100 * index}ms`,
+                        }}
+                      >
+                        {letter === ' ' ? '\u00A0' : letter}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  {/* Second Line: "Octwave 2.0" */}
+                  <div>
+                    {secondLine.split('').map((letter, index) => (
+                      <span
+                        key={index + firstLine.length}
+                        className={`letter ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        style={{ 
+                          animationDelay: `${100 * (index + firstLine.length)}ms`,
+                        }}
+                        onAnimationEnd={index === secondLine.length - 1 ? dashAnimation.handleAnimationEnd : undefined}
+                      >
+                        {letter === ' ' ? '\u00A0' : letter}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               ) : (
-                <span className="opacity-0">Ride the Octwave 2.0 — Build the Future</span>
+                <span className="opacity-0">Ride the Octwave 2.0</span>
               )}
             </div>
           </h1>
