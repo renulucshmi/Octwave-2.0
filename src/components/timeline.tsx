@@ -39,8 +39,8 @@ const particleConfigs = [
 const timelineEvents: TimelineEvent[] = [
   {
     id: 1,
-    year: '2024',
-    title: 'Neural Network Integration',
+    year: 'WEEK 01',
+    title: 'Introductory session & Workshop session 01',
     
     color: 'var(--octwave-from)',
     glowColor: 'var(--octwave-from)',
@@ -49,33 +49,43 @@ const timelineEvents: TimelineEvent[] = [
   },
   {
     id: 2,
-    year: '2023',
-    title: 'Holographic Interface Launch',
+    year: 'WEEK 02',
+    title: 'Workshop session 02 & 03',
     
     color: 'var(--octwave-via)',
     glowColor: 'var(--octwave-via)',
-    iconPath: 'M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z',
+    iconPath: 'M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z',
     dataPoints: [89, 91, 85, 93, 90]
   },
   {
     id: 3,
-    year: '2022',
-    title: 'Quantum Leap Protocol',
+    year: 'WEEK 03',
+    title: 'Workshop session 04 & Team Registration (online)',
     
     color: 'var(--octwave-to)',
     glowColor: 'var(--octwave-to)',
-    iconPath: 'M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z',
+    iconPath: 'M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7ZM12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z',
     dataPoints: [78, 82, 86, 91, 88]
   },
   {
     id: 4,
-    year: '2021',
-    title: 'Cybernetic Enhancement',
+    year: 'WEEK 04',
+    title: 'Preliminary Round (online)',
     
     color: 'var(--octwave-from)',
     glowColor: 'var(--octwave-from)',
-    iconPath: 'M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2Z',
+    iconPath: 'M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z',
     dataPoints: [72, 75, 79, 84, 81]
+  },
+  {
+    id: 5,
+    year: 'WEEK 05 & 06',
+    title: 'Final Round',
+    
+    color: 'var(--octwave-via)',
+    glowColor: 'var(--octwave-via)',
+    iconPath: 'M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z',
+    dataPoints: [95, 98, 92, 96, 100]
   },
 
 ];
