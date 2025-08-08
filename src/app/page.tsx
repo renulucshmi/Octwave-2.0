@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import SmoothFollower from "@/components/SmoothFollowercursot";
 import NeuralInterfaceFAQ from "@/components/faq";
 import { useEffect, useState } from "react";
+import PrizeSection from "@/components/PrizeSection";
 
 // Dynamically import VectorTimeline to avoid hydration issues
 const VectorTimeline = dynamic(() => import("@/components/timeline"), {
@@ -41,7 +42,7 @@ function useDashAnimation(text: string, letterDelay: number = 100) { // Reduced 
 }
 
 export default function Home() {
-  const mainHeading = "Ride the Octwave 2.0 - Build the Future";
+  const mainHeading = "Ride the Octwave 2.0";
   const badgeText = "Octwave 2.0 • Registration Open • Organized by IEEE IAS, University of Moratuwa";
   const firstParagraph = "Team-based AI/ML challenge solving real industry problems.";
   const secondParagraph = "Work with a problem statement, apply practical AI/ML techniques, and collaborate with academia and industry to deliver impactful, feasible solutions.";
@@ -107,7 +108,7 @@ export default function Home() {
       `}</style>
 
       {/* Hero */}
-      <header className="section pt-16 pb-20 sm:pt-24 sm:pb-28">
+      <header className="section pt-4 pb-20 sm:pt-6 sm:pb-28">
         <SmoothFollower/>
         <div className="text-center">
           {/* Badge - appears after dash animation (no typing animation) */}
@@ -169,25 +170,121 @@ export default function Home() {
             }`}
           >
             <a href="#register" className="btn-primary">Register Now</a>
-            <a href="#tracks" className="btn-ghost">Explore Tracks</a>
           </div>
         </div>
       </header>
 
-      {/* Tracks */}
-      <section id="tracks" className="section pb-14">
-        <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">Tracks</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {[
-            { title: "AI & Data", desc: "ML, agents, and data products that matter." },
-            { title: "Web & Cloud", desc: "Next-gen apps, DX tools, and cloud-native." },
-            { title: "Sustainability", desc: "Tech for climate, energy, and society." },
-          ].map((t) => (
-            <div key={t.title} className="card p-5 text-black/80 dark:text-white/90">
-              <h3 className="text-lg font-semibold">{t.title}</h3>
-              <p className="mt-2 text-sm text-black/60 dark:text-white/70">{t.desc}</p>
+      {/* Event Structure */}
+      <section id="event-structure" className="section pb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">Event Structure</h2>
+          <p className="text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto">
+            A comprehensive journey from learning to competing
+          </p>
+        </div>
+        
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Introductory Session */}
+          <div className="card p-8 text-center hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full octwave-gradient-bg flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                1
+              </div>
+              <h3 className="text-2xl font-bold mb-4 octwave-gradient-text">
+                Introductory Session
+              </h3>
+              <p className="text-base leading-relaxed text-black/80 dark:text-white/90 max-w-2xl mx-auto">
+                This session provides participants with an overview of industry trends in Artificial Intelligence (AI) and Machine 
+                Learning (ML). Experts will discuss the applications of machine learning in industrial settings, offering insights into 
+                its transformative potential. The session aims to establish a foundational understanding before moving into more 
+                technical topics in subsequent workshops.
+              </p>
             </div>
-          ))}
+          </div>
+
+          {/* Workshops */}
+          <div className="card p-8 text-center hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full octwave-gradient-bg flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                2
+              </div>
+              <h3 className="text-2xl font-bold mb-6 octwave-gradient-text">
+                Workshops
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-2 max-w-3xl mx-auto">
+                <div className="bg-white/10 dark:bg-black/20 rounded-lg p-4 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
+                  <h4 className="font-semibold text-black dark:text-white mb-2">Session 1</h4>
+                  <p className="text-sm text-black/70 dark:text-white/80">Introduction to Machine Learning</p>
+                </div>
+                <div className="bg-white/10 dark:bg-black/20 rounded-lg p-4 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
+                  <h4 className="font-semibold text-black dark:text-white mb-2">Session 2</h4>
+                  <p className="text-sm text-black/70 dark:text-white/80">Building models and handling time series data</p>
+                </div>
+                <div className="bg-white/10 dark:bg-black/20 rounded-lg p-4 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
+                  <h4 className="font-semibold text-black dark:text-white mb-2">Session 3</h4>
+                  <p className="text-sm text-black/70 dark:text-white/80">About data engineering</p>
+                </div>
+                <div className="bg-white/10 dark:bg-black/20 rounded-lg p-4 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
+                  <h4 className="font-semibold text-black dark:text-white mb-2">Session 4</h4>
+                  <p className="text-sm text-black/70 dark:text-white/80">Introduction to Kaggle platform</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Competition */}
+          <div className="card p-8 text-center hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full octwave-gradient-bg flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                3
+              </div>
+              <h3 className="text-2xl font-bold mb-6 octwave-gradient-text">
+                Competition
+              </h3>
+              <div className="space-y-6 max-w-3xl mx-auto">
+                <div className="bg-white/10 dark:bg-black/20 rounded-lg p-6 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
+                  <div className="flex items-center justify-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-full octwave-gradient-bg flex items-center justify-center text-sm font-bold text-white">
+                      📝
+                    </div>
+                    <h4 className="text-lg font-bold text-black dark:text-white">Team Registration (Online)</h4>
+                  </div>
+                  <p className="text-sm text-black/80 dark:text-white/90">
+                    Teams will be registered with all details, and individual registrants will be grouped into teams.
+                  </p>
+                </div>
+                
+                <div className="bg-white/10 dark:bg-black/20 rounded-lg p-6 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
+                  <div className="flex items-center justify-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-full octwave-gradient-bg flex items-center justify-center text-sm font-bold text-white">
+                      💻
+                    </div>
+                    <h4 className="text-lg font-bold text-black dark:text-white">Preliminary Round (Online)</h4>
+                  </div>
+                  <p className="text-sm text-black/80 dark:text-white/90">
+                    A Kaggle competition and report submission. 10 teams will be chosen from this round, considering 
+                    the competition rank and evaluation of reports.
+                  </p>
+                </div>
+                
+                <div className="bg-white/10 dark:bg-black/20 rounded-lg p-6 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
+                  <div className="flex items-center justify-center gap-3 mb-3">
+                    <div className="w-8 h-8 rounded-full octwave-gradient-bg flex items-center justify-center text-sm font-bold text-white">
+                      🏆
+                    </div>
+                    <h4 className="text-lg font-bold text-black dark:text-white">Final Round (Physical)</h4>
+                  </div>
+                  <p className="text-sm text-black/80 dark:text-white/90">
+                    A challenge round at the University of Moratuwa. Problem statement and dataset will be provided. 
+                    Final presentations will be done in front of a judging board, concluding with the awarding ceremony.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -196,23 +293,143 @@ export default function Home() {
     
 
       {/* Prizes */}
-      <section className="section pb-14">
-        <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">Prizes</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          {[
-            { place: "Grand Prize", amt: "$3,000" },
-            { place: "Runner Up", amt: "$1,500" },
-            { place: "Track Winners", amt: "$500 each" },
-          ].map((p) => (
-            <div key={p.place} className="card p-6">
-              <p className="text-sm text-black/70 dark:text-white/70">{p.place}</p>
-              <p className="mt-2 text-2xl font-bold text-black dark:text-white">{p.amt}</p>
+      <PrizeSection />
+
+      {/* Rules Section */}
+      <section id="rules" className="section pb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">Competition Rules</h2>
+          <p className="text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto">
+            Guidelines and regulations for fair competition
+          </p>
+        </div>
+        
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Eligibility Rules */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  👥
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">Team Eligibility</h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Teams must consist of 2-4 members from undergraduate or graduate programs</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>At least one team member must be from an engineering or computer science background</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Team members can be from different universities or institutions</span>
+                </li>
+              </ul>
             </div>
-          ))}
+          </div>
+
+          {/* Submission Rules */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  📝
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">Submission Guidelines</h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>All code must be original and developed during the competition period</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>External libraries and frameworks are allowed with proper attribution</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Submissions must include documentation and a technical report</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Late submissions will not be accepted under any circumstances</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Competition Conduct */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  ⚖️
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">Fair Play & Conduct</h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Collaboration between teams is strictly prohibited during competition phases</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Use of pre-existing solutions or plagiarism will result in immediate disqualification</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Teams must attend all mandatory workshops and sessions</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Professional conduct and respect for organizers and participants is required</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Evaluation Criteria */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  🏆
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">Evaluation Criteria</h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Technical innovation and creativity (30%)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Solution accuracy and performance (25%)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Code quality and documentation (20%)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Presentation and communication (15%)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Real-world applicability and impact (10%)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
-
-      
 
       {/* CTA */}
       <footer id="register" className="section pb-24">
@@ -221,11 +438,8 @@ export default function Home() {
           <p className="mt-2 text-black/70 dark:text-white/80">Register your team and start building.</p>
           <div className="mt-6 flex justify-center gap-3">
             <a className="btn-primary" href="#">Register</a>
-            <a className="btn-ghost" href="#">View Rules</a>
           </div>
         </div>
-        <p className="mt-6 text-center text-xs text-black/60 dark:text-white/60">Organized by IEEE Industry Applications Society, University of Moratuwa</p>
-        <p className="mt-2 text-center text-xs text-black/60 dark:text-white/60">© {new Date().getFullYear()} Octwave 2.0</p>
       </footer>
     </div>
   );
