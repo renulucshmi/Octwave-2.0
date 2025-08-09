@@ -5,12 +5,16 @@ import { useEffect, useState } from "react";
 export default function RegisterPage() {
   const [mounted, setMounted] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [registrationResult, setRegistrationResult] = useState<any>(null);
   const [formData, setFormData] = useState({
     email: '',
     teamMembers: '1',
     teamName: '',
+    university: '',
     members: [
-      { fullName: '', ieeeNumber: '', email: '', phone: '', university: '', yearOfStudy: '', kaggleId: '' }
+      { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '', kaggleId: '' }
     ],
     confirmation: false
   });
@@ -22,7 +26,7 @@ export default function RegisterPage() {
   const handleTeamMembersChange = (count: string) => {
     const memberCount = parseInt(count);
     const newMembers = Array(memberCount).fill(null).map((_, index) => 
-      formData.members[index] || { fullName: '', ieeeNumber: '', email: '', phone: '', university: '', yearOfStudy: '', kaggleId: '' }
+      formData.members[index] || { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '', kaggleId: '' }
     );
     setFormData({ ...formData, teamMembers: count, members: newMembers });
   };
@@ -33,11 +37,35 @@ export default function RegisterPage() {
     setFormData({ ...formData, members: newMembers });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    setShowSuccessModal(true);
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log('Registration successful:', result);
+        setRegistrationResult(result);
+        setShowSuccessModal(true);
+      } else {
+        setSubmitError(result.error || 'Registration failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setSubmitError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!mounted) {
@@ -146,6 +174,38 @@ export default function RegisterPage() {
             />
           </div>
 
+          {/* University */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-2">
+              University <span className="text-red-500">*</span>
+            </label>
+            <select
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+              value={formData.university}
+              onChange={(e) => setFormData({ ...formData, university: e.target.value })}
+            >
+              <option value="">Select University</option>
+              <option value="University of Colombo">University of Colombo</option>
+              <option value="University of Peradeniya">University of Peradeniya</option>
+              <option value="University of Sri Jayewardenepura">University of Sri Jayewardenepura</option>
+              <option value="University of Moratuwa">University of Moratuwa</option>
+              <option value="University of Ruhuna">University of Ruhuna</option>
+              <option value="University of Kelaniya">University of Kelaniya</option>
+              <option value="Rajarata University of Sri Lanka">Rajarata University of Sri Lanka</option>
+              <option value="University of Jaffna">University of Jaffna</option>
+              <option value="Wayamba University of Sri Lanka">Wayamba University of Sri Lanka</option>
+              <option value="Sabaragamuwa University of Sri Lanka">Sabaragamuwa University of Sri Lanka</option>
+              <option value="Eastern University of Sri Lanka">Eastern University of Sri Lanka</option>
+              <option value="The Open University of Sri Lanka">The Open University of Sri Lanka</option>
+              <option value="Sri Lanka Institute of Information Technology (SLIIT)">Sri Lanka Institute of Information Technology (SLIIT)</option>
+              <option value="General Sir John Kotelawala Defence University (KDU)">General Sir John Kotelawala Defence University (KDU)</option>
+              <option value="Uva Wellassa University">Uva Wellassa University</option>
+              <option value="South Eastern University of Sri Lanka">South Eastern University of Sri Lanka</option>
+            </select>
+            <p className="text-xs text-gray-500 mt-1">All team members must be from the same university</p>
+          </div>
+
           {/* Team Members */}
           {formData.members.map((member, index) => (
             <div key={index} className="mb-8 p-4 border-2 border-gray-200 rounded-lg dark:border-gray-700">
@@ -207,37 +267,6 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    University <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
-                    value={member.university}
-                    onChange={(e) => updateMember(index, 'university', e.target.value)}
-                  >
-                    <option value="">Select University</option>
-                    <option value="University of Colombo">University of Colombo</option>
-                    <option value="University of Peradeniya">University of Peradeniya</option>
-                    <option value="University of Sri Jayewardenepura">University of Sri Jayewardenepura</option>
-                    <option value="University of Moratuwa">University of Moratuwa</option>
-                    <option value="University of Ruhuna">University of Ruhuna</option>
-                    <option value="University of Kelaniya">University of Kelaniya</option>
-                    <option value="Rajarata University of Sri Lanka">Rajarata University of Sri Lanka</option>
-                    <option value="University of Jaffna">University of Jaffna</option>
-                    <option value="Wayamba University of Sri Lanka">Wayamba University of Sri Lanka</option>
-                    <option value="Sabaragamuwa University of Sri Lanka">Sabaragamuwa University of Sri Lanka</option>
-                    <option value="Eastern University of Sri Lanka">Eastern University of Sri Lanka</option>
-                    <option value="The Open University of Sri Lanka">The Open University of Sri Lanka</option>
-                    <option value="Sri Lanka Institute of Information Technology (SLIIT)">Sri Lanka Institute of Information Technology (SLIIT)</option>
-                    <option value="General Sir John Kotelawala Defence University (KDU)">General Sir John Kotelawala Defence University (KDU)</option>
-                    <option value="Uva Wellassa University">Uva Wellassa University</option>
-                    <option value="South Eastern University of Sri Lanka">South Eastern University of Sri Lanka</option>
-                  </select>
-                  <p className="text-xs text-gray-500 mt-1">All team members must be from the same university</p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
                     Year of Study <span className="text-red-500">*</span>
                   </label>
                   <select
@@ -285,12 +314,31 @@ export default function RegisterPage() {
             </label>
           </div>
 
+          {/* Error Display */}
+          {submitError && (
+            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="text-red-700 dark:text-red-300 text-sm">{submitError}</p>
+            </div>
+          )}
+
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full btn-primary text-lg py-4 hover:scale-105 transition-all duration-300"
+            disabled={isSubmitting}
+            className={`w-full btn-primary text-lg py-4 transition-all duration-300 ${
+              isSubmitting 
+                ? 'opacity-50 cursor-not-allowed' 
+                : 'hover:scale-105'
+            }`}
           >
-            Register for OctWave 2.0
+            {isSubmitting ? (
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Submitting...
+              </div>
+            ) : (
+              'Register for OctWave 2.0'
+            )}
           </button>
         </form>
 
@@ -317,7 +365,10 @@ export default function RegisterPage() {
             <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md w-full mx-4 text-center relative">
               {/* Close button */}
               <button
-                onClick={() => setShowSuccessModal(false)}
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  setRegistrationResult(null);
+                }}
                 className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -334,6 +385,18 @@ export default function RegisterPage() {
               <h3 className="text-2xl font-bold octwave-gradient-text mb-4">
                 Registration Successful!
               </h3>
+              
+              {/* Team ID Display */}
+              {registrationResult && (
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4">
+                  <p className="text-sm text-blue-800 dark:text-blue-300 font-medium">Your Team ID:</p>
+                  <p className="text-2xl font-bold text-blue-900 dark:text-blue-200">{registrationResult.teamId}</p>
+                  <p className="text-xs text-blue-700 dark:text-blue-400 mt-1">
+                    Please save this ID for future reference
+                  </p>
+                </div>
+              )}
+              
               <p className="text-black/80 dark:text-white/90 mb-6">
                 Thank you for registering for OctWave 2.0! We'll contact you soon with further details.
               </p>
@@ -355,7 +418,10 @@ export default function RegisterPage() {
 
               {/* Close Modal Button */}
               <button
-                onClick={() => setShowSuccessModal(false)}
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  setRegistrationResult(null);
+                }}
                 className="btn-ghost w-full"
               >
                 Close
