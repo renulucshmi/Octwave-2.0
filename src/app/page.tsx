@@ -97,7 +97,7 @@ export default function Home() {
         .letter {
           display: inline-block;
           font-size: clamp(2rem, 8vw, 4rem);
-          color: #1a1a1a;
+          color: #550180;
           letter-spacing: 2px;
           font-weight: bold;
         }
@@ -113,10 +113,10 @@ export default function Home() {
       {/* Hero */}
       <header className="relative overflow-hidden min-h-[80vh] -mt-12">
         {/* Animated Background */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-6">
           <AHoleBackground 
             height="100%" 
-            opacity={0.15}
+            opacity={0.65}
             className="w-full h-full"
           />
         </div>
@@ -175,14 +175,14 @@ export default function Home() {
                   </div>
                 </div>
               ) : (
-                <span className="opacity-0">Ride the Octwave 2.0</span>
+                <span className="opacity-0 ">Ride the Octwave 2.0</span>
               )}
             </div>
           </h1>
           
           {/* First Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-4 text-base sm:text-lg md:text-xl text-gray-800 max-w-2xl mx-auto font-medium min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
+            className={`mt-4 text-base sm:text-lg md:text-xl text-gray-800 dark:text-white/85 max-w-2xl mx-auto font-medium min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -191,7 +191,7 @@ export default function Home() {
           
           {/* Second Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-3 text-sm sm:text-base md:text-lg text-gray-700 max-w-2xl mx-auto transition-all duration-500 ${
+            className={`mt-3 text-sm sm:text-base md:text-lg text-gray-700 dark:text-white/85 max-w-2xl mx-auto transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
