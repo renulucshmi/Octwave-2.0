@@ -18,6 +18,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   const animationRef = useRef<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Handle client-side mounting and responsive detection
   useEffect(() => {
@@ -26,10 +27,19 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       setIsMobile(window.innerWidth < 768);
     };
     
+    const checkDarkMode = () => {
+      setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    };
+    
     checkMobile();
+    checkDarkMode();
+    
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', checkDarkMode);
     window.addEventListener('resize', checkMobile);
     
     return () => {
+      mediaQuery.removeEventListener('change', checkDarkMode);
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
@@ -189,7 +199,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
           linesCtx.beginPath();
           linesCtx.moveTo(p0.x, p0.y);
           linesCtx.lineTo(p1.x, p1.y);
-          linesCtx.strokeStyle = '#444';
+          linesCtx.strokeStyle = isDarkMode ? '#888' : '#666';
           linesCtx.lineWidth = isMobile ? 1.5 : 2; // Thinner lines on mobile
           linesCtx.stroke();
           linesCtx.closePath();
@@ -207,6 +217,9 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       const r = isMobile ? 0.5 + Math.random() * 2 : 0.5 + Math.random() * 4; // Smaller particles on mobile
       const vy = 0.5 + Math.random();
 
+      const alpha = Math.random() * 0.8 + 0.2; // Ensure minimum visibility
+      const color = isDarkMode ? `rgba(200, 200, 255, ${alpha})` : `rgba(100, 100, 150, ${alpha})`;
+      
       return {
         x: sx,
         sx,
@@ -215,7 +228,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
         vy,
         p: 0,
         r,
-        c: `rgba(255, 255, 255, ${Math.random()})`
+        c: color
       };
     };
 
@@ -238,7 +251,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     };
 
     const drawDiscs = () => {
-      ctx.strokeStyle = '#444';
+      ctx.strokeStyle = isDarkMode ? '#888' : '#666';
       ctx.lineWidth = isMobile ? 1.5 : 2;
 
       // Responsive start disc positioning
@@ -354,7 +367,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isClient]);
+  }, [isClient, isDarkMode]);
 
   const containerStyles: React.CSSProperties = {
     position: 'relative',
