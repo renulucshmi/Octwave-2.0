@@ -97,7 +97,7 @@ export default function Home() {
         .letter {
           display: inline-block;
           font-size: clamp(2rem, 8vw, 4rem);
-          color:var(--foreground);
+          color: #550180;
           letter-spacing: 2px;
           font-weight: bold;
         }
@@ -116,7 +116,7 @@ export default function Home() {
         <div className="absolute inset-0 z-6">
           <AHoleBackground 
             height="100%" 
-            opacity={0.55}
+            opacity={0.65}
             className="w-full h-full"
           />
         </div>
