@@ -24,7 +24,14 @@ export default function Footer() {
 
               {/* Nav Links */}
               <nav className="grid grid-cols-2 gap-3 text-sm">
-                {[{label:"About",href:"#about"},{label:"Tracks",href:"#tracks"},{label:"Timeline",href:"#timeline"},{label:"Prizes",href:"#prizes"},{label:"FAQ",href:"#faq"},{label:"Register",href:"#register"}].map(l => (
+                {[
+                  {label:"Event Structure",href:"#event-structure"},
+                  {label:"Timeline",href:"#timeline"}, 
+                  {label:"Prizes",href:"#prizes"},
+                  {label:"Rules",href:"#rules"},
+                  {label:"Contact",href:"#contact"},
+                  {label:"Register",href:"/register"}
+                ].map(l => (
                   <a key={l.label} href={l.href} className="text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white transition-colors">
                     {l.label}
                   </a>
@@ -43,7 +50,7 @@ export default function Footer() {
                   <a aria-label="GitHub" href="#" className="grid h-9 w-9 place-items-center rounded-full ring-1 ring-black/10 dark:ring-white/10 hover:bg-black/5 dark:hover:bg-white/5">
                     <span>GH</span>
                   </a>
-                  <a href="mailto:hello@example.com" className="ml-2 text-sm text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">hello@example.com</a>
+                  <a href="mailto:octwave@ieee.lk" className="ml-2 text-sm text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white">octwave@ieee.lk</a>
                 </div>
               </div>
             </div>

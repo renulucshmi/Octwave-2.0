@@ -28,10 +28,10 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="Octwave logo"
-              width={64}
-              height={64}
+              width={108}
+              height={108}
               priority
-              className="object-contain"
+              className="object-contain h-16"
             />
             <span className="hidden sm:block text-xl font-semibold tracking-wide text-white">
               OCTWAVE
