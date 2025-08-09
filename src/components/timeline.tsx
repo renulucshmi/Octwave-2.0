@@ -272,6 +272,7 @@ const VectorTimeline: React.FC = () => {
                   index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
                 } group`}
               >
+                {/* Timeline Card */}
                 {/* Holographic Event Container */}
                 <div
                   className={`w-5/12 transform transition-all duration-1000 ${
@@ -284,8 +285,8 @@ const VectorTimeline: React.FC = () => {
                   style={{ transitionDelay: `${index * 200}ms` }}
                 >
                   <div className="relative">
-                    <svg 
-                      className={`w-full h-40 ${index % 2 === 0 ? 'ml-0' : 'mr-12'}`} 
+                    <svg
+                      className={`w-full h-30 sm:h-40 ${index % 2 === 0 ? 'ml-0' : 'mr-12'}`}
                       viewBox="0 0 400 130"
                     >
                       <defs>
@@ -307,8 +308,9 @@ const VectorTimeline: React.FC = () => {
                         </pattern>
                       </defs>
                       
-                      {/* Holographic Container */}
+                      {/* Holographic Container - Desktop */}
                       <path
+                        className="hidden sm:block transform transition-all duration-500 group-hover:scale-105"
                         d={index % 2 === 0 
                           ? "M40,20 L320,20 L340,40 L320,110 L40,110 L20,90 L20,40 Z"
                           : "M360,20 L80,20 L60,40 L80,110 L360,110 L380,90 L380,40 Z"
@@ -317,7 +319,19 @@ const VectorTimeline: React.FC = () => {
                         stroke={event.color}
                         strokeWidth="2"
                         filter={`url(#hologramGlow-${event.id})`}
-                        className="transform transition-all duration-500 group-hover:scale-105"
+                      />
+                      
+                      {/* Holographic Container - Mobile */}
+                      <path
+                        className="block sm:hidden transform transition-all duration-500 group-hover:scale-105"
+                        d={index % 2 === 0 
+                          ? "M40,0 L320,0 L340,20 L320,220 L40,220 L20,200 L20,20 Z"
+                          : "M360,0 L80,0 L60,20 L80,220 L360,220 L380,200 L380,20 Z"
+                        }
+                        fill={`url(#hologram-${event.id})`}
+                        stroke={event.color}
+                        strokeWidth="2"
+                        filter={`url(#hologramGlow-${event.id})`}
                       />
                       
                       {/* Scanlines Effect */}
@@ -358,15 +372,15 @@ const VectorTimeline: React.FC = () => {
                       <foreignObject 
                         x={index % 2 === 0 ? "70" : "100"} 
                         y="30" 
-                        width="180" 
-                        height="70"
+                        width="230" 
+                        height="170"
                       >
                         <div className="text-gray-800 dark:text-gray-200 p-2">
                           <div className="flex items-center gap-1 mb-1">
                             <div className={`w-1 h-1 rounded-full animate-pulse`} style={{backgroundColor: event.color}}></div>
                             <span className="text-xs font-mono text-gray-500 dark:text-gray-400 tracking-wide font-semibold">#{event.id}</span>
                           </div>
-                          <h3 className="text-sm font-bold mb-1 text-gray-900 dark:text-gray-100 leading-tight">
+                          <h3 className="text-3xl sm:text-sm font-bold mb-1 text-gray-900 dark:text-gray-100 leading-tight">
                             {event.title}
                           </h3>
                           {/* <p className="text-xs text-gray-700 dark:text-gray-300 leading-tight">
