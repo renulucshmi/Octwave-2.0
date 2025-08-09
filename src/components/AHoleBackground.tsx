@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface AHoleBackgroundProps {
   className?: string;
@@ -16,9 +16,26 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Handle client-side mounting and responsive detection
+  useEffect(() => {
+    setIsClient(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   useEffect(() => {
-    if (!containerRef.current || !canvasRef.current) return;
+    if (!isClient || !containerRef.current || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -337,7 +354,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, []);
+  }, [isClient]);
 
   const containerStyles: React.CSSProperties = {
     position: 'relative',
@@ -351,13 +368,13 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   // Responsive overlay positioning
   const overlayStyles: React.CSSProperties = {
     position: 'absolute',
-    top: window.innerWidth < 768 ? '45%' : '60%',
+    top: isMobile ? '45%' : '60%',
     left: '50%',
     zIndex: 2,
     display: 'block',
     width: '120%',
     height: '100%',
-    background: window.innerWidth < 768 
+    background: isMobile 
       ? 'radial-gradient(ellipse at 50% 30%, transparent 15%, #070712 65%)'
       : 'radial-gradient(ellipse at 50% 40%, transparent 20%, #070712 70%)',
     transform: 'translate3d(-50%, -50%, 0)',
@@ -367,11 +384,11 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   // Responsive aura positioning and size
   const auraStyles: React.CSSProperties = {
     position: 'absolute',
-    top: window.innerWidth < 768 ? '-20%' : '-40%',
+    top: isMobile ? '-20%' : '-40%',
     left: '50%',
     zIndex: 3,
-    width: window.innerWidth < 768 ? '40%' : '25%',
-    height: window.innerWidth < 768 ? '80%' : '100%',
+    width: isMobile ? '40%' : '25%',
+    height: isMobile ? '80%' : '100%',
     background: `linear-gradient(
       20deg,
       #00f8f1,
@@ -383,9 +400,9 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       #ffbd1e 100%
     ) 0 100% / 100% 200%`,
     borderRadius: '0 0 100% 100%',
-    filter: window.innerWidth < 768 ? 'blur(20px)' : 'blur(30px)',
+    filter: isMobile ? 'blur(20px)' : 'blur(30px)',
     mixBlendMode: 'plus-lighter',
-    opacity: window.innerWidth < 768 ? 0.4 : 0.6,
+    opacity: isMobile ? 0.4 : 0.6,
     transform: 'translate3d(-50%, 0, 0)',
     animation: 'aura-glow 5s infinite linear',
     pointerEvents: 'none'
@@ -394,13 +411,13 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   // Responsive after overlay
   const afterOverlayStyles: React.CSSProperties = {
     position: 'absolute',
-    top: window.innerWidth < 768 ? '45%' : '60%',
+    top: isMobile ? '45%' : '60%',
     left: '50%',
     zIndex: 5,
     display: 'block',
-    width: window.innerWidth < 768 ? '90%' : '80%',
-    height: window.innerWidth < 768 ? '70%' : '80%',
-    background: window.innerWidth < 768
+    width: isMobile ? '90%' : '80%',
+    height: isMobile ? '70%' : '80%',
+    background: isMobile
       ? 'radial-gradient(ellipse at 50% 50%, #a900ff 10%, transparent 50%)'
       : 'radial-gradient(ellipse at 50% 60%, #a900ff 15%, transparent 60%)',
     mixBlendMode: 'overlay',
@@ -417,7 +434,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     height: '100%',
     background: 'repeating-linear-gradient(transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px)',
     mixBlendMode: 'overlay',
-    opacity: window.innerWidth < 768 ? 0.2 : 0.3,
+    opacity: isMobile ? 0.2 : 0.3,
     pointerEvents: 'none'
   };
 
@@ -439,11 +456,12 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
           }
         }
       `}</style>
-      <div 
-        ref={containerRef} 
-        className={`ahole-background ${className}`}
-        style={containerStyles}
-      >
+      {isClient && (
+        <div 
+          ref={containerRef} 
+          className={`ahole-background ${className}`}
+          style={containerStyles}
+        >
         <canvas 
           ref={canvasRef}
           style={{ 
@@ -456,7 +474,8 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
         <div style={auraStyles} />
         <div style={afterOverlayStyles} />
         <div style={scanlineStyles} />
-      </div>
+        </div>
+      )}
     </>
   );
 };
