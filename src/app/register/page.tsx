@@ -4,171 +4,365 @@ import { useEffect, useState } from "react";
 
 export default function RegisterPage() {
   const [mounted, setMounted] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    teamMembers: '1',
+    teamName: '',
+    members: [
+      { fullName: '', ieeeNumber: '', email: '', phone: '', university: '', yearOfStudy: '', kaggleId: '' }
+    ],
+    confirmation: false
+  });
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleTeamMembersChange = (count: string) => {
+    const memberCount = parseInt(count);
+    const newMembers = Array(memberCount).fill(null).map((_, index) => 
+      formData.members[index] || { fullName: '', ieeeNumber: '', email: '', phone: '', university: '', yearOfStudy: '', kaggleId: '' }
+    );
+    setFormData({ ...formData, teamMembers: count, members: newMembers });
+  };
+
+  const updateMember = (index: number, field: string, value: string) => {
+    const newMembers = [...formData.members];
+    newMembers[index] = { ...newMembers[index], [field]: value };
+    setFormData({ ...formData, members: newMembers });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the form data to your backend
+    console.log('Form submitted:', formData);
+    setShowSuccessModal(true);
+  };
 
   if (!mounted) {
     return null;
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-        @keyframes pulse-glow {
-          0%, 100% {
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-          }
-          50% {
-            box-shadow: 0 0 40px rgba(102, 126, 234, 0.6);
-          }
-        }
-        .float-animation {
-          animation: float 3s ease-in-out infinite;
-        }
-        .pulse-glow {
-          animation: pulse-glow 2s ease-in-out infinite;
-        }
-      `}</style>
-
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-purple-400/10 to-pink-400/10 blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-gradient-to-r from-blue-400/10 to-indigo-400/10 blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="text-center max-w-4xl mx-auto px-6">
-        {/* Main Icon */}
-        <div className="float-animation mb-8">
-          <div className="w-32 h-32 mx-auto rounded-full octwave-gradient-bg pulse-glow flex items-center justify-center text-4xl text-white shadow-2xl">
-            🚧
-          </div>
-        </div>
-
-        {/* Main Heading */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold octwave-gradient-text mb-6">
-          Registration Portal
-        </h1>
-
-        {/* Status Badge */}
-        <div className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium bg-yellow-100 text-yellow-800 ring-1 ring-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-300 dark:ring-yellow-800 mb-8">
-          <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-          Under Development
-        </div>
-
-        {/* Description */}
-        <div className="space-y-4 mb-12">
-          <p className="text-xl sm:text-2xl text-black/80 dark:text-white/90 leading-relaxed">
-            We're building something amazing! 🎯
-          </p>
-          <p className="text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto leading-relaxed">
-            Our registration portal is currently under development. Soon you'll be able to register your team, 
-            submit your details, and join the Octwave 2.0 competition with ease.
+    <div className="min-h-screen py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">
+            OctWave 2.0 - Registration
+          </h1>
+          <div className="text-2xl mb-4">🚀 Unlock the Future of Artificial Intelligence with OctWave 2.0!</div>
+          <p className="text-lg text-black/80 dark:text-white/90 max-w-3xl mx-auto">
+            Join Sri Lanka's premier AI/ML competition designed to empower young professionals to solve real-world challenges! 
+            Organized by IEEE Industry Applications Society (IAS) Student Branch Chapter, University of Moratuwa.
           </p>
         </div>
 
-        {/* Feature Preview Cards */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-12 max-w-4xl mx-auto">
-          <div className="card p-6 text-center hover:scale-105 transition-all duration-300">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full octwave-gradient-bg flex items-center justify-center text-white text-xl">
-              👥
-            </div>
-            <h3 className="text-lg font-semibold mb-2 octwave-gradient-text">Team Registration</h3>
-            <p className="text-sm text-black/70 dark:text-white/80">
-              Register your team of 2-4 members
-            </p>
-          </div>
-
-          <div className="card p-6 text-center hover:scale-105 transition-all duration-300">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full octwave-gradient-bg flex items-center justify-center text-white text-xl">
-              📝
-            </div>
-            <h3 className="text-lg font-semibold mb-2 octwave-gradient-text">Easy Forms</h3>
-            <p className="text-sm text-black/70 dark:text-white/80">
-              Simple and intuitive registration forms
-            </p>
-          </div>
-
-          <div className="card p-6 text-center hover:scale-105 transition-all duration-300">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full octwave-gradient-bg flex items-center justify-center text-white text-xl">
-              ⚡
-            </div>
-            <h3 className="text-lg font-semibold mb-2 octwave-gradient-text">Instant Confirmation</h3>
-            <p className="text-sm text-black/70 dark:text-white/80">
-              Get immediate registration confirmation
-            </p>
-          </div>
+        {/* What Awaits You */}
+        <div className="card p-6 mb-8">
+          <h2 className="text-2xl font-bold octwave-gradient-text mb-4">🎯 What Awaits You:</h2>
+          <ul className="space-y-2 text-black/80 dark:text-white/90">
+            <li>✅ Industry-expert led workshops on ML, Data Engineering & Kaggle</li>
+            <li>✅ Hands-on experience solving real industrial challenges with AI/ML</li>
+            <li>✅ Team-based competition with Kaggle preliminary round</li>
+            <li>✅ Final physical competition at University of Moratuwa</li>
+            <li>✅ Industry recognition and networking opportunities with tech leaders</li>
+            <li>✅ Certificates and awards endorsed by industry partners</li>
+          </ul>
         </div>
 
-        {/* Timeline Information */}
-        <div className="card p-8 mb-12 bg-white/10 dark:bg-black/20 backdrop-blur-sm border-2 border-white/20">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-8 h-8 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold">
-              📅
-            </div>
-            <h3 className="text-xl font-bold octwave-gradient-text">Expected Launch</h3>
-          </div>
-          <p className="text-lg text-black/80 dark:text-white/90 mb-4">
-            Registration portal will be available soon!
-          </p>
-          <p className="text-sm text-black/70 dark:text-white/80">
-            Stay tuned to our social media channels for updates on the registration opening.
-          </p>
+        {/* Event Structure */}
+        <div className="card p-6 mb-8">
+          <h2 className="text-2xl font-bold octwave-gradient-text mb-4">📅 Event Structure:</h2>
+          <ul className="space-y-2 text-black/80 dark:text-white/90">
+            <li><strong>Registration Period:</strong> August 17-23</li>
+            <li><strong>1st Virtual Session:</strong> Introduction to OctWave 2.0 & AI/ML fundamentals</li>
+            <li><strong>2nd Virtual Session:</strong> Kaggle platform & challenge solving techniques</li>
+            <li><strong>Kaggle Challenge:</strong> September 1-7 (Solution submission deadline: Sept 7)</li>
+            <li><strong>Top 10 Teams Selection & Announcement:</strong> Post Kaggle evaluation</li>
+            <li><strong>3rd Virtual Session:</strong> Real-world problem solving with AI/ML + Final round briefing</li>
+            <li><strong>Final Round:</strong> Physical competition at University of Moratuwa</li>
+          </ul>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-          <Link 
-            href="/" 
-            className="btn-primary text-base px-8 py-4 shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300"
-          >
-            <span className="flex items-center gap-2">
-              ← Back to Home
-            </span>
-          </Link>
+        {/* Important Requirements */}
+        <div className="card p-6 mb-8 border-yellow-300 bg-yellow-50 dark:bg-yellow-900/20">
+          <h2 className="text-2xl font-bold text-yellow-800 dark:text-yellow-300 mb-4">⚠️ Important Team Requirements:</h2>
+          <ul className="space-y-2 text-yellow-800 dark:text-yellow-300">
+            <li>• All team members must be from the same university</li>
+            <li>• Teams can have 1-4 members maximum</li>
+            <li>• Open to undergraduate students from government and private institutions in Sri Lanka</li>
+          </ul>
+          <p className="mt-4 font-semibold">Transform your innovative ideas into real-world AI/ML solutions with OctWave 2.0!</p>
+        </div>
+
+        {/* Registration Form */}
+        <form className="card p-6 mb-8" onSubmit={handleSubmit}>
+          <h2 className="text-2xl font-bold octwave-gradient-text mb-6">Registration Form</h2>
           
-          <button 
-            disabled
-            className="btn-ghost text-base px-8 py-4 opacity-50 cursor-not-allowed"
+          {/* Email */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-2">
+              Email <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+          </div>
+
+          {/* Number of Team Members */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-2">
+              Number of Team Members <span className="text-red-500">*</span>
+            </label>
+            <select
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+              value={formData.teamMembers}
+              onChange={(e) => handleTeamMembersChange(e.target.value)}
+            >
+              <option value="1">1 Member</option>
+              <option value="2">2 Members</option>
+              <option value="3">3 Members</option>
+              <option value="4">4 Members</option>
+            </select>
+          </div>
+
+          {/* Team Name */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-2">
+              Team Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+              value={formData.teamName}
+              onChange={(e) => setFormData({ ...formData, teamName: e.target.value })}
+            />
+          </div>
+
+          {/* Team Members */}
+          {formData.members.map((member, index) => (
+            <div key={index} className="mb-8 p-4 border-2 border-gray-200 rounded-lg dark:border-gray-700">
+              <h3 className="text-lg font-semibold octwave-gradient-text mb-4">
+                Member {index + 1} {index === 0 && "(Leader)"}
+              </h3>
+              
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+                    value={member.fullName}
+                    onChange={(e) => updateMember(index, 'fullName', e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    IEEE Membership No (optional)
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+                    value={member.ieeeNumber}
+                    onChange={(e) => updateMember(index, 'ieeeNumber', e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+                    value={member.email}
+                    onChange={(e) => updateMember(index, 'email', e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Phone (WhatsApp) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+                    value={member.phone}
+                    onChange={(e) => updateMember(index, 'phone', e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    University <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+                    value={member.university}
+                    onChange={(e) => updateMember(index, 'university', e.target.value)}
+                  >
+                    <option value="">Select University</option>
+                    <option value="University of Colombo">University of Colombo</option>
+                    <option value="University of Peradeniya">University of Peradeniya</option>
+                    <option value="University of Sri Jayewardenepura">University of Sri Jayewardenepura</option>
+                    <option value="University of Moratuwa">University of Moratuwa</option>
+                    <option value="University of Ruhuna">University of Ruhuna</option>
+                    <option value="University of Kelaniya">University of Kelaniya</option>
+                    <option value="Rajarata University of Sri Lanka">Rajarata University of Sri Lanka</option>
+                    <option value="University of Jaffna">University of Jaffna</option>
+                    <option value="Wayamba University of Sri Lanka">Wayamba University of Sri Lanka</option>
+                    <option value="Sabaragamuwa University of Sri Lanka">Sabaragamuwa University of Sri Lanka</option>
+                    <option value="Eastern University of Sri Lanka">Eastern University of Sri Lanka</option>
+                    <option value="The Open University of Sri Lanka">The Open University of Sri Lanka</option>
+                    <option value="Sri Lanka Institute of Information Technology (SLIIT)">Sri Lanka Institute of Information Technology (SLIIT)</option>
+                    <option value="General Sir John Kotelawala Defence University (KDU)">General Sir John Kotelawala Defence University (KDU)</option>
+                    <option value="Uva Wellassa University">Uva Wellassa University</option>
+                    <option value="South Eastern University of Sri Lanka">South Eastern University of Sri Lanka</option>
+                  </select>
+                  <p className="text-xs text-gray-500 mt-1">All team members must be from the same university</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Year of Study <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+                    value={member.yearOfStudy}
+                    onChange={(e) => updateMember(index, 'yearOfStudy', e.target.value)}
+                  >
+                    <option value="">Choose</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                  </select>
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium mb-2">
+                    Kaggle ID (optional)
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+                    value={member.kaggleId}
+                    onChange={(e) => updateMember(index, 'kaggleId', e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Confirmation */}
+          <div className="mb-6">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                required
+                className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                checked={formData.confirmation}
+                onChange={(e) => setFormData({ ...formData, confirmation: e.target.checked })}
+              />
+              <span className="text-sm">
+                I confirm the details are correct above <span className="text-red-500">*</span>
+              </span>
+            </label>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full btn-primary text-lg py-4 hover:scale-105 transition-all duration-300"
           >
-            Register Team (Coming Soon)
+            Register for OctWave 2.0
           </button>
-        </div>
+        </form>
 
         {/* Contact Information */}
-        <div className="text-center">
-          <p className="text-sm text-black/60 dark:text-white/60 mb-2">
-            Questions about registration?
-          </p>
-          <p className="text-sm text-black/70 dark:text-white/80">
-            Contact us: <span className="octwave-gradient-text font-semibold">octwave@ieee.lk</span>
-          </p>
+        <div className="card p-6 mb-8">
+          <h2 className="text-2xl font-bold octwave-gradient-text mb-4">📞 Contact Information:</h2>
+          <div className="space-y-2 text-black/80 dark:text-white/90">
+            <p><strong>Renulucshmi Prakasan</strong> (Co-chair - OctWave 2.0): +94754350533</p>
+            <p><strong>Rashmitha Hansamal</strong> (Co-chair - OctWave 2.0): +94776057351</p>
+            <p><strong>Abinaya Subramaniam</strong> (OC - OctWave 2.0): +94763885326</p>
+          </div>
         </div>
-      </div>
 
-      {/* Floating particles for visual appeal */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 rounded-full octwave-gradient-bg opacity-30 animate-pulse"
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + (i % 3) * 20}%`,
-              animationDelay: `${i * 0.8}s`,
-              animationDuration: `${2 + i * 0.5}s`,
-            }}
-          />
-        ))}
+        {/* Back to Home */}
+        <div className="text-center mt-8">
+          <Link href="/" className="btn-ghost">
+            ← Back to Home
+          </Link>
+        </div>
+
+        {/* Success Modal */}
+        {showSuccessModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md w-full mx-4 text-center relative">
+              {/* Close button */}
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Success Icon */}
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full octwave-gradient-bg flex items-center justify-center text-2xl text-white">
+                ✅
+              </div>
+
+              {/* Success Message */}
+              <h3 className="text-2xl font-bold octwave-gradient-text mb-4">
+                Registration Successful!
+              </h3>
+              <p className="text-black/80 dark:text-white/90 mb-6">
+                Thank you for registering for OctWave 2.0! We'll contact you soon with further details.
+              </p>
+
+              {/* WhatsApp Group Section */}
+              <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-6">
+                <h4 className="text-lg font-semibold text-green-800 dark:text-green-300 mb-2">
+                  Join our WhatsApp group for updates:
+                </h4>
+                <a 
+                  href="https://chat.whatsapp.com/J6RzyUaTL3NFOtDVjh2guG?mode=ac_t"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-flex items-center gap-2 bg-green-600 hover:bg-green-700"
+                >
+                  📱 Join WhatsApp Group
+                </a>
+              </div>
+
+              {/* Close Modal Button */}
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="btn-ghost w-full"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import SmoothFollower from "@/components/SmoothFollowercursot";
 import NeuralInterfaceFAQ from "@/components/faq";
 import AHoleBackground from "@/components/AHoleBackground";
+import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import PrizeSection from "@/components/PrizeSection";
 
@@ -44,9 +45,9 @@ function useDashAnimation(text: string, letterDelay: number = 100) {
 
 export default function Home() {
   const mainHeading = "Ride the Octwave 2.0";
-  const badgeText = "Octwave 2.0 • Registration Open • Organized by IEEE IAS, University of Moratuwa";
+  const badgeText = "";
   const firstParagraph = "Team-based AI/ML challenge solving real industry problems.";
-  const secondParagraph = "Work with a problem statement, apply practical AI/ML techniques, and collaborate with academia and industry to deliver impactful, feasible solutions.";
+  const secondParagraph = "Workshops series and AI/ML competition organized by IEEE IAS of University of Moratuwa. Work with a problem statement, apply practical AI/ML techniques, and collaborate with academia and industry to deliver impactful, feasible solutions.";
 
   const dashAnimation = useDashAnimation(mainHeading);
 
@@ -96,7 +97,7 @@ export default function Home() {
         .letter {
           display: inline-block;
           font-size: clamp(2rem, 8vw, 4rem);
-          color: var(--foreground);
+          color: #1a1a1a;
           letter-spacing: 2px;
           font-weight: bold;
         }
@@ -110,31 +111,33 @@ export default function Home() {
       `}</style>
 
       {/* Hero */}
-      <header className="relative overflow-hidden min-h-[80vh]">
+      <header className="relative overflow-hidden min-h-[80vh] -mt-12">
         {/* Animated Background */}
         <div className="absolute inset-0 z-0">
           <AHoleBackground 
             height="100%" 
-            opacity={0.4}
+            opacity={0.15}
             className="w-full h-full"
           />
         </div>
         
         {/* Content */}
-        <div className="relative z-10 section pt-4 pb-20 sm:pt-6 sm:pb-28">
+        <div className="relative z-10 max-w-6xl mx-auto px-8 pb-20 sm:pb-28">
           <SmoothFollower/>
           <div className="text-center">
           {/* Badge - appears after dash animation (no typing animation) */}
-          <div 
-            className={`inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/70 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10 min-h-[28px] transition-all duration-500 ${
-              dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
-            <span>{badgeText}</span>
-          </div>
+          {badgeText && (
+            <div 
+              className={`inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/70 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10 min-h-[28px] transition-all duration-500 ${
+                dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              <span>{badgeText}</span>
+            </div>
+          )}
           
           {/* Main Heading with Dash Animation - Mobile Responsive */}
-          <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+          <h1 className="mt-16 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
             <div 
               className={`main-heading ${dashAnimation.animationComplete ? 'done-animating' : ''}`}
             >
@@ -179,7 +182,7 @@ export default function Home() {
           
           {/* First Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-4 text-base sm:text-lg md:text-xl text-black/80 dark:text-white/85 max-w-2xl mx-auto font-medium min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
+            className={`mt-4 text-base sm:text-lg md:text-xl text-gray-800 max-w-2xl mx-auto font-medium min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -188,7 +191,7 @@ export default function Home() {
           
           {/* Second Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-3 text-sm sm:text-base md:text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto transition-all duration-500 ${
+            className={`mt-3 text-sm sm:text-base md:text-lg text-gray-700 max-w-2xl mx-auto transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -201,7 +204,7 @@ export default function Home() {
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <a href="#register" className="btn-primary">Register Now</a>
+            <a href="/register" className="btn-primary">Register Now</a>
           </div>
           </div>
         </div>
@@ -351,15 +354,15 @@ export default function Home() {
               <ul className="space-y-2 text-black/80 dark:text-white/90">
                 <li className="flex items-start gap-3">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
-                  <span>Teams must consist of 2-4 members from undergraduate or graduate programs</span>
+                  <span>All team members must be from the same university</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
-                  <span>At least one team member must be from an engineering or computer science background</span>
+                  <span>Teams can have 1-4 members maximum</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
-                  <span>Team members can be from different universities or institutions</span>
+                  <span>Open to undergraduate students from government and private institutions in Sri Lanka</span>
                 </li>
               </ul>
             </div>
@@ -464,16 +467,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Contact Information */}
+      <section id="contact" className="section pb-20">
+        <div className="card p-6 md:p-8">
+          <h2 className="text-2xl font-bold octwave-gradient-text mb-6 text-center">📞 Contact Information</h2>
+          <div className="space-y-3 text-center max-w-2xl mx-auto">
+            <p className="text-black/80 dark:text-white/90">
+              <strong>Renulucshmi Prakasan</strong> (Co-chair - OctWave 2.0): 
+              <a href="tel:+94754350533" className="octwave-gradient-text font-semibold ml-2">+94754350533</a>
+            </p>
+            <p className="text-black/80 dark:text-white/90">
+              <strong>Rashmitha Hansamal</strong> (Co-chair - OctWave 2.0): 
+              <a href="tel:+94776057351" className="octwave-gradient-text font-semibold ml-2">+94776057351</a>
+            </p>
+            <p className="text-black/80 dark:text-white/90">
+              <strong>Abinaya Subramaniam</strong> (Co-chair - OctWave 2.0): 
+              <a href="tel:+94763885326" className="octwave-gradient-text font-semibold ml-2">+94763885326</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <footer id="register" className="section pb-24">
         <div className="card p-6 md:p-8 text-center">
           <h3 className="text-xl sm:text-2xl font-semibold text-black dark:text-white">Ready to ride the Octwave 2.0?</h3>
           <p className="mt-2 text-black/70 dark:text-white/80">Register your team and start building.</p>
           <div className="mt-6 flex justify-center gap-3">
-            <a className="btn-primary" href="#">Register</a>
+            <a className="btn-primary" href="/register">Register</a>
           </div>
         </div>
       </footer>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
