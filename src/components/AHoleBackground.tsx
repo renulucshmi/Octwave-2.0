@@ -413,9 +413,9 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       #ffbd1e 100%
     ) 0 100% / 100% 200%`,
     borderRadius: '0 0 100% 100%',
-    filter: isMobile ? 'blur(20px)' : 'blur(30px)',
+    filter: isMobile ? 'blur(20px)' : 'blur(50px)',
     mixBlendMode: 'plus-lighter',
-    opacity: isMobile ? 0.4 : 0.6,
+    opacity: isMobile ? 0.4 : 0.2,
     transform: 'translate3d(-50%, 0, 0)',
     animation: 'aura-glow 5s infinite linear',
     pointerEvents: 'none'

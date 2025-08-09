@@ -112,7 +112,7 @@ export default function Home() {
       {/* Hero */}
       <header className="relative overflow-hidden min-h-[80vh] -mt-12">
         {/* Animated Background */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-6">
           <AHoleBackground 
             height="100%" 
             opacity={0.25}
@@ -174,7 +174,7 @@ export default function Home() {
                   </div>
                 </div>
               ) : (
-                <span className="opacity-0">Ride the Octwave 2.0</span>
+                <span className="opacity-0 ">Ride the Octwave 2.0</span>
               )}
             </div>
           </h1>
