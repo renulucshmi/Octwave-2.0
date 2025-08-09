@@ -96,13 +96,9 @@ export default function Home() {
         .letter {
           display: inline-block;
           font-size: clamp(2rem, 8vw, 4rem);
-          color: transparent;
-          background: linear-gradient(135deg, #00f8f1 0%, #ffbd1e 50%, #fe848f 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
+          color: var(--foreground);
           letter-spacing: 2px;
           font-weight: bold;
-          text-shadow: 0 0 20px rgba(0, 248, 241, 0.3);
         }
         .letter.animate {
           animation: dash 300ms ease-in forwards;

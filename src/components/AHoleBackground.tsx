@@ -32,8 +32,9 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     let rect: DOMRect;
     let linesCanvas: OffscreenCanvas;
     let particleArea: any = {};
+    let isMobile = false;
 
-    // Easing functions (simplified version)
+    // Easing functions
     const easingUtils = {
       linear: (t: number) => t,
       easeInExpo: (t: number) => t === 0 ? 0 : Math.pow(2, 10 * (t - 1))
@@ -41,6 +42,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
 
     const setSize = () => {
       rect = containerRef.current!.getBoundingClientRect();
+      isMobile = rect.width < 768; // Detect mobile screens
       
       render = {
         width: rect.width,
@@ -59,16 +61,17 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     };
 
     const tweenDisc = (disc: any) => {
+      // Responsive positioning and sizing
       const startDisc = {
         x: rect.width * 0.5,
-        y: rect.height * 0.6,
-        w: rect.width * 0.4,
-        h: rect.height * 0.5
+        y: isMobile ? rect.height * 0.45 : rect.height * 0.6,
+        w: isMobile ? Math.min(rect.width * 0.8, rect.height * 0.4) : rect.width * 0.4,
+        h: isMobile ? Math.min(rect.width * 0.6, rect.height * 0.3) : rect.height * 0.5
       };
 
       const endDisc = {
         x: rect.width * 0.5,
-        y: rect.height * 1.2,
+        y: isMobile ? rect.height * 1.1 : rect.height * 1.2,
         w: 0,
         h: 0
       };
@@ -85,14 +88,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       const { width, height } = rect;
       discs = [];
 
-      const startDisc = {
-        x: width * 0.5,
-        y: height * 0.6,
-        w: rect.width * 0.4,
-        h: rect.height * 0.5
-      };
-
-      const totalDiscs = 100;
+      const totalDiscs = isMobile ? 60 : 100; // Fewer discs on mobile for performance
       let prevBottom = height;
       clip = {};
 
@@ -134,7 +130,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       const { width, height } = rect;
       lines = [];
 
-      const totalLines = 100;
+      const totalLines = isMobile ? 60 : 100; // Fewer lines on mobile
       const linesAngle = (Math.PI * 2) / totalLines;
 
       for (let i = 0; i < totalLines; i++) {
@@ -177,7 +173,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
           linesCtx.moveTo(p0.x, p0.y);
           linesCtx.lineTo(p1.x, p1.y);
           linesCtx.strokeStyle = '#444';
-          linesCtx.lineWidth = 2;
+          linesCtx.lineWidth = isMobile ? 1.5 : 2; // Thinner lines on mobile
           linesCtx.stroke();
           linesCtx.closePath();
         });
@@ -191,7 +187,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       const ex = particleArea.ex + particleArea.ew * Math.random();
       const dx = ex - sx;
       const y = start ? particleArea.h * Math.random() : particleArea.h;
-      const r = 0.5 + Math.random() * 4;
+      const r = isMobile ? 0.5 + Math.random() * 2 : 0.5 + Math.random() * 4; // Smaller particles on mobile
       const vy = 0.5 + Math.random();
 
       return {
@@ -213,12 +209,12 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       particleArea = {
         sw: clip.disc.w * 0.5,
         ew: clip.disc.w * 2,
-        h: height * 0.85
+        h: height * (isMobile ? 0.8 : 0.85) // Adjust particle area for mobile
       };
       particleArea.sx = (width - particleArea.sw) / 2;
       particleArea.ex = (width - particleArea.ew) / 2;
 
-      const totalParticles = 100;
+      const totalParticles = isMobile ? 50 : 100; // Fewer particles on mobile
       for (let i = 0; i < totalParticles; i++) {
         particles.push(initParticle(true));
       }
@@ -226,13 +222,14 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
 
     const drawDiscs = () => {
       ctx.strokeStyle = '#444';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = isMobile ? 1.5 : 2;
 
+      // Responsive start disc positioning
       const startDisc = {
         x: rect.width * 0.5,
-        y: rect.height * 0.6,
-        w: rect.width * 0.4,
-        h: rect.height * 0.5
+        y: isMobile ? rect.height * 0.45 : rect.height * 0.6,
+        w: isMobile ? Math.min(rect.width * 0.8, rect.height * 0.4) : rect.width * 0.4,
+        h: isMobile ? Math.min(rect.width * 0.6, rect.height * 0.3) : rect.height * 0.5
       };
 
       ctx.beginPath();
@@ -240,8 +237,9 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       ctx.stroke();
       ctx.closePath();
 
+      const skipFactor = isMobile ? 8 : 5; // Skip more discs on mobile
       discs.forEach((disc, i) => {
-        if (i % 5 !== 0) return;
+        if (i % skipFactor !== 0) return;
 
         if (disc.w < clip.disc.w - 5) {
           ctx.save();
@@ -280,7 +278,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
 
     const moveDiscs = () => {
       discs.forEach((disc) => {
-        disc.p = (disc.p + 0.001) % 1;
+        disc.p = (disc.p + (isMobile ? 0.0008 : 0.001)) % 1; // Slightly slower on mobile
         tweenDisc(disc);
       });
     };
@@ -350,26 +348,30 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     opacity
   };
 
+  // Responsive overlay positioning
   const overlayStyles: React.CSSProperties = {
     position: 'absolute',
-    top: '60%',
+    top: window.innerWidth < 768 ? '45%' : '60%',
     left: '50%',
     zIndex: 2,
     display: 'block',
     width: '120%',
     height: '100%',
-    background: 'radial-gradient(ellipse at 50% 40%, transparent 20%, black 70%)',
+    background: window.innerWidth < 768 
+      ? 'radial-gradient(ellipse at 50% 30%, transparent 15%, #070712 65%)'
+      : 'radial-gradient(ellipse at 50% 40%, transparent 20%, #070712 70%)',
     transform: 'translate3d(-50%, -50%, 0)',
     pointerEvents: 'none'
   };
 
+  // Responsive aura positioning and size
   const auraStyles: React.CSSProperties = {
     position: 'absolute',
-    top: '-40%',
+    top: window.innerWidth < 768 ? '-20%' : '-40%',
     left: '50%',
     zIndex: 3,
-    width: '25%',
-    height: '100%',
+    width: window.innerWidth < 768 ? '40%' : '25%',
+    height: window.innerWidth < 768 ? '80%' : '100%',
     background: `linear-gradient(
       20deg,
       #00f8f1,
@@ -381,23 +383,26 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       #ffbd1e 100%
     ) 0 100% / 100% 200%`,
     borderRadius: '0 0 100% 100%',
-    filter: 'blur(30px)',
+    filter: window.innerWidth < 768 ? 'blur(20px)' : 'blur(30px)',
     mixBlendMode: 'plus-lighter',
-    opacity: 0.6,
+    opacity: window.innerWidth < 768 ? 0.4 : 0.6,
     transform: 'translate3d(-50%, 0, 0)',
     animation: 'aura-glow 5s infinite linear',
     pointerEvents: 'none'
   };
 
+  // Responsive after overlay
   const afterOverlayStyles: React.CSSProperties = {
     position: 'absolute',
-    top: '60%',
+    top: window.innerWidth < 768 ? '45%' : '60%',
     left: '50%',
     zIndex: 5,
     display: 'block',
-    width: '80%',
-    height: '80%',
-    background: 'radial-gradient(ellipse at 50% 60%, #a900ff 15%, transparent 60%)',
+    width: window.innerWidth < 768 ? '90%' : '80%',
+    height: window.innerWidth < 768 ? '70%' : '80%',
+    background: window.innerWidth < 768
+      ? 'radial-gradient(ellipse at 50% 50%, #a900ff 10%, transparent 50%)'
+      : 'radial-gradient(ellipse at 50% 60%, #a900ff 15%, transparent 60%)',
     mixBlendMode: 'overlay',
     transform: 'translate3d(-50%, -50%, 0)',
     pointerEvents: 'none'
@@ -412,7 +417,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     height: '100%',
     background: 'repeating-linear-gradient(transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px)',
     mixBlendMode: 'overlay',
-    opacity: 0.3,
+    opacity: window.innerWidth < 768 ? 0.2 : 0.3,
     pointerEvents: 'none'
   };
 
@@ -425,6 +430,12 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
           }
           100% {
             background-position: 0 300%;
+          }
+        }
+        
+        @media (max-width: 767px) {
+          .ahole-background canvas {
+            will-change: transform;
           }
         }
       `}</style>
