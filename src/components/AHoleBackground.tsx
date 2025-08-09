@@ -82,7 +82,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       const startDisc = {
         x: rect.width * 0.5,
         y: isMobile ? rect.height * 0.45 : rect.height * 0.6,
-        w: isMobile ? Math.min(rect.width * 0.8, rect.height * 0.4) : rect.width * 0.4,
+        w: isMobile ? Math.min(rect.width * 1.2, rect.height * 0.6) : rect.width * 0.7,
         h: isMobile ? Math.min(rect.width * 0.6, rect.height * 0.3) : rect.height * 0.5
       };
 
@@ -245,7 +245,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       const startDisc = {
         x: rect.width * 0.5,
         y: isMobile ? rect.height * 0.45 : rect.height * 0.6,
-        w: isMobile ? Math.min(rect.width * 0.8, rect.height * 0.4) : rect.width * 0.4,
+        w: isMobile ? Math.min(rect.width * 1.2, rect.height * 0.6) : rect.width * 0.7,
         h: isMobile ? Math.min(rect.width * 0.6, rect.height * 0.3) : rect.height * 0.5
       };
 
