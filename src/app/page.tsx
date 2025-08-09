@@ -115,7 +115,7 @@ export default function Home() {
         <div className="absolute inset-0 z-6">
           <AHoleBackground 
             height="100%" 
-            opacity={0.25}
+            opacity={0.45}
             className="w-full h-full"
           />
         </div>
