@@ -3,6 +3,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import SmoothFollower from "@/components/SmoothFollowercursot";
 import NeuralInterfaceFAQ from "@/components/faq";
+import AHoleBackground from "@/components/AHoleBackground";
 import { useEffect, useState } from "react";
 import PrizeSection from "@/components/PrizeSection";
 
@@ -96,11 +97,12 @@ export default function Home() {
           display: inline-block;
           font-size: clamp(2rem, 8vw, 4rem);
           color: transparent;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #00f8f1 0%, #ffbd1e 50%, #fe848f 100%);
           -webkit-background-clip: text;
           background-clip: text;
           letter-spacing: 2px;
           font-weight: bold;
+          text-shadow: 0 0 20px rgba(0, 248, 241, 0.3);
         }
         .letter.animate {
           animation: dash 300ms ease-in forwards;
@@ -112,9 +114,20 @@ export default function Home() {
       `}</style>
 
       {/* Hero */}
-      <header className="section pt-4 pb-20 sm:pt-6 sm:pb-28">
-        <SmoothFollower/>
-        <div className="text-center">
+      <header className="relative overflow-hidden min-h-[80vh]">
+        {/* Animated Background */}
+        <div className="absolute inset-0 z-0">
+          <AHoleBackground 
+            height="100%" 
+            opacity={0.4}
+            className="w-full h-full"
+          />
+        </div>
+        
+        {/* Content */}
+        <div className="relative z-10 section pt-4 pb-20 sm:pt-6 sm:pb-28">
+          <SmoothFollower/>
+          <div className="text-center">
           {/* Badge - appears after dash animation (no typing animation) */}
           <div 
             className={`inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/70 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10 min-h-[28px] transition-all duration-500 ${
@@ -193,6 +206,7 @@ export default function Home() {
             }`}
           >
             <a href="#register" className="btn-primary">Register Now</a>
+          </div>
           </div>
         </div>
       </header>
