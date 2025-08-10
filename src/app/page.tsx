@@ -209,7 +209,7 @@ export default function Home() {
       </header>
 
       {/* Event Structure */}
-      <section id="event-structure" className="section pb-20">
+      <section id="event-structure" className="section pb-20 pt-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">Event Structure</h2>
           <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
@@ -468,7 +468,7 @@ export default function Home() {
       {/* Contact Information */}
       <section id="contact" className="section pb-20">
         <div className="card p-6 md:p-8">
-          <h2 className="text-2xl font-bold octwave-gradient-text mb-6 text-center">📞 Contact Information</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">📞 Contact Us</h2>
           <div className="space-y-3 text-center max-w-2xl mx-auto">
             <p className="text-black/80 dark:text-white/90">
               <strong>Renulucshmi Prakasan</strong> (Co-chair - OctWave 2.0): 

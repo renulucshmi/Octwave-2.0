@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { redis } from '@/lib/redis';
+import { googleSheets } from '@/lib/googleSheets';
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,82 +31,34 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Generate sequential team ID
-    const client = await redis.getClient();
-    
-    // Get the current counter and increment it
-    const teamCounter = await client.incr('team:counter');
-    let teamId = `OW_${teamCounter}`;
-    
-    // Check if this ID already exists (shouldn't happen, but safety check)
-    const existingTeam = await client.hGetAll(`registration:${teamId}`);
-    if (Object.keys(existingTeam).length > 0) {
-      // If somehow exists, try with a timestamp suffix
-      const fallbackId = `OW_${teamCounter}_${Date.now()}`;
-      console.warn(`Team ID ${teamId} already exists, using fallback: ${fallbackId}`);
-      teamId = fallbackId;
-    }
-
-    // Prepare registration data
-    const registrationData = {
-      id: teamId,
+    // Register team using Google Sheets
+    const result = await googleSheets.registerTeam({
       teamName: body.teamName,
+      email: body.email,
       university: body.university,
-      contactEmail: body.email,
-      teamMembers: JSON.stringify(body.members), // Serialize array to string
-      registrationDate: new Date().toISOString(),
-      status: 'registered'
-    };
-
-    // Save to Redis with multiple keys for different access patterns
-    
-    // 1. Main registration data - store each field separately in hash
-    await client.hSet(`registration:${teamId}`, {
-      id: teamId,
-      teamName: body.teamName,
-      university: body.university,
-      contactEmail: body.email,
-      teamMembers: JSON.stringify(body.members),
-      registrationDate: new Date().toISOString(),
-      status: 'registered'
+      members: body.members
     });
-    
-    // 2. Add to university index
-    await client.sAdd(`university:${body.university.replace(/\s+/g, '_')}`, teamId);
-    
-    // 3. Add to email index (for duplicate checking)
-    await client.set(`email:${body.email}`, teamId);
-    
-    // 4. Add to all registrations list
-    await client.lPush('registrations:all', teamId);
-    
-    // 5. Add member emails to prevent duplicate registrations
-    for (const member of body.members) {
-      await client.set(`member_email:${member.email}`, teamId);
+
+    if (!result.success) {
+      return NextResponse.json(
+        { error: result.error || 'Failed to register team' },
+        { status: 500 }
+      );
     }
 
-    // 6. Set expiration for session data (optional - 30 days)
-    await client.expire(`registration:${teamId}`, 30 * 24 * 60 * 60);
-
-    console.log(`Team registered successfully: ${teamId}`);
-
-    return NextResponse.json(
-      { 
-        success: true, 
-        teamId,
-        message: 'Registration successful!',
-        data: {
-          teamName: body.teamName,
-          university: body.university,
-          memberCount: body.members.length
-        }
-      },
-      { status: 201 }
-    );
+    return NextResponse.json({
+      success: true,
+      teamId: result.teamId,
+      message: 'Registration successful!',
+      data: {
+        teamName: body.teamName,
+        university: body.university,
+        memberCount: body.members.length
+      }
+    }, { status: 201 });
 
   } catch (error) {
     console.error('Registration error:', error);
-    
     return NextResponse.json(
       { 
         error: 'Internal server error',
@@ -117,72 +69,65 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET method to retrieve registration data (for admin purposes)
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const teamId = searchParams.get('teamId');
     const email = searchParams.get('email');
 
-    const client = await redis.getClient();
-
-    if (teamId) {
-      // Get specific team registration
-      const registration = await client.hGetAll(`registration:${teamId}`);
+    if (teamId || email) {
+      // For specific queries, get all data and filter
+      const result = await googleSheets.getAllRegistrations();
       
-      if (Object.keys(registration).length === 0) {
+      if (!result.success) {
         return NextResponse.json(
-          { error: 'Registration not found' },
-          { status: 404 }
+          { error: result.error || 'Failed to fetch registrations' },
+          { status: 500 }
         );
       }
 
-      // Parse teamMembers back to object
-      if (registration.teamMembers) {
-        try {
-          registration.teamMembers = JSON.parse(registration.teamMembers);
-        } catch (e) {
-          console.error('Error parsing team members:', e);
+      const registrations = result.data || [];
+
+      if (teamId) {
+        const registration = registrations.find(reg => reg.teamId === teamId);
+        if (!registration) {
+          return NextResponse.json(
+            { error: 'Registration not found' },
+            { status: 404 }
+          );
         }
+        return NextResponse.json({ registration });
       }
 
-      return NextResponse.json({ registration });
-    }
-
-    if (email) {
-      // Check if email is already registered
-      const existingTeamId = await client.get(`email:${email}`);
-      
-      return NextResponse.json({ 
-        exists: !!existingTeamId,
-        teamId: existingTeamId 
-      });
-    }
-
-    // Get all registrations (admin only - you might want to add auth here)
-    const allTeamIds = await client.lRange('registrations:all', 0, -1);
-    const registrations = [];
-
-    for (const id of allTeamIds) {
-      const registration = await client.hGetAll(`registration:${id}`);
-      if (Object.keys(registration).length > 0) {
-        // Parse teamMembers back to object
-        if (registration.teamMembers) {
-          try {
-            registration.teamMembers = JSON.parse(registration.teamMembers);
-          } catch (e) {
-            console.error('Error parsing team members for registration:', id, e);
-          }
-        }
-        registrations.push(registration);
+      if (email) {
+        const existingTeam = registrations.find(reg => 
+          reg.email === email || 
+          reg.members.some(member => member.email === email)
+        );
+        return NextResponse.json({ 
+          exists: !!existingTeam,
+          teamId: existingTeam?.teamId 
+        });
       }
     }
 
-    return NextResponse.json({ registrations, count: registrations.length });
+    // Get all registrations
+    const result = await googleSheets.getAllRegistrations();
+    
+    if (!result.success) {
+      return NextResponse.json(
+        { error: result.error || 'Failed to fetch registrations' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ 
+      registrations: result.data || [], 
+      count: (result.data || []).length 
+    });
 
   } catch (error) {
     console.error('Error fetching registrations:', error);
-    
     return NextResponse.json(
       { error: 'Failed to fetch registration data' },
       { status: 500 }
