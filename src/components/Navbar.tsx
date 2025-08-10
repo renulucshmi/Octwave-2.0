@@ -33,7 +33,7 @@ export default function Navbar() {
               priority
               className="object-contain h-16"
             />
-            <span className="hidden sm:block text-xl font-semibold tracking-wide text-black dark:text-white">
+            <span className="hidden sm:block text-xl font-semibold tracking-wide octwave-gradient-text dark:text-white">
               OCTWAVE
             </span>
           </Link>
