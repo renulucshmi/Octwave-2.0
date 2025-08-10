@@ -135,8 +135,8 @@ export default function PrizeSection({
         }
       `}</style>
 
-      <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-8">
-        <span className="octwave-gradient-text">{title}</span>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4 text-center">
+        {title}
       </h2>
 
       <div className="space-y-8">

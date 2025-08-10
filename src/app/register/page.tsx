@@ -19,6 +19,19 @@ export default function RegisterPage() {
     confirmation: false
   });
 
+  const resetForm = () => {
+    setFormData({
+      email: '',
+      teamMembers: '1',
+      teamName: '',
+      university: '',
+      members: [
+        { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '', kaggleId: '' }
+      ],
+      confirmation: false
+    });
+  };
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -43,26 +56,39 @@ export default function RegisterPage() {
     setSubmitError('');
 
     try {
+      // Submit to our API route which will handle Google Sheets
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          teamName: formData.teamName,
+          email: formData.email,
+          university: formData.university,
+          members: formData.members
+        })
       });
 
       const result = await response.json();
 
-      if (response.ok) {
-        console.log('Registration successful:', result);
-        setRegistrationResult(result);
+      if (!response.ok) {
+        throw new Error(result.error || 'Registration failed');
+      }
+
+      if (result.success) {
+        setRegistrationResult({
+          teamId: result.teamId,
+          teamName: formData.teamName
+        });
         setShowSuccessModal(true);
       } else {
-        setSubmitError(result.error || 'Registration failed. Please try again.');
+        throw new Error(result.error || 'Registration failed');
       }
+
     } catch (error) {
       console.error('Registration error:', error);
-      setSubmitError('Network error. Please check your connection and try again.');
+      setSubmitError(error instanceof Error ? error.message : 'There was an issue submitting your registration. Please try again or contact us directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -362,58 +388,87 @@ export default function RegisterPage() {
         {/* Success Modal */}
         {showSuccessModal && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md w-full mx-4 text-center relative">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4 text-center relative max-h-[90vh] overflow-y-auto">
               {/* Close button */}
               <button
                 onClick={() => {
                   setShowSuccessModal(false);
                   setRegistrationResult(null);
+                  resetForm();
                 }}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="absolute top-4 right-4 text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full p-2 transition-colors z-10"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
 
               {/* Success Icon */}
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full octwave-gradient-bg flex items-center justify-center text-2xl text-white">
+              <div className="w-12 h-12 mx-auto mb-3 rounded-full octwave-gradient-bg flex items-center justify-center text-xl text-white">
                 ✅
               </div>
 
               {/* Success Message */}
-              <h3 className="text-2xl font-bold octwave-gradient-text mb-4">
+              <h3 className="text-xl font-bold octwave-gradient-text mb-3">
                 Registration Successful!
               </h3>
               
               {/* Team ID Display */}
               {registrationResult && (
-                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4">
-                  <p className="text-sm text-blue-800 dark:text-blue-300 font-medium">Your Team ID:</p>
-                  <p className="text-2xl font-bold text-blue-900 dark:text-blue-200">{registrationResult.teamId}</p>
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 mb-3">
+                  <p className="text-xs text-blue-800 dark:text-blue-300 font-medium">Your Team ID:</p>
+                  <p className="text-lg font-bold text-blue-900 dark:text-blue-200">{registrationResult.teamId}</p>
                   <p className="text-xs text-blue-700 dark:text-blue-400 mt-1">
                     Please save this ID for future reference
                   </p>
                 </div>
               )}
               
-              <p className="text-black/80 dark:text-white/90 mb-6">
+              <p className="text-black/80 dark:text-white/90 mb-4 text-sm">
                 Thank you for registering for OctWave 2.0! We'll contact you soon with further details.
               </p>
 
               {/* WhatsApp Group Section */}
-              <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-6">
-                <h4 className="text-lg font-semibold text-green-800 dark:text-green-300 mb-2">
+              <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3 mb-4">
+                <h4 className="text-sm font-semibold text-green-800 dark:text-green-300 mb-2">
                   Join our WhatsApp group for updates:
                 </h4>
-                <a 
-                  href="https://chat.whatsapp.com/J6RzyUaTL3NFOtDVjh2guG?mode=ac_t"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary inline-flex items-center gap-2 bg-green-600 hover:bg-green-700"
-                >
-                  📱 Join WhatsApp Group
-                </a>
+                
+                {/* WhatsApp Link Display */}
+                <div className="bg-white dark:bg-gray-700 rounded-lg p-2 mb-2 border border-green-200 dark:border-green-700">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">WhatsApp Group Link:</p>
+                  <p className="text-xs text-gray-800 dark:text-gray-200 font-mono break-all">
+                    https://chat.whatsapp.com/J6RzyUaTL3NFOtDVjh2guG
+                  </p>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-2">
+                  <button
+                    onClick={(event) => {
+                      navigator.clipboard.writeText('https://chat.whatsapp.com/J6RzyUaTL3NFOtDVjh2guG');
+                      // Show a temporary feedback
+                      const btn = event.target as HTMLButtonElement;
+                      const originalText = btn.textContent;
+                      btn.textContent = '✅ Copied!';
+                      setTimeout(() => {
+                        btn.textContent = originalText;
+                      }, 2000);
+                    }}
+                    className="btn-primary inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-sm py-2"
+                  >
+                    📋 Copy WhatsApp Link
+                  </button>
+                  
+                  <a 
+                    href="https://chat.whatsapp.com/J6RzyUaTL3NFOtDVjh2guG"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-sm py-2"
+                  >
+                    📱 Open WhatsApp Group
+                  </a>
+                </div>
               </div>
 
               {/* Close Modal Button */}
@@ -421,8 +476,9 @@ export default function RegisterPage() {
                 onClick={() => {
                   setShowSuccessModal(false);
                   setRegistrationResult(null);
+                  resetForm();
                 }}
-                className="btn-ghost w-full"
+                className="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-colors text-sm"
               >
                 Close
               </button>
