@@ -198,9 +198,9 @@ const VectorTimeline: React.FC = () => {
         {/* Futuristic Header */}
         <div className="text-center mb-6">
           <div className="relative inline-block">
-            <h1 className="text-7xl font-bold octwave-gradient-text mb-6 ">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-6">
              Event Timeline
-            </h1>
+            </h2>
             
           </div>
           <div className="flex justify-center items-center gap-2 mt-2">

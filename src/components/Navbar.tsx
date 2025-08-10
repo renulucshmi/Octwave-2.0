@@ -23,7 +23,7 @@ export default function Navbar() {
     >
       <div className="section">
         <nav className="flex items-center justify-between gap-4 py-3">
-          {/* Left: Logo + wordmark (simple, no extra styling) */}
+          {/* Left: Logo */}
           <Link href="/" className="flex items-center gap-3">
             <Image
               src="/logo.png"
@@ -33,9 +33,6 @@ export default function Navbar() {
               priority
               className="object-contain h-16"
             />
-            <span className="hidden sm:block text-xl font-semibold tracking-wide text-white">
-              OCTWAVE
-            </span>
           </Link>
 
           {/* Right: Register button + admin link + mobile menu toggle */}
