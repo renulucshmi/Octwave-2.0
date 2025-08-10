@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -35,51 +34,13 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Right: Register button + mobile menu toggle */}
+          {/* Right: Register button */}
           <div className="flex items-center gap-2">
             <Link href="/register" className="btn-primary">
               Register
             </Link>
-
-            <button
-              aria-label="Toggle menu"
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:bg-white/10"
-              onClick={() => setOpen((v) => !v)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="size-5"
-              >
-                {open ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <>
-                    <path d="M3 6h18" />
-                    <path d="M3 12h18" />
-                    <path d="M3 18h18" />
-                  </>
-                )}
-              </svg>
-            </button>
           </div>
         </nav>
-
-        {/* Mobile drawer (only Register link required) */}
-        {open && (
-          <div className="md:hidden pb-3 px-2">
-            <Link
-              href="/register"
-              className="block w-full text-center btn-ghost"
-              onClick={() => setOpen(false)}
-            >
-              Register
-            </Link>
-          </div>
-        )}
       </div>
 
       {/* thin border gradient underline */}
