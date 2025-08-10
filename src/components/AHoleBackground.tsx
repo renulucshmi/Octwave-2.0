@@ -199,7 +199,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
           linesCtx.beginPath();
           linesCtx.moveTo(p0.x, p0.y);
           linesCtx.lineTo(p1.x, p1.y);
-          linesCtx.strokeStyle = isDarkMode ? '#888' : '#666';
+          linesCtx.strokeStyle = isDarkMode ? '#888' : '#c9277c';
           linesCtx.lineWidth = isMobile ? 1.5 : 2; // Thinner lines on mobile
           linesCtx.stroke();
           linesCtx.closePath();
@@ -218,7 +218,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       const vy = 0.5 + Math.random();
 
       const alpha = Math.random() * 0.8 + 0.2; // Ensure minimum visibility
-      const color = isDarkMode ? `rgba(200, 200, 255, ${alpha})` : `rgba(100, 100, 150, ${alpha})`;
+      const color = isDarkMode ? `rgba(200, 200, 255, ${alpha})` : `rgba(201, 39, 124, ${alpha})`;
       
       return {
         x: sx,
@@ -251,7 +251,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     };
 
     const drawDiscs = () => {
-      ctx.strokeStyle = isDarkMode ? '#888' : '#666';
+      ctx.strokeStyle = isDarkMode ? '#888' : '#8c2da5';
       ctx.lineWidth = isMobile ? 1.5 : 2;
 
       // Responsive start disc positioning
@@ -388,8 +388,8 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     width: '120%',
     height: '100%',
     background: isMobile 
-      ? 'radial-gradient(ellipse at 50% 30%, transparent 15%, #070712 65%)'
-      : 'radial-gradient(ellipse at 50% 40%, transparent 20%, #070712 70%)',
+      ? `radial-gradient(ellipse at 50% 30%, transparent 15%, ${isDarkMode ? '#070712' : '#ffffff'} 65%)`
+      : `radial-gradient(ellipse at 50% 40%, transparent 20%, ${isDarkMode ? '#070712' : '#ffffff'} 70%)`,
     transform: 'translate3d(-50%, -50%, 0)',
     pointerEvents: 'none'
   };
