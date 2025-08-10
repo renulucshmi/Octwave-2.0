@@ -96,7 +96,6 @@ export default function Home() {
         .letter {
           display: inline-block;
           font-size: clamp(2rem, 8vw, 4rem);
-          color: var(--foreground);
           letter-spacing: 2px;
           font-weight: bold;
         }
@@ -127,7 +126,7 @@ export default function Home() {
           {/* Badge - appears after dash animation (no typing animation) */}
           {badgeText && (
             <div 
-              className={`inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/70 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10 min-h-[28px] transition-all duration-500 ${
+              className={`inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/80 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10 min-h-[28px] transition-all duration-500 ${
                 dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
@@ -147,7 +146,7 @@ export default function Home() {
                     {firstLine.split('').map((letter, index) => (
                       <span
                         key={index}
-                        className={`letter ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
                         style={{ 
                           animationDelay: `${100 * index}ms`,
                         }}
@@ -162,7 +161,7 @@ export default function Home() {
                     {secondLine.split('').map((letter, index) => (
                       <span
                         key={index + firstLine.length}
-                        className={`letter ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
                         style={{ 
                           animationDelay: `${100 * (index + firstLine.length)}ms`,
                         }}
@@ -174,14 +173,14 @@ export default function Home() {
                   </div>
                 </div>
               ) : (
-                <span className="opacity-0 ">Ride the Octwave 2.0</span>
+                <span className="opacity-0 text-black dark:text-white">Ride the Octwave 2.0</span>
               )}
             </div>
           </h1>
           
           {/* First Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-4 text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-200 max-w-2xl mx-auto font-medium min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
+            className={`mt-4 text-base sm:text-lg md:text-xl text-black dark:text-gray-100 max-w-2xl mx-auto font-semibold min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -190,7 +189,7 @@ export default function Home() {
           
           {/* Second Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-3 text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto transition-all duration-500 ${
+            className={`mt-3 text-sm sm:text-base md:text-lg text-gray-800 dark:text-gray-200 max-w-2xl mx-auto font-medium transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -213,7 +212,7 @@ export default function Home() {
       <section id="event-structure" className="section pb-20 pt-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">Event Structure</h2>
-          <p className="text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto">
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
             A comprehensive journey from learning to competing
           </p>
         </div>
@@ -251,19 +250,19 @@ export default function Home() {
               <div className="grid gap-4 sm:grid-cols-2 max-w-3xl mx-auto">
                 <div className="bg-white/10 dark:bg-black/20 rounded-lg p-4 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
                   <h4 className="font-semibold text-black dark:text-white mb-2">Session 1</h4>
-                  <p className="text-sm text-black/70 dark:text-white/80">Introduction to Machine Learning</p>
+                  <p className="text-sm text-black/80 dark:text-white/80">Introduction to Machine Learning</p>
                 </div>
                 <div className="bg-white/10 dark:bg-black/20 rounded-lg p-4 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
                   <h4 className="font-semibold text-black dark:text-white mb-2">Session 2</h4>
-                  <p className="text-sm text-black/70 dark:text-white/80">Building models and handling time series data</p>
+                  <p className="text-sm text-black/80 dark:text-white/80">Building models and handling time series data</p>
                 </div>
                 <div className="bg-white/10 dark:bg-black/20 rounded-lg p-4 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
                   <h4 className="font-semibold text-black dark:text-white mb-2">Session 3</h4>
-                  <p className="text-sm text-black/70 dark:text-white/80">About data engineering</p>
+                  <p className="text-sm text-black/80 dark:text-white/80">About data engineering</p>
                 </div>
                 <div className="bg-white/10 dark:bg-black/20 rounded-lg p-4 border border-white/20 hover:bg-white/20 dark:hover:bg-black/30 transition-all duration-300">
                   <h4 className="font-semibold text-black dark:text-white mb-2">Session 4</h4>
-                  <p className="text-sm text-black/70 dark:text-white/80">Introduction to Kaggle platform</p>
+                  <p className="text-sm text-black/80 dark:text-white/80">Introduction to Kaggle platform</p>
                 </div>
               </div>
             </div>
@@ -334,7 +333,7 @@ export default function Home() {
       <section id="rules" className="section pb-20">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">Competition Rules</h2>
-          <p className="text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto">
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
             Guidelines and regulations for fair competition
           </p>
         </div>
@@ -491,7 +490,7 @@ export default function Home() {
       <section id="register" className="section pb-24">
         <div className="card p-6 md:p-8 text-center">
           <h3 className="text-xl sm:text-2xl font-semibold text-black dark:text-white">Ready to ride the Octwave 2.0?</h3>
-          <p className="mt-2 text-black/70 dark:text-white/80">Register your team and start building.</p>
+          <p className="mt-2 text-black/80 dark:text-white/80">Register your team and start building.</p>
           <div className="mt-6 flex justify-center gap-3">
             <a className="btn-primary" href="/register">Register</a>
           </div>

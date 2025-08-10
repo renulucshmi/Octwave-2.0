@@ -33,6 +33,7 @@ export default function Navbar() {
               priority
               className="object-contain h-16"
             />
+
           </Link>
 
           {/* Right: Register button + mobile menu toggle */}
@@ -43,7 +44,7 @@ export default function Navbar() {
 
             <button
               aria-label="Toggle menu"
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:bg-white/10"
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-black/15 dark:border-white/15 bg-black/5 dark:bg-white/5 text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10"
               onClick={() => setOpen((v) => !v)}
             >
               <svg
