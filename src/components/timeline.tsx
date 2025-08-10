@@ -262,7 +262,7 @@ const VectorTimeline: React.FC = () => {
           </div>
 
           {/* Timeline Events */}
-          <div className="space-y-8">
+          <div className="space-y-1 sm:space-y-8">
             {timelineEvents.map((event, index) => (
               <div
                 key={event.id}

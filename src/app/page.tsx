@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import SmoothFollower from "@/components/SmoothFollowercursot";
 import NeuralInterfaceFAQ from "@/components/faq";
 import AHoleBackground from "@/components/AHoleBackground";
-import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import PrizeSection from "@/components/PrizeSection";
 
@@ -97,7 +96,7 @@ export default function Home() {
         .letter {
           display: inline-block;
           font-size: clamp(2rem, 8vw, 4rem);
-          color: #550180;
+          color: var(--foreground);
           letter-spacing: 2px;
           font-weight: bold;
         }
@@ -116,7 +115,7 @@ export default function Home() {
         <div className="absolute inset-0 z-6">
           <AHoleBackground 
             height="100%" 
-            opacity={0.65}
+            opacity={0.45}
             className="w-full h-full"
           />
         </div>
@@ -182,7 +181,7 @@ export default function Home() {
           
           {/* First Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-4 text-base sm:text-lg md:text-xl text-gray-800 dark:text-white/85 max-w-2xl mx-auto font-medium min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
+            className={`mt-4 text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-200 max-w-2xl mx-auto font-medium min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -191,7 +190,7 @@ export default function Home() {
           
           {/* Second Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-3 text-sm sm:text-base md:text-lg text-gray-700 dark:text-white/85 max-w-2xl mx-auto transition-all duration-500 ${
+            className={`mt-3 text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -488,8 +487,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <footer id="register" className="section pb-24">
+      {/* CTA Section */}
+      <section id="register" className="section pb-24">
         <div className="card p-6 md:p-8 text-center">
           <h3 className="text-xl sm:text-2xl font-semibold text-black dark:text-white">Ready to ride the Octwave 2.0?</h3>
           <p className="mt-2 text-black/70 dark:text-white/80">Register your team and start building.</p>
@@ -497,10 +496,7 @@ export default function Home() {
             <a className="btn-primary" href="/register">Register</a>
           </div>
         </div>
-      </footer>
-
-      {/* Footer */}
-      <Footer />
+      </section>
     </div>
   );
 }

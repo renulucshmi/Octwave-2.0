@@ -38,10 +38,14 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Right: Register button + mobile menu toggle */}
+          {/* Right: Register button + admin link + mobile menu toggle */}
           <div className="flex items-center gap-2">
             <Link href="/register" className="btn-primary">
               Register
+            </Link>
+            
+            <Link href="/admin" className="hidden md:block text-xs text-white/70 hover:text-white px-2 py-1 rounded transition-colors">
+              Admin
             </Link>
 
             <button
