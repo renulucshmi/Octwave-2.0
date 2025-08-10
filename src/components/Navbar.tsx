@@ -33,7 +33,7 @@ export default function Navbar() {
               priority
               className="object-contain h-16"
             />
-            <span className="hidden sm:block text-xl font-semibold tracking-wide text-white">
+            <span className="hidden sm:block text-xl font-semibold tracking-wide text-black dark:text-white">
               OCTWAVE
             </span>
           </Link>
@@ -44,13 +44,13 @@ export default function Navbar() {
               Register
             </Link>
             
-            <Link href="/admin" className="hidden md:block text-xs text-white/70 hover:text-white px-2 py-1 rounded transition-colors">
+            <Link href="/admin" className="hidden md:block text-xs text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white px-2 py-1 rounded transition-colors">
               Admin
             </Link>
 
             <button
               aria-label="Toggle menu"
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:bg-white/10"
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-black/15 dark:border-white/15 bg-black/5 dark:bg-white/5 text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10"
               onClick={() => setOpen((v) => !v)}
             >
               <svg
