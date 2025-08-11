@@ -26,7 +26,9 @@ export default function RegisterPage() {
       teamName: '',
       university: '',
       members: [
+
         { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' }
+
       ],
       confirmation: false
     });
