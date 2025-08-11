@@ -505,11 +505,66 @@ export default function Home() {
 
       {/* CTA Section */}
       <section id="register" className="section pb-24">
-        <div className="card p-6 md:p-8 text-center">
-          <h3 className="text-xl sm:text-2xl font-semibold text-black dark:text-white">Ready to ride the Octwave 2.0?</h3>
-          <p className="mt-2 text-black/80 dark:text-white/80">Register your team and start building.</p>
-          <div className="mt-6 flex justify-center gap-3">
-            <a className="btn-primary" href="/register">Register</a>
+        <div className="group relative">
+          {/* Background gradient blur */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+          
+          {/* Main card */}
+          <div className="relative card p-8 md:p-12 text-center hover:scale-105 transition-all duration-300 hover:shadow-2xl border border-white/20 dark:border-white/10 backdrop-blur-xl bg-white/90 dark:bg-black/80 rounded-2xl overflow-hidden">
+            {/* Animated background overlay */}
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl"></div>
+            
+            {/* Decorative elements */}
+            <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400/20 to-purple-600/20 blur-xl"></div>
+            <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-gradient-to-br from-purple-400/30 to-indigo-600/30 blur-lg"></div>
+            
+            {/* Content */}
+            <div className="relative z-10">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold bg-gradient-to-r from-pink-400/20 via-purple-500/20 to-indigo-500/20 text-transparent bg-clip-text octwave-gradient-text ring-1 ring-white/20 dark:ring-white/10 mb-6">
+                <span className="text-2xl">🚀</span>
+                <span>Join the Competition</span>
+              </div>
+              
+              {/* Main heading */}
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold octwave-gradient-text mb-4">
+                Ready to ride the Octwave 2.0?
+              </h3>
+              
+              {/* Gradient divider */}
+              <div className="w-24 h-1 mx-auto mb-4 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 rounded-full"></div>
+              
+              {/* Description */}
+              <p className="text-base sm:text-lg text-black/80 dark:text-white/90 max-w-md mx-auto mb-8 leading-relaxed">
+                Register your team and start building innovative AI/ML solutions that solve real industry problems.
+              </p>
+              
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a className="btn-primary text-base px-8 py-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300" href="/register">
+                  🎯 Register Your Team
+                </a>
+                <a className="btn-ghost text-base px-6 py-3 font-medium" href="#event-structure">
+                  Learn More
+                </a>
+              </div>
+              
+              {/* Stats or additional info */}
+              <div className="mt-8 flex items-center justify-center gap-8 text-sm text-black/60 dark:text-white/60">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
+                  <span>Team-based</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
+                  <span>$1,600+ Prizes</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
+                  <span>Real Industry Problems</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
