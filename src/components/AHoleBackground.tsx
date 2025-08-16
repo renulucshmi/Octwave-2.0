@@ -372,7 +372,9 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   const containerStyles: React.CSSProperties = {
     position: 'relative',
     width: '100%',
-    height,
+  // On mobile, increase the visual height of the hole background so it extends further
+  // down the page (helps push the effect into the hero and reduce visual gap).
+  height: isMobile ? '140vh' : height,
     overflow: 'hidden',
     background: 'var(--background)',
     opacity
@@ -385,7 +387,8 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
     left: '50%',
     zIndex: 2,
     display: 'block',
-    width: '120%',
+  // prevent overflow by keeping overlay within viewport
+  width: '100%',
     height: '100%',
     background: isMobile 
       ? `radial-gradient(ellipse at 50% 30%, transparent 15%, ${isDarkMode ? '#070712' : '#ffffff'} 65%)`
