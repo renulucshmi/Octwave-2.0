@@ -257,7 +257,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
       // Responsive start disc positioning
       const startDisc = {
         x: rect.width * 0.5,
-        y: isMobile ? rect.height * 0.45 : rect.height * 0.6,
+        y: isMobile ? rect.height * 0.35 : rect.height * 0.6, // Move disc higher on mobile
         w: isMobile ? Math.min(rect.width * 1.2, rect.height * 0.6) : rect.width * 0.7,
         h: isMobile ? Math.min(rect.width * 0.6, rect.height * 0.3) : rect.height * 0.5
       };
@@ -377,13 +377,15 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   height: isMobile ? '140vh' : height,
     overflow: 'hidden',
     background: 'var(--background)',
-    opacity
+    opacity,
+    // Move the entire container up in mobile view
+    transform: isMobile ? 'translateY(-10vh)' : 'none'
   };
 
   // Responsive overlay positioning
   const overlayStyles: React.CSSProperties = {
     position: 'absolute',
-    top: isMobile ? '45%' : '60%',
+    top: isMobile ? '35%' : '60%', // Move overlay higher on mobile
     left: '50%',
     zIndex: 2,
     display: 'block',
@@ -391,7 +393,7 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   width: '100%',
     height: '100%',
     background: isMobile 
-      ? `radial-gradient(ellipse at 50% 30%, transparent 15%, ${isDarkMode ? '#070712' : '#ffffff'} 65%)`
+      ? `radial-gradient(ellipse at 50% 20%, transparent 35%, ${isDarkMode ? '#070712' : '#ffffff'} 65%)` // Adjust gradient center
       : `radial-gradient(ellipse at 50% 40%, transparent 20%, ${isDarkMode ? '#070712' : '#ffffff'} 70%)`,
     transform: 'translate3d(-50%, -50%, 0)',
     pointerEvents: 'none'
