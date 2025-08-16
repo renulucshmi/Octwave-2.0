@@ -109,7 +109,7 @@ export default function Home() {
       `}</style>
 
       {/* Hero */}
-      <header className="relative overflow-hidden min-h-[80vh] -mt-12">
+  <header className="relative overflow-hidden min-h-[80vh] -mt-12">
         {/* Animated Background */}
         <div className="absolute inset-0 z-6">
           <AHoleBackground 
@@ -120,7 +120,7 @@ export default function Home() {
         </div>
         
         {/* Content */}
-        <div className="relative z-10 max-w-6xl mx-auto px-8 pb-20 sm:pb-28">
+  <div className="relative z-10 max-w-6xl mx-auto px-8 pb-12 sm:pb-28">
           <SmoothFollower/>
           <div className="text-center">
           {/* Badge - appears after dash animation (no typing animation) */}
@@ -209,7 +209,7 @@ export default function Home() {
       </header>
 
       {/* Event Structure */}
-      <section id="event-structure" className="section pb-20 pt-16">
+  <section id="event-structure" className="section pb-20 pt-8 sm:pt-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">Event Structure</h2>
           <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
