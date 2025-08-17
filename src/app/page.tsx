@@ -62,16 +62,15 @@ export default function Home() {
   const dashAnimation = useDashAnimation(mainHeading);
 
   // Split heading for mobile responsiveness
-  const firstLine = "Ride the";
   const secondLine = "Octwave 2.0";
   const thirdLine = "The Wave Is Rising.";
   const fourthLine = "Are You Ready?";
-  
-  const allLines = [firstLine, secondLine, thirdLine, fourthLine];
+
+  const allLines = [secondLine, thirdLine, fourthLine];
 
   return (
     <div className="min-h-screen flex flex-col">
-      <style jsx>{`
+  <style jsx>{`
         @keyframes dash {
           0% {
             transform: skew(-30deg, 0deg) translateX(300%) scale(0.8);
@@ -110,9 +109,15 @@ export default function Home() {
         }
         .letter {
           display: inline-block;
-          font-size: clamp(2rem, 8vw, 4rem);
+          /* slightly smaller to help fit everything in one viewport */
+          font-size: clamp(1.5rem, 6vw, 3rem);
           letter-spacing: 2px;
           font-weight: bold;
+        }
+        /* Make third and fourth heading lines slightly smaller */
+        .smaller-line .letter {
+          /* make the smaller lines noticeably smaller */
+          font-size: clamp(1rem, 4.5vw, 2rem);
         }
         .letter.animate {
           animation: dash 300ms ease-in forwards;
@@ -123,8 +128,8 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Hero */}
-      <header className="relative overflow-hidden min-h-[80vh] -mt-12">
+  {/* Hero */}
+  <header className="relative overflow-hidden h-screen -mt-8">
         {/* Animated Background */}
         <div className="absolute inset-0 z-6">
           <AHoleBackground
@@ -150,17 +155,17 @@ export default function Home() {
           )}
           
           {/* Main Heading with Dash Animation - Mobile Responsive */}
-          <h1 className="mt-16 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+          <h1 className="mt-8 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
             <div 
               className={`main-heading ${dashAnimation.animationComplete ? 'done-animating' : ''}`}
             >
               {dashAnimation.animationStarted ? (
-                <div className="flex flex-col items-center justify-center gap-2">
-                  {/* First Line: "Ride the" */}
+                <div className="flex flex-col items-center justify-center gap-1">
+                  {/* Second Line: "Octwave 2.0" */}
                   <div>
-                    {firstLine.split('').map((letter, index) => (
+                    {secondLine.split('').map((letter, index) => (
                       <span
-                        key={index}
+                        key={`s-${index}`}
                         className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
                         style={{ 
                           animationDelay: `${100 * index}ms`,
@@ -170,30 +175,15 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
-                  
-                  {/* Second Line: "Octwave 2.0" */}
-                  <div>
-                    {secondLine.split('').map((letter, index) => (
-                      <span
-                        key={index + firstLine.length}
-                        className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
-                        style={{ 
-                          animationDelay: `${100 * (index + firstLine.length)}ms`,
-                        }}
-                      >
-                        {letter === ' ' ? '\u00A0' : letter}
-                      </span>
-                    ))}
-                  </div>
 
                   {/* Third Line: "The Wave Is Rising." */}
-                  <div>
+                  <div className="smaller-line">
                     {thirdLine.split('').map((letter, index) => (
                       <span
-                        key={index + firstLine.length + secondLine.length}
+                        key={`t-${index}`}
                         className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
                         style={{ 
-                          animationDelay: `${100 * (index + firstLine.length + secondLine.length)}ms`,
+                          animationDelay: `${100 * (index + secondLine.length)}ms`,
                         }}
                       >
                         {letter === ' ' ? '\u00A0' : letter}
@@ -202,13 +192,13 @@ export default function Home() {
                   </div>
 
                   {/* Fourth Line: "Are You Ready?" */}
-                  <div>
+                  <div className="smaller-line">
                     {fourthLine.split('').map((letter, index) => (
                       <span
-                        key={index + firstLine.length + secondLine.length + thirdLine.length}
+                        key={`f-${index}`}
                         className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
                         style={{ 
-                          animationDelay: `${100 * (index + firstLine.length + secondLine.length + thirdLine.length)}ms`,
+                          animationDelay: `${100 * (index + secondLine.length + thirdLine.length)}ms`,
                         }}
                         onAnimationEnd={index === fourthLine.length - 1 ? dashAnimation.handleAnimationEnd : undefined}
                       >
@@ -218,14 +208,14 @@ export default function Home() {
                   </div>
                 </div>
               ) : (
-                <span className="opacity-0 text-black dark:text-white">Ride the Octwave 2.0 The Wave Is Rising. Are You Ready?</span>
+                <span className="opacity-0 text-black dark:text-white">Octwave 2.0 The Wave Is Rising. Are You Ready?</span>
               )}
             </div>
           </h1>
           
           {/* First Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-4 text-base sm:text-lg md:text-xl text-black dark:text-gray-100 max-w-2xl mx-auto font-semibold min-h-[1.5rem] sm:min-h-[1.75rem] md:min-h-[2rem] transition-all duration-500 ${
+            className={`mt-3 text-base sm:text-md md:text-lg text-black dark:text-gray-100 max-w-2xl mx-auto font-semibold min-h-[1rem] sm:min-h-[1rem] md:min-h-[1.25rem] transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -234,7 +224,7 @@ export default function Home() {
           
           {/* Second Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-3 text-sm sm:text-base md:text-lg text-gray-800 dark:text-gray-200 max-w-2xl mx-auto font-medium transition-all duration-500 ${
+            className={`mt-2 text-sm sm:text-base md:text-md text-gray-800 dark:text-gray-200 max-w-2xl mx-auto font-medium transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -243,7 +233,7 @@ export default function Home() {
           
           {/* Buttons - appear after animation is complete */}
           <div 
-            className={`mt-8 flex items-center justify-center gap-3 transition-all duration-500 ${
+            className={`mt-4 flex items-center justify-center gap-3 transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
