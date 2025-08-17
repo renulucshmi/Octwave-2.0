@@ -10,10 +10,11 @@ export default function RegisterPage() {
   const [registrationResult, setRegistrationResult] = useState<any>(null);
   const [formData, setFormData] = useState({
     email: '',
-    teamMembers: '1',
+    teamMembers: '2',
     teamName: '',
     university: '',
     members: [
+      { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' },
       { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' }
     ],
     confirmation: false
@@ -22,13 +23,12 @@ export default function RegisterPage() {
   const resetForm = () => {
     setFormData({
       email: '',
-      teamMembers: '1',
+      teamMembers: '2',
       teamName: '',
       university: '',
       members: [
-
+        { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' },
         { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' }
-
       ],
       confirmation: false
     });
