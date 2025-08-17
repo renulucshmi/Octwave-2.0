@@ -743,7 +743,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
-                  <span>$1,600+ Prizes</span>
+                  <span>Cash Prizes</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
