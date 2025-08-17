@@ -364,11 +364,7 @@ export default function Home() {
                       </h4>
                     </div>
                     <p className="text-sm text-black/80 dark:text-white/90">
-                      The Top 10 finalist teams will compete at the University
-                      of Moratuwa. A new problem statement and dataset will be
-                      provided, and teams must submit both a report and
-                      presentation. Final presentations will be judged, followed
-                      by the awarding ceremony.
+                      The Top 10 finalist teams will compete at the University of Moratuwa. A new problem statement and dataset will be provided, and teams must submit their working code, report, and presentation. Final presentations will be judged, followed by the awarding ceremony.
                     </p>
                   </div>
                 </div>
