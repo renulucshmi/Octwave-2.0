@@ -147,7 +147,7 @@ export default function RegisterPage() {
           <h2 className="text-2xl font-bold text-yellow-800 dark:text-yellow-300 mb-4">⚠️ Important Team Requirements:</h2>
           <ul className="space-y-2 text-yellow-800 dark:text-yellow-300">
             <li>• All team members must be from the same university</li>
-            <li>• Teams can have 1-4 members maximum</li>
+            <li>• Teams can have 2-4 members maximum</li>
             <li>• Open to undergraduate students from government and private institutions in Sri Lanka</li>
           </ul>
           <p className="mt-4 font-semibold">Transform your innovative ideas into real-world AI/ML solutions with OctWave 2.0!</p>
@@ -181,7 +181,6 @@ export default function RegisterPage() {
               value={formData.teamMembers}
               onChange={(e) => handleTeamMembersChange(e.target.value)}
             >
-              <option value="1">1 Member</option>
               <option value="2">2 Members</option>
               <option value="3">3 Members</option>
               <option value="4">4 Members</option>
