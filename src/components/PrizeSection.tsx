@@ -12,14 +12,14 @@ type Prize = {
 
 const championPrize: Prize = {
   title: "Champions",
-  amount: "$1,000",
-  sub: "Winner Team",
+  amount: " LKR 50,000",
+  sub: "First Place",
   highlight: true,
 };
 
 const runnerUpPrizes: Prize[] = [
-  { title: "First Runner Up", amount: "$500", sub: "Second Place" },
-  { title: "Second Runners Up", amount: "$100", sub: "Third Place" },
+  { title: "First Runner Up", amount: " LKR 30,000", sub: "Second Place" },
+  { title: "Second Runners Up", amount: " LKR 20,000", sub: "Third Place" },
 ];
 
 function useStaggerReveal(selector: string, root?: HTMLElement | null) {
