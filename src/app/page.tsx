@@ -109,8 +109,8 @@ export default function Home() {
         }
         .letter {
           display: inline-block;
-          /* slightly smaller to help fit everything in one viewport */
-          font-size: clamp(1.5rem, 6vw, 3rem);
+          /* slightly larger for readability */
+          font-size: clamp(1.75rem, 6.5vw, 3.25rem);
           letter-spacing: 2px;
           font-weight: bold;
         }
@@ -129,7 +129,7 @@ export default function Home() {
       `}</style>
 
   {/* Hero */}
-  <header className="relative overflow-hidden h-screen -mt-8">
+  <header className="relative overflow-hidden h-screen -mt-6">
         {/* Animated Background */}
         <div className="absolute inset-0 z-6">
           <AHoleBackground
@@ -155,12 +155,12 @@ export default function Home() {
           )}
           
           {/* Main Heading with Dash Animation - Mobile Responsive */}
-          <h1 className="mt-8 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+          <h1 className="mt-20 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
             <div 
               className={`main-heading ${dashAnimation.animationComplete ? 'done-animating' : ''}`}
             >
               {dashAnimation.animationStarted ? (
-                <div className="flex flex-col items-center justify-center gap-1">
+                <div className="flex flex-col items-center justify-center gap-3">
                   {/* Second Line: "Octwave 2.0" */}
                   <div>
                     {secondLine.split('').map((letter, index) => (
@@ -215,7 +215,7 @@ export default function Home() {
           
           {/* First Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-3 text-base sm:text-md md:text-lg text-black dark:text-gray-100 max-w-2xl mx-auto font-semibold min-h-[1rem] sm:min-h-[1rem] md:min-h-[1.25rem] transition-all duration-500 ${
+            className={`mt-6 text-base sm:text-md md:text-lg text-black dark:text-gray-100 max-w-2xl mx-auto font-semibold min-h-[1rem] sm:min-h-[1rem] md:min-h-[1.25rem] transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -224,7 +224,7 @@ export default function Home() {
           
           {/* Second Paragraph - appears after dash animation (no typing animation) */}
           <p 
-            className={`mt-2 text-sm sm:text-base md:text-md text-gray-800 dark:text-gray-200 max-w-2xl mx-auto font-medium transition-all duration-500 ${
+            className={`mt-4 text-sm sm:text-base md:text-md text-gray-800 dark:text-gray-200 max-w-2xl mx-auto font-medium transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -233,7 +233,7 @@ export default function Home() {
           
           {/* Buttons - appear after animation is complete */}
           <div 
-            className={`mt-4 flex items-center justify-center gap-3 transition-all duration-500 ${
+            className={`mt-8 flex items-center justify-center gap-3 transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -366,9 +366,9 @@ export default function Home() {
                     <p className="text-sm text-black/80 dark:text-white/90">
                       The Top 10 finalist teams will compete at the University
                       of Moratuwa. A new problem statement and dataset will be
-                      provided, and teams must submit both a report and
-                      presentation. Final presentations will be judged, followed
-                      by the awarding ceremony.
+                      provided, and teams must submit their working code,
+                      report, and presentation. Final presentations will be
+                      judged, followed by the awarding ceremony.
                     </p>
                   </div>
                 </div>
@@ -379,7 +379,9 @@ export default function Home() {
       </section>
 
       {/* Timeline */}
-      <VectorTimeline />
+      <section id="timeline">
+        <VectorTimeline />
+      </section>
 
       {/* Prizes */}
       <PrizeSection />
@@ -741,7 +743,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
-                  <span>$1,600+ Prizes</span>
+                  <span>Cash Prizes</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
