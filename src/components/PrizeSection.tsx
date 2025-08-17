@@ -60,22 +60,21 @@ export default function PrizeSection({
   const containerRef = useStaggerReveal("[data-prize-item]");
 
   return (
-    <section className="section pb-16" ref={containerRef as any}>
+    <section id="prizes" className="section pb-16" ref={containerRef as any}>
       <style jsx>{`
         .prize-card {
           position: relative;
           transform: translateY(16px) scale(0.98);
           opacity: 0;
-          transition: transform 600ms cubic-bezier(.2,.8,.2,1),
-                      opacity 600ms ease,
-                      box-shadow 400ms ease;
+          transition: transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
+            opacity 600ms ease, box-shadow 400ms ease;
         }
         .prize-reveal.prize-card {
           transform: translateY(0) scale(1);
           opacity: 1;
         }
         .prize-card:hover {
-          box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
         }
         .shine {
           position: relative;
@@ -87,46 +86,71 @@ export default function PrizeSection({
           position: absolute;
           inset: -2px;
           border-radius: 16px;
-          background: conic-gradient(from 120deg, var(--octwave-from), var(--octwave-to), var(--octwave-from));
+          background: conic-gradient(
+            from 120deg,
+            var(--octwave-from),
+            var(--octwave-to),
+            var(--octwave-from)
+          );
           filter: blur(18px);
-          opacity: .18;
+          opacity: 0.18;
           z-index: -1;
         }
         .shine::after {
           content: "";
           position: absolute;
           inset: -200% -50%;
-          background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,.25) 50%, transparent 60%);
+          background: linear-gradient(
+            120deg,
+            transparent 40%,
+            rgba(255, 255, 255, 0.25) 50%,
+            transparent 60%
+          );
           transform: rotate(10deg) translateX(-60%);
         }
         .shine:hover::after {
-          transition: transform 900ms cubic-bezier(.2,.8,.2,1);
+          transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
           transform: rotate(10deg) translateX(60%);
         }
         .bg-layer {
           position: absolute;
           inset: 0;
           border-radius: 12px;
-          background: linear-gradient(135deg, rgba(102,126,234,.12), rgba(118,75,162,.12));
+          background: linear-gradient(
+            135deg,
+            rgba(102, 126, 234, 0.12),
+            rgba(118, 75, 162, 0.12)
+          );
           pointer-events: none;
         }
         .bg-grid {
           position: absolute;
           inset: 0;
-          background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+          background-image: radial-gradient(
+            rgba(255, 255, 255, 0.08) 1px,
+            transparent 1px
+          );
           background-size: 14px 14px;
-          opacity: .4;
+          opacity: 0.4;
           border-radius: 12px;
           pointer-events: none;
         }
         .badge-pop {
           transform: translateY(4px);
           opacity: 0;
-          transition: transform 500ms cubic-bezier(.2,.8,.2,1), opacity 500ms ease;
+          transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+            opacity 500ms ease;
         }
-        .prize-reveal .badge-pop { transform: translateY(0); opacity: 1; }
+        .prize-reveal .badge-pop {
+          transform: translateY(0);
+          opacity: 1;
+        }
         .champion-card {
-          background: linear-gradient(135deg, rgba(102,126,234,.15), rgba(118,75,162,.15));
+          background: linear-gradient(
+            135deg,
+            rgba(102, 126, 234, 0.15),
+            rgba(118, 75, 162, 0.15)
+          );
           border: 2px solid var(--octwave-from);
         }
         .certificate-card {
@@ -154,7 +178,7 @@ export default function PrizeSection({
           >
             <div className="bg-layer" />
             <div className="bg-grid" />
-            
+
             <div className="flex justify-center mb-4">
               <span className="badge-pop inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold bg-gradient-to-r from-yellow-400/20 to-orange-500/20 text-yellow-600 dark:text-yellow-400 ring-2 ring-yellow-400/40">
                 🏆 Champions
@@ -164,7 +188,9 @@ export default function PrizeSection({
             <p className="text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[var(--octwave-from)] to-[var(--octwave-to)] mb-2">
               {championPrize.amount}
             </p>
-            <p className="text-sm text-black/70 dark:text-white/70">{championPrize.sub}</p>
+            <p className="text-sm text-black/70 dark:text-white/70">
+              {championPrize.sub}
+            </p>
 
             <div className="mt-6 h-px bg-gradient-to-r from-transparent via-[var(--octwave-from)]/30 to-transparent" />
 
@@ -187,14 +213,18 @@ export default function PrizeSection({
               <div className="bg-grid" />
 
               <div className="flex items-center justify-between mb-3">
-                <p className="text-sm text-black/70 dark:text-white/70">{prize.title}</p>
-                <span className="text-lg">{index === 0 ? '🥈' : '🥉'}</span>
+                <p className="text-sm text-black/70 dark:text-white/70">
+                  {prize.title}
+                </p>
+                <span className="text-lg">{index === 0 ? "🥈" : "🥉"}</span>
               </div>
 
               <p className="text-2xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[var(--octwave-from)] to-[var(--octwave-to)]">
                 {prize.amount}
               </p>
-              <p className="mt-1 text-xs text-black/60 dark:text-white/60">{prize.sub}</p>
+              <p className="mt-1 text-xs text-black/60 dark:text-white/60">
+                {prize.sub}
+              </p>
 
               <div className="mt-4 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10" />
 
@@ -242,14 +272,18 @@ export default function PrizeSection({
               Digital Certificates
             </p>
             <p className="text-xs text-black/60 dark:text-white/60">
-              Every registered participant gets a digital certificate of participation
+              Every registered participant gets a digital certificate of
+              participation
             </p>
           </div>
         </div>
       </div>
 
       <div className="relative mt-6">
-        <div className="pointer-events-none absolute -inset-x-6 -top-6 -bottom-6 opacity-30 blur-2xl" aria-hidden>
+        <div
+          className="pointer-events-none absolute -inset-x-6 -top-6 -bottom-6 opacity-30 blur-2xl"
+          aria-hidden
+        >
           <div className="h-full w-full bg-gradient-to-tr from-[var(--octwave-from)]/20 via-transparent to-[var(--octwave-to)]/20" />
         </div>
       </div>

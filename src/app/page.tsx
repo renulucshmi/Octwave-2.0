@@ -366,9 +366,9 @@ export default function Home() {
                     <p className="text-sm text-black/80 dark:text-white/90">
                       The Top 10 finalist teams will compete at the University
                       of Moratuwa. A new problem statement and dataset will be
-                      provided, and teams must submit both a report and
-                      presentation. Final presentations will be judged, followed
-                      by the awarding ceremony.
+                      provided, and teams must submit their working code,
+                      report, and presentation. Final presentations will be
+                      judged, followed by the awarding ceremony.
                     </p>
                   </div>
                 </div>
@@ -379,7 +379,9 @@ export default function Home() {
       </section>
 
       {/* Timeline */}
-      <VectorTimeline />
+      <section id="timeline">
+        <VectorTimeline />
+      </section>
 
       {/* Prizes */}
       <PrizeSection />
@@ -741,7 +743,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
-                  <span>$1,600+ Prizes</span>
+                  <span>Cash Prizes</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
