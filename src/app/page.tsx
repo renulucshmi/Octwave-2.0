@@ -43,7 +43,7 @@ function useDashAnimation(text: string, letterDelay: number = 100) {
 }
 
 export default function Home() {
-  const mainHeading = "Ride the Octwave 2.0";
+  const mainHeading = "OctWave 2.0";
   const badgeText = "";
   const firstParagraph = "Team-based AI/ML challenge solving real industry problems.";
   const secondParagraph = "Workshops series and AI/ML competition organized by IEEE IAS of University of Moratuwa. Work with a problem statement, apply practical AI/ML techniques, and collaborate with academia and industry to deliver impactful, feasible solutions.";
@@ -53,6 +53,10 @@ export default function Home() {
   // Split heading for mobile responsiveness
   const firstLine = "Ride the";
   const secondLine = "Octwave 2.0";
+  const thirdLine = "The Wave Is Rising.";
+  const fourthLine = "Are You Ready?";
+  
+  const allLines = [firstLine, secondLine, thirdLine, fourthLine];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -140,9 +144,9 @@ export default function Home() {
               className={`main-heading ${dashAnimation.animationComplete ? 'done-animating' : ''}`}
             >
               {dashAnimation.animationStarted ? (
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+                <div className="flex flex-col items-center justify-center gap-2">
                   {/* First Line: "Ride the" */}
-                  <div className="mb-2 sm:mb-0">
+                  <div>
                     {firstLine.split('').map((letter, index) => (
                       <span
                         key={index}
@@ -165,7 +169,37 @@ export default function Home() {
                         style={{ 
                           animationDelay: `${100 * (index + firstLine.length)}ms`,
                         }}
-                        onAnimationEnd={index === secondLine.length - 1 ? dashAnimation.handleAnimationEnd : undefined}
+                      >
+                        {letter === ' ' ? '\u00A0' : letter}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Third Line: "The Wave Is Rising." */}
+                  <div>
+                    {thirdLine.split('').map((letter, index) => (
+                      <span
+                        key={index + firstLine.length + secondLine.length}
+                        className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        style={{ 
+                          animationDelay: `${100 * (index + firstLine.length + secondLine.length)}ms`,
+                        }}
+                      >
+                        {letter === ' ' ? '\u00A0' : letter}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Fourth Line: "Are You Ready?" */}
+                  <div>
+                    {fourthLine.split('').map((letter, index) => (
+                      <span
+                        key={index + firstLine.length + secondLine.length + thirdLine.length}
+                        className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        style={{ 
+                          animationDelay: `${100 * (index + firstLine.length + secondLine.length + thirdLine.length)}ms`,
+                        }}
+                        onAnimationEnd={index === fourthLine.length - 1 ? dashAnimation.handleAnimationEnd : undefined}
                       >
                         {letter === ' ' ? '\u00A0' : letter}
                       </span>
@@ -173,7 +207,7 @@ export default function Home() {
                   </div>
                 </div>
               ) : (
-                <span className="opacity-0 text-black dark:text-white">Ride the Octwave 2.0</span>
+                <span className="opacity-0 text-black dark:text-white">Ride the Octwave 2.0 The Wave Is Rising. Are You Ready?</span>
               )}
             </div>
           </h1>
