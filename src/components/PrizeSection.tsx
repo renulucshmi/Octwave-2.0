@@ -154,12 +154,14 @@ export default function PrizeSection({
           border: 2px solid var(--octwave-from);
         }
         .certificate-card {
-          background: linear-gradient(
-            135deg,
-            rgba(34, 197, 94, 0.08),
-            rgba(59, 130, 246, 0.08)
-          );
-          border: 1px solid rgba(34, 197, 94, 0.3);
+          /* subtle octwave-tinted background */
+          background: linear-gradient(135deg, rgba(59,130,246,0.04), rgba(102,126,234,0.04));
+          border: 1px solid rgba(59,130,246,0.06);
+        }
+        .participant-card {
+          /* match theme and look of other prize cards */
+          background: linear-gradient(135deg, rgba(102,126,234,0.06), rgba(118,75,162,0.04));
+          border: 1px solid rgba(139,92,246,0.06);
         }
       `}</style>
 
@@ -238,12 +240,13 @@ export default function PrizeSection({
         <div className="grid gap-4 sm:grid-cols-2 max-w-3xl mx-auto">
           <div
             data-prize-item
-            className="prize-card certificate-card card p-6 rounded-xl backdrop-blur text-center"
+            className="prize-card certificate-card card p-6 rounded-xl backdrop-blur text-center shine"
           >
+            <div className="bg-layer" />
             <div className="flex items-center justify-center mb-3">
-              <span className="text-2xl">🏅</span>
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-[var(--octwave-from)] to-[var(--octwave-to)] text-white shadow-md">🏅</span>
             </div>
-            <h3 className="text-lg font-semibold text-green-700 dark:text-green-400 mb-2">
+            <h3 className="text-lg font-semibold octwave-gradient-text mb-2">
               Finalists
             </h3>
             <p className="text-sm text-black/70 dark:text-white/70 mb-3">
@@ -256,12 +259,13 @@ export default function PrizeSection({
 
           <div
             data-prize-item
-            className="prize-card card p-6 rounded-xl border border-blue-200/50 dark:border-blue-500/30 bg-blue-50/60 dark:bg-blue-900/20 backdrop-blur text-center"
+            className="prize-card participant-card card p-6 rounded-xl shine backdrop-blur text-center"
           >
+            <div className="bg-layer" />
             <div className="flex items-center justify-center mb-3">
-              <span className="text-2xl">📜</span>
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-[var(--octwave-to)] to-[var(--octwave-from)] text-white shadow-md">📜</span>
             </div>
-            <h3 className="text-lg font-semibold text-blue-700 dark:text-blue-400 mb-2">
+            <h3 className="text-lg font-semibold octwave-gradient-text mb-2">
               All Participants
             </h3>
             <p className="text-sm text-black/70 dark:text-white/70 mb-3">
