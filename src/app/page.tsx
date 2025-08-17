@@ -361,8 +361,8 @@ export default function Home() {
                       </h4>
                     </div>
                     <p className="text-sm text-black/80 dark:text-white/90">
-                      Teams will be registered with all details, and individual
-                      registrants will be grouped into teams.
+                      Teams will register with all required details to
+                      officially enter the competition.
                     </p>
                   </div>
 
@@ -376,9 +376,8 @@ export default function Home() {
                       </h4>
                     </div>
                     <p className="text-sm text-black/80 dark:text-white/90">
-                      A Kaggle competition and report submission. 10 teams will
-                      be chosen from this round, considering the competition
-                      rank and evaluation of reports.
+                      A Kaggle competition where the Top 10 teams will be
+                      selected based on the private leaderboard.
                     </p>
                   </div>
 
@@ -392,10 +391,11 @@ export default function Home() {
                       </h4>
                     </div>
                     <p className="text-sm text-black/80 dark:text-white/90">
-                      A challenge round at the University of Moratuwa. Problem
-                      statement and dataset will be provided. Final
-                      presentations will be done in front of a judging board,
-                      concluding with the awarding ceremony.
+                      The Top 10 finalist teams will compete at the University
+                      of Moratuwa. A new problem statement and dataset will be
+                      provided, and teams must submit both a report and
+                      presentation. Final presentations will be judged, followed
+                      by the awarding ceremony.
                     </p>
                   </div>
                 </div>
