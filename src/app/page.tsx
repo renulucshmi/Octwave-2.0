@@ -6,6 +6,7 @@ import NeuralInterfaceFAQ from "@/components/faq";
 import AHoleBackground from "@/components/AHoleBackground";
 import { useEffect, useState } from "react";
 import PrizeSection from "@/components/PrizeSection";
+import ContactCards from "@/components/ContactCards";
 
 // Dynamically import VectorTimeline to avoid hydration issues
 const VectorTimeline = dynamic(() => import("@/components/timeline"), {
@@ -650,6 +651,7 @@ export default function Home() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">
             📞 Contact Us
           </h2>
+
           <div className="space-y-3 text-center max-w-2xl mx-auto">
             <p className="text-black/80 dark:text-white/90">
               <strong>Renulucshmi Prakasan</strong> (Co-chair - OctWave 2.0):
@@ -753,6 +755,10 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+      <section id="team">
+        <h2 className="text-3xl font-bold mb-6 items-center">Meet Our Team</h2>
+        <ContactCards />
       </section>
     </div>
   );

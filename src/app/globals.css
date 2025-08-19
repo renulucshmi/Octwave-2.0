@@ -165,3 +165,32 @@ body {
     opacity: 0;
   }
 }
+/* Add to your global CSS file */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.rotate-y-12 {
+  transform: rotateY(12deg);
+}
+
+.rotate-x-6 {
+  transform: rotateX(6deg);
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Optional: Add these to your Tailwind config for better performance */
+.transform-gpu {
+  transform: translateZ(0);
+}
