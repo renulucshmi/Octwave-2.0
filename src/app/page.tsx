@@ -646,42 +646,10 @@ export default function Home() {
       </section>
 
       {/* Contact Information */}
-      <section id="contact" className="section pb-20">
-        <div className="card p-6 md:p-8">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">
-            📞 Contact Us
-          </h2>
-
-          <div className="space-y-3 text-center max-w-2xl mx-auto">
-            <p className="text-black/80 dark:text-white/90">
-              <strong>Renulucshmi Prakasan</strong> (Co-chair - OctWave 2.0):
-              <a
-                href="tel:+94754350533"
-                className="octwave-gradient-text font-semibold ml-2"
-              >
-                +94754350533
-              </a>
-            </p>
-            <p className="text-black/80 dark:text-white/90">
-              <strong>Rashmitha Hansamal</strong> (Co-chair - OctWave 2.0):
-              <a
-                href="tel:+94776057351"
-                className="octwave-gradient-text font-semibold ml-2"
-              >
-                +94776057351
-              </a>
-            </p>
-            <p className="text-black/80 dark:text-white/90">
-              <strong>Abinaya Subramaniam</strong> (Co-chair - OctWave 2.0):
-              <a
-                href="tel:+94763885326"
-                className="octwave-gradient-text font-semibold ml-2"
-              >
-                +94763885326
-              </a>
-            </p>
-          </div>
-        </div>
+      <section id="contact" className="section ">
+        <h1> </h1>
+         <ContactCards />
+       
       </section>
 
       {/* CTA Section */}
@@ -756,10 +724,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section id="team">
-        <h2 className="text-3xl font-bold mb-6 items-center">Meet Our Team</h2>
-        <ContactCards />
-      </section>
+     
     </div>
   );
 }
