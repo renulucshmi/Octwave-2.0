@@ -143,8 +143,8 @@ const teamMembers = [
 
 const ContactCards: React.FC = () => {
   return (
-    <div className="w-full flex items-center justify-center min-h-screen py-12">
-      <div className="max-w-7xl w-full px-6">
+    <div className="w-full flex items-center justify-center py-12">
+      <div className="max-w-6xl w-full mx-auto px-6">
         <div className="text-center mb-8">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-2">Contact Us</h2>
           <p className="text-lg text-black/70 dark:text-white/70 max-w-2xl mx-auto">Get in touch with the OctWave 2.0 organising team</p>

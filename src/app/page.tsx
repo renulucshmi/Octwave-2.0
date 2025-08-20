@@ -132,7 +132,7 @@ export default function Home() {
   {/* Hero */}
   <header className="relative overflow-hidden h-screen -mt-6">
         {/* Animated Background */}
-        <div className="absolute inset-0 z-6">
+  <div className="absolute inset-0 -z-10" style={{ transform: 'translateY(-6vh)' }}>
           <AHoleBackground
             height="100%"
             opacity={0.45}

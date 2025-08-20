@@ -370,11 +370,15 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
   }, [isClient, isDarkMode]);
 
   const containerStyles: React.CSSProperties = {
-    position: 'relative',
+    // place the background absolutely so it doesn't create a stacking context above the navbar
+    position: 'absolute',
+    top: 0,
+    left: 0,
     width: '100%',
-  // On mobile, increase the visual height of the hole background so it extends further
-  // down the page (helps push the effect into the hero and reduce visual gap).
-  height: isMobile ? '140vh' : height,
+    zIndex: -50,
+    // On mobile, increase the visual height of the hole background so it extends further
+    // down the page (helps push the effect into the hero and reduce visual gap).
+    height: isMobile ? '140vh' : height,
     overflow: 'hidden',
     background: 'var(--background)',
     opacity,
@@ -485,7 +489,11 @@ const AHoleBackground: React.FC<AHoleBackgroundProps> = ({
           style={{ 
             display: 'block', 
             width: '100%', 
-            height: '100%' 
+            height: '100%',
+            zIndex: -1,
+            position: 'absolute',
+            top: 0,
+            left: 0
           }} 
         />
         <div style={overlayStyles} />
