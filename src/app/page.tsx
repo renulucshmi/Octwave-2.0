@@ -1,173 +1,730 @@
+"use client";
 import Image from "next/image";
-import VectorTimeline from "@/components/timeline";
+import dynamic from "next/dynamic";
 import SmoothFollower from "@/components/SmoothFollowercursot";
+import NeuralInterfaceFAQ from "@/components/faq";
+import AHoleBackground from "@/components/AHoleBackground";
+import { useEffect, useState } from "react";
+import PrizeSection from "@/components/PrizeSection";
+import ContactCards from "@/components/ContactCards";
+
+// Dynamically import VectorTimeline to avoid hydration issues
+const VectorTimeline = dynamic(() => import("@/components/timeline"), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-[400px] flex items-center justify-center">
+      <div className="animate-pulse text-center">
+        <div className="w-8 h-8 mx-auto mb-2 bg-gradient-to-r from-[var(--octwave-from)] to-[var(--octwave-to)] rounded-full"></div>
+        <p className="text-sm text-black/60 dark:text-white/60">
+          Loading timeline...
+        </p>
+      </div>
+    </div>
+  ),
+});
+
+// Custom hook for dash animation - made faster
+function useDashAnimation(text: string, letterDelay: number = 100) {
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimationStarted(true);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleAnimationEnd = () => {
+    setAnimationComplete(true);
+    setTimeout(() => {
+      setShowContent(true);
+    }, 300);
+  };
+
+  return {
+    animationStarted,
+    animationComplete,
+    showContent,
+    handleAnimationEnd,
+  };
+}
+
 export default function Home() {
+  const mainHeading = "OctWave 2.0";
+  const badgeText = "";
+  const firstParagraph =
+    "Take part in expert-led workshops, work on real datasets, and compete with the best minds to create practical solutions.";
+  const secondParagraph =
+    " OctWave 2.0 is your chance to learn new skills, showcase your talent, and make a real impact.";
+
+  const dashAnimation = useDashAnimation(mainHeading);
+
+  // Split heading for mobile responsiveness
+  const secondLine = "Octwave 2.0";
+  const thirdLine = "The Wave Is Rising.";
+  const fourthLine = "Are You Ready?";
+
+  const allLines = [secondLine, thirdLine, fourthLine];
+
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Hero */}
-      <header className="section pt-16 pb-20 sm:pt-24 sm:pb-28">
-        <SmoothFollower/>
-        <div className="text-center">
-          <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/70 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10">
-            <span>Octwave 2.0</span>
-            <span aria-hidden>•</span>
-            <span>Registration Open</span>
-            <span aria-hidden className="hidden sm:inline">•</span>
-            <span className="opacity-80">Organized by IEEE IAS, University of Moratuwa</span>
-          </div>
-          <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-            <span className="octwave-gradient-text">Ride the Octwave 2.0</span> — Build the Future
+  <style jsx>{`
+        @keyframes dash {
+          0% {
+            transform: skew(-30deg, 0deg) translateX(300%) scale(0.8);
+            opacity: 1;
+          }
+          40% {
+            transform: skew(10deg, 0deg) translateX(100%) scale(0.9);
+          }
+          60% {
+            transform: skew(10deg, 0deg) translateX(-10px) scale(1.2);
+          }
+          70% {
+            transform: skew(0, 0deg) translateX(0) scale(1.3);
+          }
+          75% {
+            transform: skew(0, 0deg) translateX(0) scale(1.3);
+          }
+          90% {
+            transform: skew(0, 0deg) translateX(0) scale(0.85);
+          }
+          100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+        }
+        @keyframes done-animating {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+        .letter {
+          display: inline-block;
+          /* slightly larger for readability */
+          font-size: clamp(1.75rem, 6.5vw, 3.25rem);
+          letter-spacing: 2px;
+          font-weight: bold;
+        }
+        /* Make third and fourth heading lines slightly smaller */
+        .smaller-line .letter {
+          /* make the smaller lines noticeably smaller */
+          font-size: clamp(1rem, 4.5vw, 2rem);
+        }
+        .letter.animate {
+          animation: dash 300ms ease-in forwards;
+          opacity: 0;
+        }
+        .main-heading.done-animating {
+          animation: done-animating 200ms ease-in;
+        }
+      `}</style>
+
+  {/* Hero */}
+  <header className="relative overflow-hidden h-screen -mt-6">
+        {/* Animated Background */}
+  <div className="absolute inset-0 -z-10" style={{ transform: 'translateY(-6vh)' }}>
+          <AHoleBackground
+            height="100%"
+            opacity={0.45}
+            className="w-full h-full"
+          />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 max-w-6xl mx-auto px-8 pb-12 sm:pb-28">
+          <SmoothFollower />
+          <div className="text-center">
+          {/* Badge - appears after dash animation (no typing animation) */}
+          {badgeText && (
+            <div 
+              className={`inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-black/10 text-black/80 ring-1 ring-black/10 dark:bg-black/20 dark:text-white/80 dark:ring-white/10 min-h-[28px] transition-all duration-500 ${
+                dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              <span>{badgeText}</span>
+            </div>
+          )}
+          
+          {/* Main Heading with Dash Animation - Mobile Responsive */}
+          <h1 className="mt-20 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+            <div 
+              className={`main-heading ${dashAnimation.animationComplete ? 'done-animating' : ''}`}
+            >
+              {dashAnimation.animationStarted ? (
+                <div className="flex flex-col items-center justify-center gap-3">
+                  {/* Second Line: "Octwave 2.0" */}
+                  <div>
+                    {secondLine.split('').map((letter, index) => (
+                      <span
+                        key={`s-${index}`}
+                        className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        style={{ 
+                          animationDelay: `${100 * index}ms`,
+                        }}
+                      >
+                        {letter === ' ' ? '\u00A0' : letter}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Third Line: "The Wave Is Rising." */}
+                  <div className="smaller-line">
+                    {thirdLine.split('').map((letter, index) => (
+                      <span
+                        key={`t-${index}`}
+                        className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        style={{ 
+                          animationDelay: `${100 * (index + secondLine.length)}ms`,
+                        }}
+                      >
+                        {letter === ' ' ? '\u00A0' : letter}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Fourth Line: "Are You Ready?" */}
+                  <div className="smaller-line">
+                    {fourthLine.split('').map((letter, index) => (
+                      <span
+                        key={`f-${index}`}
+                        className={`letter text-black dark:text-white ${dashAnimation.animationStarted ? 'animate' : ''}`}
+                        style={{ 
+                          animationDelay: `${100 * (index + secondLine.length + thirdLine.length)}ms`,
+                        }}
+                        onAnimationEnd={index === fourthLine.length - 1 ? dashAnimation.handleAnimationEnd : undefined}
+                      >
+                        {letter === ' ' ? '\u00A0' : letter}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <span className="opacity-0 text-black dark:text-white">Octwave 2.0 The Wave Is Rising. Are You Ready?</span>
+              )}
+            </div>
           </h1>
-          <p className="mt-4 text-base sm:text-lg md:text-xl text-black/80 dark:text-white/85 max-w-2xl mx-auto font-medium">
-            Team-based AI/ML challenge solving real industry problems.
+          
+          {/* First Paragraph - appears after dash animation (no typing animation) */}
+          <p 
+            className={`mt-6 text-base sm:text-md md:text-lg text-black dark:text-gray-100 max-w-2xl mx-auto font-semibold min-h-[1rem] sm:min-h-[1rem] md:min-h-[1.25rem] transition-all duration-500 ${
+              dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            {firstParagraph}
           </p>
-          <p className="mt-3 text-sm sm:text-base md:text-lg text-black/70 dark:text-white/80 max-w-2xl mx-auto">
-            Work with a problem statement, apply practical AI/ML techniques, and collaborate with academia and industry to deliver impactful, feasible solutions.
+          
+          {/* Second Paragraph - appears after dash animation (no typing animation) */}
+          <p 
+            className={`mt-4 text-sm sm:text-base md:text-md text-gray-800 dark:text-gray-200 max-w-2xl mx-auto font-medium transition-all duration-500 ${
+              dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            {secondParagraph}
           </p>
-          <div className="mt-8 flex items-center justify-center gap-3">
-            <a href="#register" className="btn-primary">Register Now</a>
-            <a href="#tracks" className="btn-ghost">Explore Tracks</a>
+          
+          {/* Buttons - appear after animation is complete */}
+          <div 
+            className={`mt-8 flex items-center justify-center gap-3 transition-all duration-500 ${
+              dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            <a href="/register" className="btn-primary">Register Now</a>
+          </div>
           </div>
         </div>
       </header>
 
-      {/* Tracks */}
-      <section id="tracks" className="section pb-14">
-        <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">Tracks</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {[
-            { title: "AI & Data", desc: "ML, agents, and data products that matter." },
-            { title: "Web & Cloud", desc: "Next-gen apps, DX tools, and cloud-native." },
-            { title: "Sustainability", desc: "Tech for climate, energy, and society." },
-          ].map((t) => (
-            <div key={t.title} className="card p-5 text-black/80 dark:text-white/90">
-              <h3 className="text-lg font-semibold">{t.title}</h3>
-              <p className="mt-2 text-sm text-black/60 dark:text-white/70">{t.desc}</p>
+      {/* Event Structure */}
+      <section id="event-structure" className="section pb-20 pt-8 sm:pt-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">
+            Event Structure
+          </h2>
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
+            A comprehensive journey from learning to competing
+          </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Workshops */}
+          <div className="group relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+            <div className="relative card p-8 text-center hover:scale-105 transition-all duration-300 hover:shadow-2xl border border-white/20 dark:border-white/10 backdrop-blur-xl bg-white/90 dark:bg-black/80 rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 octwave-gradient-bg opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl"></div>
+              <div className="absolute top-4 left-4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400/20 to-purple-600/20 blur-xl"></div>
+              <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-gradient-to-br from-purple-400/30 to-indigo-600/30 blur-lg"></div>
+              <div className="relative z-10">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl octwave-gradient-bg flex items-center justify-center text-2xl font-bold text-white shadow-xl transform group-hover:rotate-3 transition-transform duration-300">
+                  1
+                </div>
+                <h3 className="text-2xl font-bold mb-6 octwave-gradient-text">
+                  Workshops
+                </h3>
+                <div className="w-20 h-1 mx-auto mb-6 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 rounded-full"></div>
+                <div className="grid gap-4 sm:grid-cols-2 max-w-3xl mx-auto">
+                  <div className="bg-gradient-to-br from-white/20 to-white/5 dark:from-black/30 dark:to-black/10 rounded-xl p-4 border border-white/30 dark:border-white/20 hover:border-pink-300 dark:hover:border-pink-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+                    <h4 className="font-semibold text-black dark:text-white mb-2">
+                      Session 1
+                    </h4>
+                    <p className="text-sm text-black/80 dark:text-white/80">
+                      Introduction to Machine Learning
+                    </p>
+                  </div>
+                  <div className="bg-gradient-to-br from-white/20 to-white/5 dark:from-black/30 dark:to-black/10 rounded-xl p-4 border border-white/30 dark:border-white/20 hover:border-purple-300 dark:hover:border-purple-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+                    <h4 className="font-semibold text-black dark:text-white mb-2">
+                      Session 2
+                    </h4>
+                    <p className="text-sm text-black/80 dark:text-white/80">
+                      Building models and handling time series data
+                    </p>
+                  </div>
+                  <div className="bg-gradient-to-br from-white/20 to-white/5 dark:from-black/30 dark:to-black/10 rounded-xl p-4 border border-white/30 dark:border-white/20 hover:border-purple-300 dark:hover:border-purple-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+                    <h4 className="font-semibold text-black dark:text-white mb-2">
+                      Session 3
+                    </h4>
+                    <p className="text-sm text-black/80 dark:text-white/80">
+                      About data engineering
+                    </p>
+                  </div>
+                  <div className="bg-gradient-to-br from-white/20 to-white/5 dark:from-black/30 dark:to-black/10 rounded-xl p-4 border border-white/30 dark:border-white/20 hover:border-indigo-300 dark:hover:border-indigo-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+                    <h4 className="font-semibold text-black dark:text-white mb-2">
+                      Session 4
+                    </h4>
+                    <p className="text-sm text-black/80 dark:text-white/80">
+                      Introduction to Kaggle platform
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-          ))}
+          </div>
+
+          {/* Competition */}
+          <div className="group relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+            <div className="relative card p-8 text-center hover:scale-105 transition-all duration-300 hover:shadow-2xl border border-white/20 dark:border-white/10 backdrop-blur-xl bg-white/90 dark:bg-black/80 rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 octwave-gradient-bg opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl"></div>
+              <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-gradient-to-br from-pink-400/25 to-purple-600/25 blur-lg"></div>
+              <div className="absolute bottom-4 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-purple-400/20 to-indigo-600/20 blur-xl"></div>
+              <div className="relative z-10">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl octwave-gradient-bg flex items-center justify-center text-2xl font-bold text-white shadow-xl transform group-hover:rotate-3 transition-transform duration-300">
+                  2
+                </div>
+                <h3 className="text-2xl font-bold mb-6 octwave-gradient-text">
+                  Competition
+                </h3>
+                <div className="w-20 h-1 mx-auto mb-6 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 rounded-full"></div>
+                <div className="space-y-6 max-w-3xl mx-auto">
+                  <div className="bg-gradient-to-br from-white/25 to-white/10 dark:from-black/40 dark:to-black/20 rounded-xl p-6 border border-white/30 dark:border-white/20 hover:border-pink-300 dark:hover:border-pink-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                      <div className="w-8 h-8 rounded-xl octwave-gradient-bg flex items-center justify-center text-sm font-bold text-white shadow-md">
+                        📝
+                      </div>
+                      <h4 className="text-lg font-bold text-black dark:text-white">
+                        Team Registration (Online)
+                      </h4>
+                    </div>
+                    <p className="text-sm text-black/80 dark:text-white/90">
+                      Teams will register with all required details to
+                      officially enter the competition.
+                    </p>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-white/25 to-white/10 dark:from-black/40 dark:to-black/20 rounded-xl p-6 border border-white/30 dark:border-white/20 hover:border-purple-300 dark:hover:border-purple-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                      <div className="w-8 h-8 rounded-xl octwave-gradient-bg flex items-center justify-center text-sm font-bold text-white shadow-md">
+                        💻
+                      </div>
+                      <h4 className="text-lg font-bold text-black dark:text-white">
+                        Preliminary Round (Online)
+                      </h4>
+                    </div>
+                    <p className="text-sm text-black/80 dark:text-white/90">
+                      A Kaggle competition where the Top 10 teams will be
+                      selected based on the private leaderboard.
+                    </p>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-white/25 to-white/10 dark:from-black/40 dark:to-black/20 rounded-xl p-6 border border-white/30 dark:border-white/20 hover:border-indigo-300 dark:hover:border-indigo-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                      <div className="w-8 h-8 rounded-xl octwave-gradient-bg flex items-center justify-center text-sm font-bold text-white shadow-md">
+                        🏆
+                      </div>
+                      <h4 className="text-lg font-bold text-black dark:text-white">
+                        Final Round (Physical)
+                      </h4>
+                    </div>
+                    <p className="text-sm text-black/80 dark:text-white/90">
+                      The Top 10 finalist teams will compete at the University
+                      of Moratuwa. A new problem statement and dataset will be
+                      provided, and teams must submit their working code,
+                      report, and presentation. Final presentations will be
+                      judged, followed by the awarding ceremony.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <VectorTimeline />
-      <section className="section pb-14" id="timeline">
-        
-        <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">Event Timeline</h2>
-        <div className="mt-8 grid md:grid-cols-[1fr_auto_1fr] gap-6 items-start">
-          {/* Left column labels */}
-          <div className="flex flex-col gap-16 md:gap-20 text-right pr-2">
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 02</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Workshop session 02 & 03</p>
-            </div>
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 04</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Preliminary Round (online)</p>
-            </div>
-          </div>
-
-          {/* Center rail */}
-          <div className="relative mx-auto">
-            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[6px] rounded bg-gradient-to-b from-[var(--octwave-from)] via-[var(--octwave-via)] to-[var(--octwave-to)] opacity-70"></div>
-
-            {[
-              { side: "right", week: "WEEK 01", text: "Introductory session & Workshop session 01" },
-              { side: "left", week: "WEEK 02", text: "Workshop session 02 & 03" },
-              { side: "right", week: "WEEK 03", text: "Workshop session 04 & Team Registration (online)" },
-              { side: "left", week: "WEEK 04", text: "Preliminary Round (online)" },
-              { side: "right", week: "WEEK 05 & 06", text: "Final Round" },
-            ].map((e) => (
-              <div key={e.week} className="relative flex items-center my-10 md:my-12">
-                {/* node */}
-                <div className="relative z-10 w-5 h-5 rounded-full bg-white dark:bg-white shadow ring-4 ring-[rgba(0,0,0,0.1)] dark:ring-[rgba(255,255,255,0.25)]"></div>
-                {/* connector to card */}
-                <div className={`hidden md:block h-1 w-24 ${e.side === "right" ? "ml-3" : "mr-3"}`} style={{background: 'linear-gradient(90deg, var(--octwave-from), var(--octwave-to))'}}></div>
-              </div>
-            ))}
-          </div>
-
-          {/* Right column cards */}
-          <div className="flex flex-col gap-16 md:gap-20 pl-2">
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 01</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Introductory session & Workshop session 01</p>
-            </div>
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 03</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Workshop session 04 & Team Registration (online)</p>
-            </div>
-            <div>
-              <p className="font-extrabold tracking-wide text-black dark:text-white">WEEK 05 & 06</p>
-              <p className="text-sm text-black/70 dark:text-white/80">Final Round</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile stacked list */}
-        <ol className="mt-8 space-y-4 md:hidden">
-          {[
-            { w: "WEEK 01", d: "Introductory session & Workshop session 01" },
-            { w: "WEEK 02", d: "Workshop session 02 & 03" },
-            { w: "WEEK 03", d: "Workshop session 04 & Team Registration (online)" },
-            { w: "WEEK 04", d: "Preliminary Round (online)" },
-            { w: "WEEK 05 & 06", d: "Final Round" },
-          ].map((x) => (
-            <li key={x.w} className="card p-4">
-              <p className="text-xs text-black/60 dark:text-white/70">{x.w}</p>
-              <p className="font-medium text-black dark:text-white">{x.d}</p>
-            </li>
-          ))}
-        </ol>
+      <section id="timeline">
+        <VectorTimeline />
       </section>
 
       {/* Prizes */}
-      <section className="section pb-14">
-        <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">Prizes</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          {[
-            { place: "Grand Prize", amt: "$3,000" },
-            { place: "Runner Up", amt: "$1,500" },
-            { place: "Track Winners", amt: "$500 each" },
-          ].map((p) => (
-            <div key={p.place} className="card p-6">
-              <p className="text-sm text-black/70 dark:text-white/70">{p.place}</p>
-              <p className="mt-2 text-2xl font-bold text-black dark:text-white">{p.amt}</p>
-            </div>
-          ))}
+      <PrizeSection />
+
+      {/* Rules Section */}
+      <section id="rules" className="section pb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">
+            General Rules for the Kaggle Competition (Round 1)
+          </h2>
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
+            Guidelines and regulations for fair competition
+          </p>
         </div>
-      </section>
 
-      {/* FAQ */}
-      <section className="section pb-16">
-        <h2 className="text-2xl sm:text-3xl font-semibold octwave-gradient-text">FAQs</h2>
-        <dl className="mt-6 grid gap-4 md:grid-cols-2">
-          {[
-            { q: "Who can participate?", a: "Students and professionals worldwide. Teams of up to 4." },
-            { q: "What’s the fee?", a: "Free to join. Limited seats." },
-            { q: "IP and ownership?", a: "You own your work. Sponsors may offer collaborations." },
-            { q: "What do I need?", a: "A laptop, internet, and your ideas." },
-          ].map((f) => (
-            <div key={f.q} className="card p-5">
-              <dt className="font-medium text-black dark:text-white">{f.q}</dt>
-              <dd className="mt-1 text-sm text-black/70 dark:text-white/80">{f.a}</dd>
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Eligibility */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  👥
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">
+                  Eligibility
+                </h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Only officially registered participants are allowed to
+                    compete.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    All team members must belong to the same university.
+                  </span>
+                </li>
+              </ul>
             </div>
-          ))}
-        </dl>
-      </section>
+          </div>
 
-      {/* CTA */}
-      <footer id="register" className="section pb-24">
-        <div className="card p-6 md:p-8 text-center">
-          <h3 className="text-xl sm:text-2xl font-semibold text-black dark:text-white">Ready to ride the Octwave 2.0?</h3>
-          <p className="mt-2 text-black/70 dark:text-white/80">Register your team and start building.</p>
-          <div className="mt-6 flex justify-center gap-3">
-            <a className="btn-primary" href="#">Register</a>
-            <a className="btn-ghost" href="#">View Rules</a>
+          {/* Team Formation */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  🤝
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">
+                  Team Formation
+                </h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Teams must consist of 2 to 4 members.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Each team must have a Team Leader who will create the team
+                    on Kaggle.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Team members should join through the invitation link from
+                    the leader.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Team names must follow the format: (example:
+                    T05_DataWizards).
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Submissions */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  📝
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">
+                  Submissions
+                </h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Each team can make a maximum of 8 submissions per day.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Teams must select up to 2 final submissions for evaluation.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    If fewer than 2 are selected, Kaggle will auto-select the
+                    best public score.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Final ranking will be based on the Private Leaderboard
+                    score.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Data Usage */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  💾
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">
+                  Data Usage
+                </h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Competition data may be used only for this competition.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Sharing, publishing, duplicating, or redistributing the data
+                    outside the team is prohibited.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Teams must ensure no unauthorized access to the competition
+                    data.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Code & Solution Sharing */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  💻
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">
+                  Code & Solution Sharing
+                </h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Sharing code, solutions, or data between teams or publicly
+                    is strictly prohibited.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>All work must be original to the team.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Evaluation & Advancement */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  🏆
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">
+                  Evaluation & Advancement
+                </h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>
+                    Rankings will be based on the Private Leaderboard score.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>The Top 10 teams will qualify for the next round.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Evaluation Criteria */}
+          <div className="card p-8 hover:scale-105 transition-all duration-300 hover:shadow-2xl border-2 border-transparent hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full octwave-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                  🏆
+                </div>
+                <h3 className="text-xl font-bold octwave-gradient-text">
+                  Evaluation Criteria
+                </h3>
+              </div>
+              <ul className="space-y-2 text-black/80 dark:text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Technical innovation and creativity (30%)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Solution accuracy and performance (25%)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Code quality and documentation (20%)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Presentation and communication (15%)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg mt-2 flex-shrink-0"></span>
+                  <span>Real-world applicability and impact (10%)</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <p className="mt-6 text-center text-xs text-black/60 dark:text-white/60">Organized by IEEE Industry Applications Society, University of Moratuwa</p>
-        <p className="mt-2 text-center text-xs text-black/60 dark:text-white/60">© {new Date().getFullYear()} Octwave 2.0</p>
-      </footer>
+      </section>
+
+      {/* Contact Information */}
+      <section id="contact" className="section ">
+        <h1> </h1>
+         <ContactCards />
+       
+      </section>
+
+      {/* CTA Section */}
+      <section id="register" className="section pb-24">
+        <div className="group relative">
+          {/* Background gradient blur */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+
+          {/* Main card */}
+          <div className="relative card p-8 md:p-12 text-center hover:scale-105 transition-all duration-300 hover:shadow-2xl border border-white/20 dark:border-white/10 backdrop-blur-xl bg-white/90 dark:bg-black/80 rounded-2xl overflow-hidden">
+            {/* Animated background overlay */}
+            <div className="absolute inset-0 octwave-gradient-bg opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl"></div>
+
+            {/* Decorative elements */}
+            <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400/20 to-purple-600/20 blur-xl"></div>
+            <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-gradient-to-br from-purple-400/30 to-indigo-600/30 blur-lg"></div>
+
+            {/* Content */}
+            <div className="relative z-10">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold bg-gradient-to-r from-pink-400/20 via-purple-500/20 to-indigo-500/20 text-transparent bg-clip-text octwave-gradient-text ring-1 ring-white/20 dark:ring-white/10 mb-6">
+                <span className="text-2xl">🚀</span>
+                <span>Join the Competition</span>
+              </div>
+
+              {/* Main heading */}
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold octwave-gradient-text mb-4">
+                Ready to ride the Octwave 2.0?
+              </h3>
+
+              {/* Gradient divider */}
+              <div className="w-24 h-1 mx-auto mb-4 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 rounded-full"></div>
+
+              {/* Description */}
+              <p className="text-base sm:text-lg text-black/80 dark:text-white/90 max-w-md mx-auto mb-8 leading-relaxed">
+                Register your team and start building innovative AI/ML solutions
+                that solve real industry problems.
+              </p>
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  className="btn-primary text-base px-8 py-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  href="/register"
+                >
+                  🎯 Register Your Team
+                </a>
+                <a
+                  className="btn-ghost text-base px-6 py-3 font-medium"
+                  href="#event-structure"
+                >
+                  Learn More
+                </a>
+              </div>
+
+              {/* Stats or additional info */}
+              <div className="mt-8 flex items-center justify-center gap-8 text-sm text-black/60 dark:text-white/60">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
+                  <span>Team-based</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
+                  <span>Cash Prizes</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
+                  <span>Real Industry Problems</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+     
     </div>
   );
 }

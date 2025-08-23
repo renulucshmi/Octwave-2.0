@@ -4,17 +4,24 @@ import { useState, useEffect, useRef } from "react"
 
 export default function SmoothFollower() {
   const mousePosition = useRef({ x: 0, y: 0 })
-
   const dotPosition = useRef({ x: 0, y: 0 })
   const borderDotPosition = useRef({ x: 0, y: 0 })
 
   const [renderPos, setRenderPos] = useState({ dot: { x: 0, y: 0 }, border: { x: 0, y: 0 } })
   const [isHovering, setIsHovering] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   const DOT_SMOOTHNESS = 0.2
   const BORDER_DOT_SMOOTHNESS = 0.1
 
   useEffect(() => {
+    // Set mounted to true after component mounts to avoid hydration mismatch
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isMounted) return
+
     const handleMouseMove = (e: MouseEvent) => {
       mousePosition.current = { x: e.clientX, y: e.clientY }
     }
@@ -65,9 +72,12 @@ export default function SmoothFollower() {
 
       cancelAnimationFrame(animationId)
     }
-  }, [])
+  }, [isMounted])
 
-  if (typeof window === "undefined") return null
+  // Don't render anything until mounted to avoid hydration mismatch
+  if (!isMounted) {
+    return null
+  }
 
   return (
     <div className="pointer-events-none fixed inset-0 z-50">
