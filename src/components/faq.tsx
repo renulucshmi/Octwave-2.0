@@ -208,9 +208,7 @@ export default function ModernFuturisticFAQ() {
               <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-pink-400/20 transition-all duration-300" />
             </div>
           ))}
-        </div>
-
-       
+        </div>       
       </div>
     </div>
   );
