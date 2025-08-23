@@ -13,6 +13,7 @@ export default function RegisterPage() {
     teamMembers: '2',
     teamName: '',
     university: '',
+    customUniversity: '',
     members: [
       { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' },
       { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' }
@@ -26,6 +27,7 @@ export default function RegisterPage() {
       teamMembers: '2',
       teamName: '',
       university: '',
+      customUniversity: '',
       members: [
         { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' },
         { fullName: '', ieeeNumber: '', email: '', phone: '', yearOfStudy: '' }
@@ -67,7 +69,7 @@ export default function RegisterPage() {
         body: JSON.stringify({
           teamName: formData.teamName,
           email: formData.email,
-          university: formData.university,
+          university: formData.university === 'other' ? formData.customUniversity : formData.university,
           members: formData.members
         })
       });
@@ -209,8 +211,14 @@ export default function RegisterPage() {
             <select
               required
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
-              value={formData.university}
-              onChange={(e) => setFormData({ ...formData, university: e.target.value })}
+              value={formData.university === 'other' ? 'other' : formData.university}
+              onChange={(e) => {
+                if (e.target.value === 'other') {
+                  setFormData({ ...formData, university: 'other', customUniversity: '' });
+                } else {
+                  setFormData({ ...formData, university: e.target.value, customUniversity: '' });
+                }
+              }}
             >
               <option value="">Select University</option>
               <option value="University of Colombo">University of Colombo</option>
@@ -224,12 +232,33 @@ export default function RegisterPage() {
               <option value="Wayamba University of Sri Lanka">Wayamba University of Sri Lanka</option>
               <option value="Sabaragamuwa University of Sri Lanka">Sabaragamuwa University of Sri Lanka</option>
               <option value="Eastern University of Sri Lanka">Eastern University of Sri Lanka</option>
-              <option value="The Open University of Sri Lanka">The Open University of Sri Lanka</option>
-              <option value="Sri Lanka Institute of Information Technology (SLIIT)">Sri Lanka Institute of Information Technology (SLIIT)</option>
-              <option value="General Sir John Kotelawala Defence University (KDU)">General Sir John Kotelawala Defence University (KDU)</option>
               <option value="Uva Wellassa University">Uva Wellassa University</option>
               <option value="South Eastern University of Sri Lanka">South Eastern University of Sri Lanka</option>
+              <option value="The Open University of Sri Lanka">The Open University of Sri Lanka</option>
+              <option value="Sri Lanka Institute of Information Technology (SLIIT)">Sri Lanka Institute of Information Technology (SLIIT)</option>
+              <option value="Informatics Institute of Technology (IIT)">Informatics Institute of Technology (IIT)</option>
+              <option value="General Sir John Kotelawala Defence University (KDU)">General Sir John Kotelawala Defence University (KDU)</option>
+              <option value="National Institute of Business Management (NIBM)">National Institute of Business Management (NIBM)</option>
+              <option value="ESOFT Metro Campus">ESOFT Metro Campus</option>
+              <option value="ICBT Campus">ICBT Campus</option>
+              <option value="CINEC Campus">CINEC Campus</option>
+              <option value="NSBM Green University">NSBM Green University</option>
+              <option value="Curtin University Colombo">Curtin University Colombo</option>
+              <option value="Asia Pacific Institute of Information Technology (APIIT)">Asia Pacific Institute of Information Technology (APIIT)</option>
+              <option value="Nawaloka College of Higher Studies (NCHS)">Nawaloka College of Higher Studies (NCHS)</option>
+              <option value="other">Other (Type your university)</option>
             </select>
+            
+            {formData.university === 'other' && (
+              <input
+                type="text"
+                required
+                placeholder="Enter your university name"
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
+                value={formData.customUniversity || ''}
+                onChange={(e) => setFormData({ ...formData, customUniversity: e.target.value })}
+              />
+            )}
             <p className="text-xs text-gray-500 mt-1">All team members must be from the same university</p>
           </div>
 
