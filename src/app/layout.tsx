@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   title: "Octwave 2.0 — Competition",
   description:
     "Join Octwave 2.0, a premier tech innovation competition. Register, view timeline, prizes, FAQs, and more.",
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
 };
 
 export default function RootLayout({
