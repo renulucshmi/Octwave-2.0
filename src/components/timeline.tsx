@@ -38,66 +38,12 @@ const particleConfigs = [
 const timelineEvents: TimelineEvent[] = [
   {
     id: 1,
-    year: 'AUG 25-31 (Extended until Sep 6)',
+    year: 'AUG 26-31',
     title: 'Registration Period',
     color: 'var(--octwave-from)',
     glowColor: 'var(--octwave-from)',
     iconPath: 'M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7ZM12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z',
     dataPoints: [95, 87, 92, 88, 94]
-  },
-  {
-    id: 2,
-    year: 'SEP 01',
-    title: '1st Virtual Awareness Session & Introductory',
-    color: 'var(--octwave-via)',
-    glowColor: 'var(--octwave-via)',
-    iconPath: 'M12 2L2 7V10C2 16 6 22 12 22S22 16 22 10V7L12 2Z',
-    dataPoints: [89, 91, 85, 93, 90]
-  },
-  {
-    id: 3,
-    year: 'SEP 04',
-    title: '2nd Virtual Awareness Session',
-    color: 'var(--octwave-to)',
-    glowColor: 'var(--octwave-to)',
-    iconPath: 'M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z',
-    dataPoints: [78, 82, 86, 91, 88]
-  },
-  {
-    id: 4,
-    year: 'SEP 05-08',
-    title: 'Final 10 Team Selection Round (Kaggle Only)',
-    color: 'var(--octwave-from)',
-    glowColor: 'var(--octwave-from)',
-    iconPath: 'M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z',
-    dataPoints: [72, 75, 79, 84, 81]
-  },
-  {
-    id: 5,
-    year: 'SEP 09',
-    title: '3rd Virtual Awareness Session & Final Task Reveal',
-    color: 'var(--octwave-via)',
-    glowColor: 'var(--octwave-via)',
-    iconPath: 'M12 2L2 7V10C2 16 6 22 12 22S22 16 22 10V7L12 2Z',
-    dataPoints: [85, 88, 90, 87, 92]
-  },
-  {
-    id: 6,
-    year: 'SEP 10-15',
-    title: 'Final Submission Period',
-    color: 'var(--octwave-to)',
-    glowColor: 'var(--octwave-to)',
-    iconPath: 'M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z',
-    dataPoints: [92, 94, 90, 96, 98]
-  },
-  {
-    id: 7,
-    year: 'SEP 23-27',
-    title: 'Judgement Period & Final Round at UOM',
-    color: 'var(--octwave-from)',
-    glowColor: 'var(--octwave-from)',
-    iconPath: 'M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z',
-    dataPoints: [95, 98, 92, 96, 100]
   },
 ];
 

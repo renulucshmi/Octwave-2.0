@@ -268,40 +268,40 @@ export default function Home() {
                   1
                 </div>
                 <h3 className="text-2xl font-bold mb-6 octwave-gradient-text">
-                  Virtual Awareness Sessions
+                  Virtual Sessions & Training
                 </h3>
                 <div className="w-20 h-1 mx-auto mb-6 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 rounded-full"></div>
                 <div className="grid gap-4 sm:grid-cols-2 max-w-3xl mx-auto">
                   <div className="bg-gradient-to-br from-white/20 to-white/5 dark:from-black/30 dark:to-black/10 rounded-xl p-4 border border-white/30 dark:border-white/20 hover:border-pink-300 dark:hover:border-pink-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
                     <h4 className="font-semibold text-black dark:text-white mb-2">
-                      Session 1 (Sep 01)
+                      AI/ML Introduction
                     </h4>
                     <p className="text-sm text-black/80 dark:text-white/80">
-                      Introduction to OctWave 2.0, Introductory session on AI, ML
+                      Learn the fundamentals of Artificial Intelligence and Machine Learning
                     </p>
                   </div>
                   <div className="bg-gradient-to-br from-white/20 to-white/5 dark:from-black/30 dark:to-black/10 rounded-xl p-4 border border-white/30 dark:border-white/20 hover:border-purple-300 dark:hover:border-purple-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
                     <h4 className="font-semibold text-black dark:text-white mb-2">
-                      Session 2 (Sep 04)
+                      Kaggle Platform Training
                     </h4>
                     <p className="text-sm text-black/80 dark:text-white/80">
-                      Solving challenges using the Kaggle platform
+                      Master the Kaggle platform and competition techniques
                     </p>
                   </div>
                   <div className="bg-gradient-to-br from-white/20 to-white/5 dark:from-black/30 dark:to-black/10 rounded-xl p-4 border border-white/30 dark:border-white/20 hover:border-purple-300 dark:hover:border-purple-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
                     <h4 className="font-semibold text-black dark:text-white mb-2">
-                      Session 3 (Sep 09)
+                      Real-World Applications
                     </h4>
                     <p className="text-sm text-black/80 dark:text-white/80">
-                      In-depth session on solving real-world problems using AI and ML
+                      Apply AI/ML to solve practical industry problems
                     </p>
                   </div>
                   <div className="bg-gradient-to-br from-white/20 to-white/5 dark:from-black/30 dark:to-black/10 rounded-xl p-4 border border-white/30 dark:border-white/20 hover:border-indigo-300 dark:hover:border-indigo-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
                     <h4 className="font-semibold text-black dark:text-white mb-2">
-                      Final Task Reveal
+                      Competition Preparation
                     </h4>
                     <p className="text-sm text-black/80 dark:text-white/80">
-                      Awareness session about final round and task announcement
+                      Get ready for the competitive challenges ahead
                     </p>
                   </div>
                 </div>
@@ -331,12 +331,12 @@ export default function Home() {
                         📝
                       </div>
                       <h4 className="text-lg font-bold text-black dark:text-white">
-                        Team Registration (Aug 25-31, Extended until Sep 6)
+                        Team Registration (Aug 26-31)
                       </h4>
                     </div>
                     <p className="text-sm text-black/80 dark:text-white/90">
-                      Teams register with all required details to officially enter the competition.
-                      Registration period has been extended to accommodate more teams.
+                      Register your team with all required details to officially enter the competition.
+                      Open to undergraduate students from all Sri Lankan universities.
                     </p>
                   </div>
 
@@ -346,27 +346,12 @@ export default function Home() {
                         💻
                       </div>
                       <h4 className="text-lg font-bold text-black dark:text-white">
-                        Selection Round (Sep 5-8) - Kaggle Only
+                        Competition Rounds
                       </h4>
                     </div>
                     <p className="text-sm text-black/80 dark:text-white/90">
-                      Preliminary round focusing only on Kaggle leaderboard performance.
-                      Top 10 teams will be selected without requiring reports.
-                    </p>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-white/25 to-white/10 dark:from-black/40 dark:to-black/20 rounded-xl p-6 border border-white/30 dark:border-white/20 hover:border-yellow-300 dark:hover:border-yellow-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
-                    <div className="flex items-center justify-center gap-3 mb-3">
-                      <div className="w-8 h-8 rounded-xl octwave-gradient-bg flex items-center justify-center text-sm font-bold text-white shadow-md">
-                        📊
-                      </div>
-                      <h4 className="text-lg font-bold text-black dark:text-white">
-                        Submission Period (Sep 10-15)
-                      </h4>
-                    </div>
-                    <p className="text-sm text-black/80 dark:text-white/90">
-                      Selected teams must submit their code, comprehensive report, 
-                      and presentation materials for the final evaluation.
+                      Multi-stage competition featuring online challenges and a final physical round
+                      at the University of Moratuwa with top teams.
                     </p>
                   </div>
 
@@ -376,12 +361,12 @@ export default function Home() {
                         🏆
                       </div>
                       <h4 className="text-lg font-bold text-black dark:text-white">
-                        Final Round (Sep 23-27) - University of Moratuwa
+                        Awards & Recognition
                       </h4>
                     </div>
                     <p className="text-sm text-black/80 dark:text-white/90">
-                      Physical competition at University of Moratuwa featuring judgement period,
-                      final presentations, and the awards ceremony for winning teams.
+                      Winners receive cash prizes, certificates, and industry recognition.
+                      Network with tech leaders and showcase your AI/ML solutions.
                     </p>
                   </div>
                 </div>
