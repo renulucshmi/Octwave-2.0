@@ -130,19 +130,7 @@ export default function RegisterPage() {
           </ul>
         </div>
 
-        {/* Event Structure */}
-        <div className="card p-6 mb-8">
-          <h2 className="text-2xl font-bold octwave-gradient-text mb-4">📅 Event Structure:</h2>
-          <ul className="space-y-2 text-black/80 dark:text-white/90">
-            <li><strong>Registration Period:</strong> August 17-23</li>
-            <li><strong>1st Virtual Session:</strong> Introduction to OctWave 2.0 & AI/ML fundamentals</li>
-            <li><strong>2nd Virtual Session:</strong> Kaggle platform & challenge solving techniques</li>
-            <li><strong>Kaggle Challenge:</strong> September 1-7 (Solution submission deadline: Sept 7)</li>
-            <li><strong>Top 10 Teams Selection & Announcement:</strong> Post Kaggle evaluation</li>
-            <li><strong>3rd Virtual Session:</strong> Real-world problem solving with AI/ML + Final round briefing</li>
-            <li><strong>Final Round:</strong> Physical competition at University of Moratuwa</li>
-          </ul>
-        </div>
+        
 
         {/* Important Requirements */}
         <div className="card p-6 mb-8 border-yellow-300 bg-yellow-50 dark:bg-yellow-900/20">
