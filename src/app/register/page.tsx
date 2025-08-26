@@ -304,12 +304,21 @@ export default function RegisterPage() {
                     Phone (WhatsApp) <span className="text-red-500">*</span>
                   </label>
                   <input
-                    type="tel"
+                    type="text"
                     required
+                    inputMode="numeric"
+                    pattern="^\\d{10}$"
+                    maxLength={10}
+                    minLength={10}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600"
                     value={member.phone}
-                    onChange={(e) => updateMember(index, 'phone', e.target.value)}
+                    onChange={(e) => {
+                      // Only allow digits
+                      const value = e.target.value.replace(/[^0-9]/g, '');
+                      updateMember(index, 'phone', value);
+                    }}
                   />
+                  <p className="text-xs text-gray-500 mt-1">Enter exactly 10 digits. Do not include +94 or spaces.</p>
                 </div>
 
                 <div>
