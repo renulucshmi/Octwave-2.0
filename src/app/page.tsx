@@ -331,7 +331,7 @@ export default function Home() {
                         📝
                       </div>
                       <h4 className="text-lg font-bold text-black dark:text-white">
-                        Team Registration (Aug 26-31)
+                        Team Registration
                       </h4>
                     </div>
                     <p className="text-sm text-black/80 dark:text-white/90">
