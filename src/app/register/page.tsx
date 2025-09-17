@@ -469,7 +469,7 @@ export default function RegisterPage() {
                 <div className="bg-white dark:bg-gray-700 rounded-lg p-2 mb-2 border border-green-200 dark:border-green-700">
                   <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">WhatsApp Group Link:</p>
                   <p className="text-xs text-gray-800 dark:text-gray-200 font-mono break-all">
-                    https://chat.whatsapp.com/J6RzyUaTL3NFOtDVjh2guG
+                  https://chat.whatsapp.com/HV38OZplCZ58Z7HfZhwgRY 
                   </p>
                 </div>
 
