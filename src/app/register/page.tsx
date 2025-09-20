@@ -477,7 +477,7 @@ export default function RegisterPage() {
                 <div className="flex flex-col gap-2">
                   <button
                     onClick={(event) => {
-                      navigator.clipboard.writeText('https://chat.whatsapp.com/J6RzyUaTL3NFOtDVjh2guG');
+                      navigator.clipboard.writeText('https://chat.whatsapp.com/HV38OZplCZ58Z7HfZhwgRY');
                       // Show a temporary feedback
                       const btn = event.target as HTMLButtonElement;
                       const originalText = btn.textContent;
@@ -492,7 +492,7 @@ export default function RegisterPage() {
                   </button>
                   
                   <a 
-                    href="https://chat.whatsapp.com/J6RzyUaTL3NFOtDVjh2guG"
+                    href="https://chat.whatsapp.com/HV38OZplCZ58Z7HfZhwgRY"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-primary inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-sm py-2"
