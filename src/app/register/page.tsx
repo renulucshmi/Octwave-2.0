@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { AlertTriangle, Calendar, Clock, Rocket } from "lucide-react";
 
 export default function RegisterPage() {
   const [mounted, setMounted] = useState(false);
@@ -115,6 +116,34 @@ export default function RegisterPage() {
             Join Sri Lanka's premier AI/ML competition designed to empower young professionals to solve real-world challenges! 
             Organized by IEEE Industry Applications Society (IAS) Student Branch Chapter, University of Moratuwa.
           </p>
+        </div>
+
+        {/* Registration Deadline Reminder */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white rounded-2xl mb-8 p-6">
+          <div className="absolute inset-0 bg-black/10"></div>
+          <div className="relative z-10 text-center">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="w-6 h-6 animate-pulse" />
+                <span className="font-bold text-lg">REGISTRATION CLOSING SOON!</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="w-5 h-5" />
+                <span className="font-semibold">Deadline: September 30th, 2025</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 animate-bounce" />
+                <span className="font-bold text-yellow-200">Only 2 days left!</span>
+              </div>
+            </div>
+            <p className="text-sm opacity-90 mb-4">
+              Don't miss out on Sri Lanka's premier AI/ML competition! Complete your registration now.
+            </p>
+            <div className="inline-flex items-center justify-center gap-2 bg-white text-red-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+              <Rocket className="w-4 h-4" />
+              <span>Register Below</span>
+            </div>
+          </div>
         </div>
 
         {/* What Awaits You */}

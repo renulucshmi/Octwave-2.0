@@ -7,6 +7,7 @@ import AHoleBackground from "@/components/AHoleBackground";
 import { useEffect, useState } from "react";
 import PrizeSection from "@/components/PrizeSection";
 import ContactCards from "@/components/ContactCards";
+import { AlertTriangle, Calendar, Clock, Rocket } from "lucide-react";
 
 // Dynamically import VectorTimeline to avoid hydration issues
 const VectorTimeline = dynamic(() => import("@/components/timeline"), {
@@ -245,26 +246,26 @@ export default function Home() {
       </header>
 
       {/* Registration Deadline Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white py-4">
+      <section className="relative overflow-hidden bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white py-6">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl animate-pulse">⚠️</span>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+            <div className="flex items-center gap-3">
+              <AlertTriangle className="w-6 h-6 animate-pulse" />
               <span className="font-bold text-lg">REGISTRATION CLOSING SOON!</span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">📅</span>
+            <div className="flex items-center gap-3">
+              <Calendar className="w-5 h-5" />
               <span className="font-semibold">Deadline: September 30th, 2025</span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl animate-bounce">⏰</span>
-              <span className="font-bold text-yellow-200">Only 1 day left!</span>
+            <div className="flex items-center gap-3">
+              <Clock className="w-5 h-5 animate-bounce" />
+              <span className="font-bold text-yellow-200">Only 2 days left!</span>
             </div>
           </div>
-          <div className="mt-2">
-            <a href="/register" className="inline-flex items-center gap-2 bg-white text-red-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
-              <span>🚀</span>
+          <div className="flex justify-center">
+            <a href="/register" className="inline-flex items-center gap-2 bg-white text-red-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg">
+              <Rocket className="w-5 h-5" />
               Register Now
             </a>
           </div>
