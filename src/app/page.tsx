@@ -244,6 +244,33 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Registration Deadline Banner */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white py-4">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl animate-pulse">⚠️</span>
+              <span className="font-bold text-lg">REGISTRATION CLOSING SOON!</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xl">📅</span>
+              <span className="font-semibold">Deadline: September 30th, 2025</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xl animate-bounce">⏰</span>
+              <span className="font-bold text-yellow-200">Only 1 day left!</span>
+            </div>
+          </div>
+          <div className="mt-2">
+            <a href="/register" className="inline-flex items-center gap-2 bg-white text-red-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+              <span>🚀</span>
+              Register Now
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Event Structure */}
       <section id="event-structure" className="section pb-20 pt-8 sm:pt-16">
         <div className="text-center mb-12">
@@ -349,10 +376,15 @@ export default function Home() {
                         Competition Rounds
                       </h4>
                     </div>
-                    <p className="text-sm text-black/80 dark:text-white/90">
+                    <p className="text-sm text-black/80 dark:text-white/90 mb-2">
                       Multi-stage competition featuring online challenges and a final physical round
                       at the University of Moratuwa with top teams.
                     </p>
+                    <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg p-3 border border-blue-300/30">
+                      <p className="text-xs font-semibold text-blue-800 dark:text-blue-300">
+                        📅 Initial Round (Kaggle): October 4th-5th, 2025
+                      </p>
+                    </div>
                   </div>
 
                   <div className="bg-gradient-to-br from-white/25 to-white/10 dark:from-black/40 dark:to-black/20 rounded-xl p-6 border border-white/30 dark:border-white/20 hover:border-indigo-300 dark:hover:border-indigo-400 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
@@ -390,9 +422,15 @@ export default function Home() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">
             General Rules for the Kaggle Competition (Round 1)
           </h2>
-          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto">
+          <p className="text-lg text-black/80 dark:text-white/80 max-w-2xl mx-auto mb-3">
             Guidelines and regulations for fair competition
           </p>
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full px-4 py-2 border border-blue-300/30">
+            <span className="text-lg">📅</span>
+            <span className="font-semibold text-blue-800 dark:text-blue-300">
+              Initial Round: October 4th-5th, 2025
+            </span>
+          </div>
         </div>
 
         <div className="max-w-4xl mx-auto space-y-6">

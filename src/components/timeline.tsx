@@ -39,7 +39,7 @@ const timelineEvents: TimelineEvent[] = [
   {
     id: 1,
     year: 'PHASE 1',
-    title: 'Registration Period',
+    title: 'Registration Period (Closes Sept 30th)',
     color: 'var(--octwave-from)',
     glowColor: 'var(--octwave-from)',
     iconPath: 'M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7ZM12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z',
@@ -66,7 +66,7 @@ const timelineEvents: TimelineEvent[] = [
   {
     id: 4,
     year: 'PHASE 4',
-    title: 'Final 10 Team Selection Round (Kaggle Only)',
+    title: 'Initial Round - Kaggle Competition (Oct 4th-5th)',
     color: 'var(--octwave-from)',
     glowColor: 'var(--octwave-from)',
     iconPath: 'M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z',
