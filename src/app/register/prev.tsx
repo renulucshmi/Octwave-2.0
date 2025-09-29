@@ -118,30 +118,30 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        {/* Registration Closed Notice */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 text-white rounded-2xl mb-8 p-6">
-          <div className="absolute inset-0 bg-black/20"></div>
+        {/* Registration Deadline Reminder */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white rounded-2xl mb-8 p-6">
+          <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative z-10 text-center">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-6 h-6 text-red-400" />
-                <span className="font-bold text-lg">REGISTRATION CLOSED</span>
+                <AlertTriangle className="w-6 h-6 animate-pulse" />
+                <span className="font-bold text-lg">REGISTRATION CLOSING SOON!</span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-gray-300" />
-                <span className="font-semibold">Deadline was: September 30th, 2025</span>
+                <Calendar className="w-5 h-5" />
+                <span className="font-semibold">Deadline: September 30th, 2025</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-gray-300" />
-                <span className="font-bold text-gray-300">Registration period ended</span>
+                <Clock className="w-5 h-5 animate-bounce" />
+                <span className="font-bold text-yellow-200">Only 2 days left!</span>
               </div>
             </div>
             <p className="text-sm opacity-90 mb-4">
-              Registration for OctWave 2.0 has officially closed. Thank you for your interest!
+              Don't miss out on Sri Lanka's premier AI/ML competition! Complete your registration now.
             </p>
-            <div className="inline-flex items-center justify-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-full font-bold cursor-not-allowed">
-              <Clock className="w-4 h-4" />
-              <span>Registration Closed</span>
+            <div className="inline-flex items-center justify-center gap-2 bg-white text-red-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+              <Rocket className="w-4 h-4" />
+              <span>Register Below</span>
             </div>
           </div>
         </div>
@@ -172,33 +172,9 @@ export default function RegisterPage() {
           <p className="mt-4 font-semibold">Transform your innovative ideas into real-world AI/ML solutions with OctWave 2.0!</p>
         </div>
 
-        {/* Registration Form - Disabled */}
-        <div className="card p-6 mb-8 bg-gray-50 dark:bg-gray-900/50 border-2 border-gray-300 dark:border-gray-700">
-          <div className="text-center py-12">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
-              <Clock className="w-10 h-10 text-gray-600 dark:text-gray-400" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-600 dark:text-gray-400 mb-4">Registration Period Ended</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
-              The registration deadline for OctWave 2.0 has passed. Registration closed on September 30th, 2025.
-            </p>
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-6 max-w-md mx-auto">
-              <h3 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">What's Next?</h3>
-              <ul className="text-sm text-blue-700 dark:text-blue-400 space-y-1">
-                <li>• Registered teams will be contacted soon</li>
-                <li>• Workshop schedules will be announced</li>
-                <li>• Competition details coming up</li>
-              </ul>
-            </div>
-            <p className="text-sm text-gray-500 dark:text-gray-500">
-              Thank you for your interest in OctWave 2.0!
-            </p>
-          </div>
-        </div>
-
-        {/* Disabled Registration Form for Reference */}
-        <div className="card p-6 mb-8 opacity-50 pointer-events-none" style={{ filter: 'grayscale(100%)' }}>
-          <h2 className="text-2xl font-bold text-gray-500 mb-6">Registration Form (Closed)</h2>
+        {/* Registration Form */}
+        <form className="card p-6 mb-8" onSubmit={handleSubmit}>
+          <h2 className="text-2xl font-bold octwave-gradient-text mb-6">Registration Form</h2>
           
           {/* Email */}
           <div className="mb-6">
@@ -431,15 +407,26 @@ export default function RegisterPage() {
             </div>
           )}
 
-          {/* Submit Button - Disabled */}
+          {/* Submit Button */}
           <button
-            type="button"
-            disabled={true}
-            className="w-full bg-gray-400 text-gray-600 text-lg py-4 rounded-lg cursor-not-allowed"
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full btn-primary text-lg py-4 transition-all duration-300 ${
+              isSubmitting 
+                ? 'opacity-50 cursor-not-allowed' 
+                : 'hover:scale-105'
+            }`}
           >
-            Registration Closed
+            {isSubmitting ? (
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Submitting...
+              </div>
+            ) : (
+              'Register for OctWave 2.0'
+            )}
           </button>
-        </div>
+        </form>
 
         {/* Contact Information */}
         <div className="card p-6 mb-8">

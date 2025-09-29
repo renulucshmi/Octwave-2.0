@@ -245,29 +245,29 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Registration Deadline Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 text-white py-6">
-        <div className="absolute inset-0 bg-black/10"></div>
+      {/* Registration Closed Banner */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 text-white py-6">
+        <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
             <div className="flex items-center gap-3">
-              <AlertTriangle className="w-6 h-6 animate-pulse" />
-              <span className="font-bold text-lg">REGISTRATION CLOSING SOON!</span>
+              <AlertTriangle className="w-6 h-6 text-red-400" />
+              <span className="font-bold text-lg">REGISTRATION CLOSED</span>
             </div>
             <div className="flex items-center gap-3">
-              <Calendar className="w-5 h-5" />
-              <span className="font-semibold">Deadline: September 30th, 2025</span>
+              <Calendar className="w-5 h-5 text-gray-300" />
+              <span className="font-semibold">Deadline was: September 30th, 2025</span>
             </div>
             <div className="flex items-center gap-3">
-              <Clock className="w-5 h-5 animate-bounce" />
-              <span className="font-bold text-yellow-200">Only 2 days left!</span>
+              <Clock className="w-5 h-5 text-gray-300" />
+              <span className="font-bold text-gray-300">Registration period ended</span>
             </div>
           </div>
           <div className="flex justify-center">
-            <a href="/register" className="inline-flex items-center gap-2 bg-white text-red-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg">
-              <Rocket className="w-5 h-5" />
-              Register Now
-            </a>
+            <div className="inline-flex items-center gap-2 bg-gray-500 text-white px-6 py-3 rounded-full font-bold cursor-not-allowed shadow-lg">
+              <Clock className="w-5 h-5" />
+              Registration Closed
+            </div>
           </div>
         </div>
       </section>
@@ -727,12 +727,9 @@ export default function Home() {
 
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a
-                  className="btn-primary text-base px-8 py-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                  href="/register"
-                >
-                  🎯 Register Your Team
-                </a>
+                <div className="bg-gray-500 text-white text-base px-8 py-3 font-semibold rounded-lg cursor-not-allowed shadow-lg">
+                  Registration Closed
+                </div>
                 <a
                   className="btn-ghost text-base px-6 py-3 font-medium"
                   href="#event-structure"
