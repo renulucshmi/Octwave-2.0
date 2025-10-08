@@ -250,7 +250,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-yellow-400 text-purple-900 px-4 py-1 rounded-full font-bold text-sm mb-3">
-            🏆 Finalists Only
+            🏆 Selected Finalists Only
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
             <div className="flex items-center gap-3">
