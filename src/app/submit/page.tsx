@@ -50,6 +50,21 @@ export default function SubmitPage() {
     }
   };
 
+  // Helper function to convert file to base64
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const result = reader.result as string;
+        // Remove data URL prefix (e.g., "data:application/pdf;base64,")
+        const base64 = result.split(',')[1];
+        resolve(base64);
+      };
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -61,40 +76,60 @@ export default function SubmitPage() {
         throw new Error('Please upload both report and presentation files');
       }
 
-      // Create FormData for file upload
-      const submitFormData = new FormData();
-      submitFormData.append('teamId', formData.teamId);
-      submitFormData.append('teamName', formData.teamName);
-      submitFormData.append('leaderEmail', formData.leaderEmail);
-      submitFormData.append('leaderMobile', formData.leaderMobile);
-      submitFormData.append('reportFile', formData.reportFile);
-      submitFormData.append('presentationFile', formData.presentationFile);
+      // Convert files to base64 for direct upload to Google Apps Script
+      setSubmitError('Processing report file...');
+      const reportBase64 = await fileToBase64(formData.reportFile);
+      
+      setSubmitError('Processing presentation file...');
+      const presentationBase64 = await fileToBase64(formData.presentationFile);
 
-      const response = await fetch('/api/submit', {
+      // Get Google Apps Script URL
+      const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_SUBMIT_URL || 
+                       'https://script.google.com/macros/s/AKfycbxeAaMXGA804Ms1l7XVa-tiqN_rcwft8ZAddjFmqsZrMvZe4fI8Yc4UXBjhFu7vpyjI2A/exec';
+
+      setSubmitError('Uploading files to Google Drive...');
+
+      // Send directly to Google Apps Script (bypasses Next.js serverless limits)
+      const response = await fetch(scriptUrl, {
         method: 'POST',
-        body: submitFormData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          teamId: formData.teamId,
+          teamName: formData.teamName,
+          leaderEmail: formData.leaderEmail,
+          leaderMobile: formData.leaderMobile,
+          reportFile: {
+            name: formData.reportFile.name,
+            mimeType: formData.reportFile.type,
+            data: reportBase64
+          },
+          presentationFile: {
+            name: formData.presentationFile.name,
+            mimeType: formData.presentationFile.type,
+            data: presentationBase64
+          }
+        })
       });
 
-      // Check if response is JSON
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        // Server returned HTML or other non-JSON response (likely an error page)
+      // Parse response
+      let result;
+      try {
         const text = await response.text();
-        console.error('Non-JSON response:', text.substring(0, 200));
-        throw new Error('Server error occurred. Please try again or contact support if the issue persists.');
+        result = JSON.parse(text);
+      } catch (parseError) {
+        console.error('Response parse error:', parseError);
+        throw new Error('Invalid response from server. Please try again.');
       }
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Submission failed');
+      if (!result.success) {
+        throw new Error(result.error || result.message || 'Submission failed');
       }
 
-      if (result.success) {
-        setShowSuccessModal(true);
-      } else {
-        throw new Error(result.error || 'Submission failed');
-      }
+      // Clear the progress message
+      setSubmitError('');
+      setShowSuccessModal(true);
 
     } catch (error) {
       console.error('Submission error:', error);
@@ -277,10 +312,18 @@ export default function SubmitPage() {
               </div>
             </div>
 
-            {/* Error Display */}
+            {/* Error/Progress Display */}
             {submitError && (
-              <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                <p className="text-red-700 dark:text-red-300 text-sm">{submitError}</p>
+              <div className={`mb-6 p-4 rounded-lg ${
+                submitError.includes('Processing') || submitError.includes('Uploading') 
+                  ? 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
+                  : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+              }`}>
+                <p className={`text-sm ${
+                  submitError.includes('Processing') || submitError.includes('Uploading')
+                    ? 'text-blue-700 dark:text-blue-300'
+                    : 'text-red-700 dark:text-red-300'
+                }`}>{submitError}</p>
               </div>
             )}
 
