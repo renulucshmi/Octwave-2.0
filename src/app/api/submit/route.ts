@@ -115,11 +115,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Configure for larger file uploads
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '50mb',
-    },
-  },
-};
+// Note: In Next.js 13+ App Router, body size limits are configured in next.config.ts
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60; // 60 seconds timeout for large file uploads

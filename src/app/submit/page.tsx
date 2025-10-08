@@ -75,6 +75,15 @@ export default function SubmitPage() {
         body: submitFormData,
       });
 
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        // Server returned HTML or other non-JSON response (likely an error page)
+        const text = await response.text();
+        console.error('Non-JSON response:', text.substring(0, 200));
+        throw new Error('Server error occurred. Please try again or contact support if the issue persists.');
+      }
+
       const result = await response.json();
 
       if (!response.ok) {
