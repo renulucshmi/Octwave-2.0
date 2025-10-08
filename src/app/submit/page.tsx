@@ -115,12 +115,15 @@ export default function SubmitPage() {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full font-bold text-sm mb-4">
+            🏆 Finalists Only
+          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold octwave-gradient-text mb-4">
-            OctWave 2.0 - Final Submission
+            OctWave 2.0 - Final Round Submission
           </h1>
-          <div className="text-2xl mb-4">📤 Submit Your Project</div>
+          <div className="text-2xl mb-4">📤 Submit Your Final Project</div>
           <p className="text-lg text-black/80 dark:text-white/90 max-w-2xl mx-auto">
-            Upload your final report (PDF) and presentation (PPT/PPTX) for OctWave 2.0 competition.
+            <strong>For qualified finalists only:</strong> Upload your final report (PDF) and presentation (PPT/PPTX) to complete your competition entry.
           </p>
         </div>
 
@@ -128,6 +131,7 @@ export default function SubmitPage() {
         <div className="card p-6 mb-8 border-yellow-300 bg-yellow-50 dark:bg-yellow-900/20">
           <h2 className="text-2xl font-bold text-yellow-800 dark:text-yellow-300 mb-4">⚠️ Important Submission Guidelines:</h2>
           <ul className="space-y-2 text-yellow-800 dark:text-yellow-300">
+            <li>• <strong>Only qualified finalists</strong> should submit here</li>
             <li>• Report must be in PDF format only</li>
             <li>• Presentation must be in PPT or PPTX format</li>
             <li>• Maximum file size: 50MB per file</li>

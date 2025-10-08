@@ -234,40 +234,42 @@ export default function Home() {
           </p>
           
           {/* Buttons - appear after animation is complete */}
-          <div 
+          <div
             className={`mt-8 flex items-center justify-center gap-3 transition-all duration-500 ${
               dashAnimation.showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <a href="/register" className="btn-primary">Register Now</a>
+            <a href="/submit" className="btn-primary">Submit Your Project</a>
           </div>
           </div>
         </div>
       </header>
 
-      {/* Registration Closed Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 text-white py-6">
+      {/* Submission Banner - Finalists Only */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 text-white py-8">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
+          <div className="inline-flex items-center gap-2 bg-yellow-400 text-purple-900 px-4 py-1 rounded-full font-bold text-sm mb-3">
+            🏆 Finalists Only
+          </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
             <div className="flex items-center gap-3">
-              <AlertTriangle className="w-6 h-6 text-red-400" />
-              <span className="font-bold text-lg">REGISTRATION CLOSED</span>
+              <Rocket className="w-6 h-6 text-white" />
+              <span className="font-bold text-lg">FINAL SUBMISSION OPEN</span>
             </div>
             <div className="flex items-center gap-3">
-              <Calendar className="w-5 h-5 text-gray-300" />
-              <span className="font-semibold">Deadline was: September 30th, 2025</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Clock className="w-5 h-5 text-gray-300" />
-              <span className="font-bold text-gray-300">Registration period ended</span>
+              <Calendar className="w-5 h-5 text-white/90" />
+              <span className="font-semibold">Qualified teams can submit now</span>
             </div>
           </div>
+          <p className="text-sm text-white/90 mb-4 max-w-2xl mx-auto">
+            Only teams that qualified for the final round can submit their project here
+          </p>
           <div className="flex justify-center">
-            <div className="inline-flex items-center gap-2 bg-gray-500 text-white px-6 py-3 rounded-full font-bold cursor-not-allowed shadow-lg">
-              <Clock className="w-5 h-5" />
-              Registration Closed
-            </div>
+            <a href="/submit" className="inline-flex items-center gap-2 bg-white text-purple-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg">
+              <Rocket className="w-5 h-5" />
+              Submit Final Project
+            </a>
           </div>
         </div>
       </section>
@@ -707,13 +709,13 @@ export default function Home() {
             <div className="relative z-10">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold bg-gradient-to-r from-pink-400/20 via-purple-500/20 to-indigo-500/20 text-transparent bg-clip-text octwave-gradient-text ring-1 ring-white/20 dark:ring-white/10 mb-6">
-                <span className="text-2xl">🚀</span>
-                <span>Join the Competition</span>
+                <span className="text-2xl">🏆</span>
+                <span>Finalists - Submit Your Project</span>
               </div>
 
               {/* Main heading */}
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold octwave-gradient-text mb-4">
-                Ready to ride the Octwave 2.0?
+                Qualified for Finals? Submit Now!
               </h3>
 
               {/* Gradient divider */}
@@ -721,20 +723,22 @@ export default function Home() {
 
               {/* Description */}
               <p className="text-base sm:text-lg text-black/80 dark:text-white/90 max-w-md mx-auto mb-8 leading-relaxed">
-                Register your team and start building innovative AI/ML solutions
-                that solve real industry problems.
+                Finalists: Upload your final report (PDF) and presentation (PPT/PPTX) to complete your OctWave 2.0 final round submission.
               </p>
 
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <div className="bg-gray-500 text-white text-base px-8 py-3 font-semibold rounded-lg cursor-not-allowed shadow-lg">
-                  Registration Closed
-                </div>
+                <a
+                  href="/submit"
+                  className="btn-primary text-base px-8 py-3 font-semibold"
+                >
+                  Submit Project Now
+                </a>
                 <a
                   className="btn-ghost text-base px-6 py-3 font-medium"
                   href="#event-structure"
                 >
-                  Learn More
+                  View Event Details
                 </a>
               </div>
 
@@ -742,15 +746,15 @@ export default function Home() {
               <div className="mt-8 flex items-center justify-center gap-8 text-sm text-black/60 dark:text-white/60">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
-                  <span>Team-based</span>
+                  <span>PDF Report</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
-                  <span>Cash Prizes</span>
+                  <span>PPT Presentation</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full octwave-gradient-bg"></span>
-                  <span>Real Industry Problems</span>
+                  <span>Google Drive Upload</span>
                 </div>
               </div>
             </div>

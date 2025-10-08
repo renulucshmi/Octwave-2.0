@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const isRegisterPage = pathname === '/register';
+  const isSubmitPage = pathname === '/submit';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
@@ -43,16 +43,16 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Right: Register/Back to Home button */}
+          {/* Right: Submit/Back to Home button */}
 
           <div className="flex items-center gap-2">
-            {isRegisterPage ? (
+            {isSubmitPage ? (
               <Link href="/" className="btn-primary">
                 ← Back to Home
               </Link>
             ) : (
-              <Link href="/register" className="btn-primary">
-                Register
+              <Link href="/submit" className="btn-primary">
+                Submit Project
               </Link>
             )}
           </div>
