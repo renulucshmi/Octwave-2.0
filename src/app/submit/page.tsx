@@ -25,13 +25,23 @@ export default function SubmitPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'report' | 'presentation') => {
     const file = e.target.files?.[0];
     if (file) {
+      // Check file size (50MB max)
+      const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+      if (file.size > maxSize) {
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        setSubmitError(`File size (${fileSizeMB}MB) exceeds the maximum limit of 50MB. Please compress or reduce the file size and try again.`);
+        e.target.value = '';
+        return;
+      }
+
       if (type === 'report') {
         // Validate PDF
         if (file.type !== 'application/pdf') {
-          alert('Please upload a PDF file for the report');
+          setSubmitError('Please upload a PDF file for the report');
           e.target.value = '';
           return;
         }
+        setSubmitError(''); // Clear any previous errors
         setFormData({ ...formData, reportFile: file });
         setFileNames({ ...fileNames, report: file.name });
       } else {
@@ -41,10 +51,11 @@ export default function SubmitPage() {
           'application/vnd.openxmlformats-officedocument.presentationml.presentation'
         ];
         if (!validTypes.includes(file.type)) {
-          alert('Please upload a PowerPoint file (.ppt or .pptx)');
+          setSubmitError('Please upload a PowerPoint file (.ppt or .pptx)');
           e.target.value = '';
           return;
         }
+        setSubmitError(''); // Clear any previous errors
         setFormData({ ...formData, presentationFile: file });
         setFileNames({ ...fileNames, presentation: file.name });
       }
@@ -61,6 +72,17 @@ export default function SubmitPage() {
       // Validate files
       if (!formData.reportFile || !formData.presentationFile) {
         throw new Error('Please upload both report and presentation files');
+      }
+
+      // Validate file sizes before submitting
+      const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+      if (formData.reportFile.size > maxSize) {
+        const fileSizeMB = (formData.reportFile.size / (1024 * 1024)).toFixed(2);
+        throw new Error(`Report file size (${fileSizeMB}MB) exceeds the maximum limit of 50MB. Please compress or reduce the file size.`);
+      }
+      if (formData.presentationFile.size > maxSize) {
+        const fileSizeMB = (formData.presentationFile.size / (1024 * 1024)).toFixed(2);
+        throw new Error(`Presentation file size (${fileSizeMB}MB) exceeds the maximum limit of 50MB. Please compress or reduce the file size.`);
       }
 
       setSubmitError('Uploading files to Google Drive...');
@@ -91,7 +113,20 @@ export default function SubmitPage() {
       clearInterval(progressInterval);
       setUploadProgress(100);
 
-      const result = await response.json();
+      // Get response text first, then try to parse as JSON
+      const responseText = await response.text();
+      let result;
+
+      try {
+        result = JSON.parse(responseText);
+      } catch (jsonError) {
+        // If response is not JSON (e.g., plain text error from server)
+        console.error('Non-JSON response:', responseText);
+        throw new Error(
+          responseText ||
+          'Server returned an invalid response. Please check your file sizes (max 50MB per file) and try again, or contact support.'
+        );
+      }
 
       if (!response.ok || !result.success) {
         throw new Error(result.error || 'Submission failed');
