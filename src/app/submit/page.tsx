@@ -7,6 +7,7 @@ export default function SubmitPage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [formData, setFormData] = useState({
     teamId: '',
     teamName: '',
@@ -35,10 +36,11 @@ export default function SubmitPage() {
       if (type === 'report') {
         // Validate PDF
         if (file.type !== 'application/pdf') {
-          alert('Please upload a PDF file for the report');
+          setSubmitError('Please upload a PDF file for the report');
           e.target.value = '';
           return;
         }
+        setSubmitError(''); // Clear any previous errors
         setFormData({ ...formData, reportFile: file });
         setFileNames({ ...fileNames, report: file.name });
       } else {
@@ -48,35 +50,22 @@ export default function SubmitPage() {
           'application/vnd.openxmlformats-officedocument.presentationml.presentation'
         ];
         if (!validTypes.includes(file.type)) {
-          alert('Please upload a PowerPoint file (.ppt or .pptx)');
+          setSubmitError('Please upload a PowerPoint file (.ppt or .pptx)');
           e.target.value = '';
           return;
         }
+        setSubmitError(''); // Clear any previous errors
         setFormData({ ...formData, presentationFile: file });
         setFileNames({ ...fileNames, presentation: file.name });
       }
     }
   };
 
-  // Helper function to convert file to base64
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const result = reader.result as string;
-        // Remove data URL prefix (e.g., "data:application/pdf;base64,")
-        const base64 = result.split(',')[1];
-        resolve(base64);
-      };
-      reader.onerror = error => reject(error);
-    });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError('');
+    setUploadProgress(0);
 
     try {
       // Validate files
@@ -84,55 +73,62 @@ export default function SubmitPage() {
         throw new Error('Please upload both report and presentation files');
       }
 
-      // Convert files to base64 for direct upload to Google Apps Script
-      setSubmitError('Processing report file...');
-      const reportBase64 = await fileToBase64(formData.reportFile);
-      
-      setSubmitError('Processing presentation file...');
-      const presentationBase64 = await fileToBase64(formData.presentationFile);
-
-      // Get Google Apps Script URL
-      const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_SUBMIT_URL || 
-                       'https://script.google.com/macros/s/AKfycbxeAaMXGA804Ms1l7XVa-tiqN_rcwft8ZAddjFmqsZrMvZe4fI8Yc4UXBjhFu7vpyjI2A/exec';
+      // Validate file sizes before submitting
+      const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+      if (formData.reportFile.size > maxSize) {
+        const fileSizeMB = (formData.reportFile.size / (1024 * 1024)).toFixed(2);
+        throw new Error(`Report file size (${fileSizeMB}MB) exceeds the maximum limit of 50MB. Please compress or reduce the file size.`);
+      }
+      if (formData.presentationFile.size > maxSize) {
+        const fileSizeMB = (formData.presentationFile.size / (1024 * 1024)).toFixed(2);
+        throw new Error(`Presentation file size (${fileSizeMB}MB) exceeds the maximum limit of 50MB. Please compress or reduce the file size.`);
+      }
 
       setSubmitError('Uploading files to Google Drive...');
 
-      // Send directly to Google Apps Script (bypasses Next.js serverless limits)
-      const response = await fetch(scriptUrl, {
+      // Create FormData to send files to Next.js API route
+      const submitFormData = new FormData();
+      submitFormData.append('teamId', formData.teamId);
+      submitFormData.append('teamName', formData.teamName);
+      submitFormData.append('leaderEmail', formData.leaderEmail);
+      submitFormData.append('leaderMobile', formData.leaderMobile);
+      submitFormData.append('reportFile', formData.reportFile);
+      submitFormData.append('presentationFile', formData.presentationFile);
+
+      // Simulate progress (since we can't track actual upload progress with fetch)
+      const progressInterval = setInterval(() => {
+        setUploadProgress(prev => {
+          if (prev >= 90) return 90; // Stop at 90% until complete
+          return prev + 10;
+        });
+      }, 300);
+
+      // Send to Next.js API route (avoids CORS issues)
+      const response = await fetch('/api/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          teamId: formData.teamId,
-          teamName: formData.teamName,
-          leaderEmail: formData.leaderEmail,
-          leaderMobile: formData.leaderMobile,
-          reportFile: {
-            name: formData.reportFile.name,
-            mimeType: formData.reportFile.type,
-            data: reportBase64
-          },
-          presentationFile: {
-            name: formData.presentationFile.name,
-            mimeType: formData.presentationFile.type,
-            data: presentationBase64
-          }
-        })
+        body: submitFormData
       });
 
-      // Parse response
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
+      // Get response text first, then try to parse as JSON
+      const responseText = await response.text();
       let result;
+
       try {
-        const text = await response.text();
-        result = JSON.parse(text);
-      } catch (parseError) {
-        console.error('Response parse error:', parseError);
-        throw new Error('Invalid response from server. Please try again.');
+        result = JSON.parse(responseText);
+      } catch (jsonError) {
+        // If response is not JSON (e.g., plain text error from server)
+        console.error('Non-JSON response:', responseText);
+        throw new Error(
+          responseText ||
+          'Server returned an invalid response. Please check your file sizes (max 50MB per file) and try again, or contact support.'
+        );
       }
 
-      if (!result.success) {
-        throw new Error(result.error || result.message || 'Submission failed');
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Submission failed');
       }
 
       // Clear the progress message
@@ -142,6 +138,7 @@ export default function SubmitPage() {
     } catch (error) {
       console.error('Submission error:', error);
       setSubmitError(error instanceof Error ? error.message : 'There was an issue submitting your files. Please try again or contact us directly.');
+      setUploadProgress(0);
     } finally {
       setIsSubmitting(false);
     }
@@ -323,7 +320,7 @@ export default function SubmitPage() {
             {/* Error/Progress Display */}
             {submitError && (
               <div className={`mb-6 p-4 rounded-lg ${
-                submitError.includes('Processing') || submitError.includes('Uploading') 
+                submitError.includes('Processing') || submitError.includes('Uploading')
                   ? 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800'
                   : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
               }`}>
@@ -332,6 +329,28 @@ export default function SubmitPage() {
                     ? 'text-blue-700 dark:text-blue-300'
                     : 'text-red-700 dark:text-red-300'
                 }`}>{submitError}</p>
+              </div>
+            )}
+
+            {/* Progress Bar */}
+            {isSubmitting && uploadProgress > 0 && (
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Upload Progress
+                  </span>
+                  <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">
+                    {uploadProgress}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 ease-out rounded-full"
+                    style={{ width: `${uploadProgress}%` }}
+                  >
+                    <div className="h-full w-full bg-white/20 animate-pulse"></div>
+                  </div>
+                </div>
               </div>
             )}
 
