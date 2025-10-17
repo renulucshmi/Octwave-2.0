@@ -24,6 +24,14 @@ export default function SubmitPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'report' | 'presentation') => {
     const file = e.target.files?.[0];
     if (file) {
+      // Check file size (50MB = 50 * 1024 * 1024 bytes)
+      const maxSize = 50 * 1024 * 1024;
+      if (file.size > maxSize) {
+        alert('Maximum file size is 50MB per file. Please check your file size and try again.');
+        e.target.value = '';
+        return;
+      }
+
       if (type === 'report') {
         // Validate PDF
         if (file.type !== 'application/pdf') {
